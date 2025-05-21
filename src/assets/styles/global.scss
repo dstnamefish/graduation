@@ -1,0 +1,33 @@
+// 引入变量和混合器
+@use 'base/variables' as variables;
+@use 'base/mixins' as mixins;
+
+// 全局基础样式
+body {
+  font-family: variables.$base-font-family; 
+  font-size: variables.$base-font-size;     
+  line-height: 1.5;
+  color: variables.$dark-color;             
+  background-color: variables.$light-color; 
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: variables.$heading-font-family; 
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: variables.$primary-color; 
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
