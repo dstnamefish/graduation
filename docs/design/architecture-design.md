@@ -2,7 +2,7 @@
 本文档是 [系统/项目名称] 的技术中枢蓝图，旨在清晰定义系统的顶层架构设计，包括核心组件划分、技术选型依据、关键流程与交互逻辑。通过约束技术边界、规范设计原则，为开发团队提供一致性指导，同时帮助产品、测试、运维等角色理解系统技术实现与协作依赖。文档内容覆盖从基础设施到应用层的完整设计，确保系统在扩展性、性能、安全等维度满足当前需求，并为未来演进预留合理空间。
 
 ## 一、文档概述
-### 1 文档目的
+### 1.文档目的
 - 本文档的宗旨在定义医疗后台管理平台的系统架构设计，为开发团队提供技术实施指南，同时为项目若干成员提供理解技术方案的参考依据。
 预期读者包括：
   - 开发团队成员
@@ -10,7 +10,7 @@
   - 项目经理
   - 运维工程师
 
-### 2 适用范围
+### 2.适用范围
 - 适用范围
   - 医疗后台管理后端服务
   - 对接医疗第三方接口
@@ -20,7 +20,7 @@
   - 前端页面具体实现
   - 第三方其他系统对接
 
-### 3 术语定义
+### 3.术语定义
 [列出文档中使用的专业术语及其解释]
 
 ## 二、架构设计原则
@@ -32,195 +32,197 @@
 - 可访问性目标
 
 ### 2.核心原则
-- **模块化（Modularity）**
-    **定义**：将系统拆分成高内聚、低耦合的功能单元，每个模块具有明确的接口和独立职责
-    **实现方式**：
-    - 技术实现
-        ```javascript
-        // ES Modules 规范
-        // user.module.js
-        export const getUser = (id) => fetch(`/api/users/${id}`);
-        export const updateUser = (user) => fetch(`/api/users`, { method: 'PUT', body: user });
-
-        //api.js
-        import { getUser } from './user.modules.js'
-        ```
-    - 设计规范：
-        模块大小控制在300-500行代码
-        禁止跨模块直接状态访问（需通过接口）
-        模块接口文档化（JSDoc）
-
-- **组件化（Componentization）**
-    **定义**：将UI分解成独立，可组合的组件单元，遵循"原子设计"理念。
-    **层级规范**：
-    |层级|示例                          |开发日期| 
-    |--- |------------------------------|-------|   
-    |原子|Button, Input                 |1人日   |
-    |分子|SearchBar（组合Button+Input）  |2人日  |
-    |组织|ProductCard（含图片+标题+价格）|3人日   |
-    |模板|商品列表页布局                 |5人日   |
-    **代码示例**：
-    ```jsx
-    // 原子组件
-    const PrimaryButton = ({ children, onClick }) => (
-      <button 
-        className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    );
-
-    // 组合组件
-    const ProductCard = ({ product }) => (
-      <div className="border p-4">
-        <Image src={product.image} />
-        <h3>{product.name}</h3>
-        <PrimaryButton onClick={() => addToCart(product)}>
-          加入购物车
-        </PrimaryButton>
-      </div>
-    );
-    ```
-    **质量要求**：
-    - 组件props不能超过10个
-    - 必须包含Storybook用例
-    - 组件命名规范
-        - 原子组件：首字母大写，如PrimaryButton
-        - 组合组件：首字母小写，如ProductCard
-        - 模板组件：首字母大写，如ProductListPage
-    - 可视化测试（如Chromatic）
-
-- **单一职责原则（SRP）**
-    **定义**：每个组件、模块或函数都应该有且只有一个明确的责任
-    **实施检测表**：
-    - 组件文件名明确反应职责（如ProductPrice.tsx）
-    - 不存在and命名的组件（如ProductCardAndImage）
-    - 函数代码行数限制（***如<30行，可修改***）
-    **反例修正**
-    ```javascript
-    // 错误：混合渲染和数据处理
-    function UserList() {
-      const [users, setUsers] = useState([]);
-      
-      useEffect(() => {
-        fetch('/api/users')  // 数据获取职责
-          .then(res => res.json())
-          .then(setUsers);
-      }, []);
-
-      return (  // 渲染职责
-        <ul>
-          {users.map(user => <li key={user.id}>{user.name}</li>)}
-        </ul>
-      );
-    }
-
-    // 正确：分离关注点
-    function useUsers() {  // 数据Hook
-      const [users, setUsers] = useState([]);
-      useEffect(() => { /* 获取数据 */ }, []);
-      return users;
-    }
-
-    function UserList({ users }) {  // 纯UI组件
-      return (
-        <ul>{users.map(user => <UserItem key={user.id} user={user} />)}</ul>
-      );
-    }
-    ```
-
-- **开放封闭原则（OCP）**
-    **定义**：软件实体（类、模块、函数等）应该对扩展开放，对修改封闭,通过抽象应对变化
-    **前端实现模式**：
-    - **高阶组件（HOC）扩展**：
+#### 模块化（Modularity）
+  **定义**：将系统拆分成高内聚、低耦合的功能单元，每个模块具有明确的接口和独立职责
+  **实现方式**：
+  - 技术实现
       ```javascript
-      const withLogging = (WrappedComponent) => {
-        return (props) => {
-          console.log('Rendered:', WrappedComponent.name);
-          return <WrappedComponent {...props} />;
-        }
-      }
-      ```
-    - **组合式扩展**：
-      ```jsx
-      <Dropdown>
-        <Dropdown.Trigger as={CustomButton}/>
-        <Dropdown.Menu>
-          <Dropdown.Item icon={<StarIcon />}>收藏</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-      ```
+      // ES Modules 规范
+      // user.module.js
+      export const getUser = (id) => fetch(`/api/users/${id}`);
+      export const updateUser = (user) => fetch(`/api/users`, { method: 'PUT', body: user });
 
-- **依赖倒置原则（DIP）**
-    **定义**：高层模块不应该依赖低层模块，两者都应该依赖抽象。抽象不应该依赖细节，细节应该依赖抽象。
-    **前端实现方式**：
-    - 接口定义（Interface）：
-      ```typescript
-        interface DataFetcher{
-          get<T>(url: string): Promise<T>;
-        }
-        class HttpDataFetcher implements DataFetcher {
-          get<T>(url: string): Promise<T> { /* 实现 */ }
-        }
-        class MockDataFetcher implements DataFetcher {
-          get<T>(url: string): Promise<T> { /* 实现 */ }
-        }
+      //api.js
+      import { getUser } from './user.modules.js'
       ```
-    - 依赖注入（DI）：
-      ```javascript
-        const ApiContext = createContext<DataFetcher>(new HttpDataFetcher());
-        function UserProfile(){
-          const api = useContext(ApiContext); // 依赖抽象
-          const [user, setUser] = useState();
+  - 设计规范：
+      模块大小控制在300-500行代码
+      禁止跨模块直接状态访问（需通过接口）
+      模块接口文档化（JSDoc）
 
-          useEffect(() => {
-             api.get('user').then(setUser); 
-          },[api]);
-        }
-      ```
+#### 组件化（Componentization）
+  **定义**：将UI分解成独立，可组合的组件单元，遵循"原子设计"理念。
+  **层级规范**：
+  |层级|示例                          |开发日期| 
+  |--- |------------------------------|-------|   
+  |原子|Button, Input                 |1人日   |
+  |分子|SearchBar（组合Button+Input）  |2人日  |
+  |组织|ProductCard（含图片+标题+价格）|3人日   |
+  |模板|商品列表页布局                 |5人日   |
+  **代码示例**：
+  ```jsx
+  // 原子组件
+  const PrimaryButton = ({ children, onClick }) => (
+    <button 
+      className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 
-- **最小知识原则（LoD）**
-    **定义**：组件只应与直接关联的组件交互，避免过多的依赖。
-    **实施方法**：
-    |通信场景|正确方式        |错误方式                  |    
-    |--------|---------------|--------------------------|
-    |父子组件|Props传递       |子组件直接修改父组件状态   |
-    |兄弟组件|状态提升        |组件A -> 组件B -> 组件C传递|
-    |跨层级  |Context/状态管理|逐层传递props             |    
-    **案例**：
-    - 使用Pub/Sub模式解耦：
-      ```javascript
-        // event-bus.js 
-        const bus = new EventEmitter();
-        export const PRODUCT_ADDED = 'product_added';
+  // 组合组件
+  const ProductCard = ({ product }) => (
+    <div className="border p-4">
+      <Image src={product.image} />
+      <h3>{product.name}</h3>
+      <PrimaryButton onClick={() => addToCart(product)}>
+        加入购物车
+      </PrimaryButton>
+    </div>
+  );
+  ```
+  **质量要求**：
+  - 组件props不能超过10个
+  - 必须包含Storybook用例
+  - 组件命名规范
+      - 原子组件：首字母大写，如PrimaryButton
+      - 组合组件：首字母小写，如ProductCard
+      - 模板组件：首字母大写，如ProductListPage
+  - 可视化测试（如Chromatic）
 
-        // ProductComponent.js
-        bus.emit(PRODUCT_ADDED, product);
-
-        // CartComponent.js
-        bus.on(PRODUCT_ADDED, updateCart);
-      ```
-
-- **逐渐增强（Progress Enhancement）**
-    **分层实现策略**：
-      - 基础层：语义化HTML + 核心功能
-      ```html
-        <form>
-          <input type="text" name="query">
-          <button type="submit">搜索</button>
-        </form>
-      ```
-      - 增强层：样式CSS + 交互JS
-      ```javascript
-        document.getElementById('search').addEventListener('submit',handleSearch);
-      ```
-      - 体验层：高级交互（如动画、WebSocket）
+#### 单一职责原则（SRP）
+  **定义**：每个组件、模块或函数都应该有且只有一个明确的责任
+  **实施检测表**：
+  - 组件文件名明确反应职责（如ProductPrice.tsx）
+  - 不存在and命名的组件（如ProductCardAndImage）
+  - 函数代码行数限制（***如<30行，可修改***）
+  **反例修正**
+  ```javascript
+  // 错误：混合渲染和数据处理
+  function UserList() {
+    const [users, setUsers] = useState([]);
     
-    **性能收益**
-      - 核心功能JS包体积可减少40-60%
-      - 交互响应速度提升20-30%
-      - 加载速度提升30-40%
+    useEffect(() => {
+      fetch('/api/users')  // 数据获取职责
+        .then(res => res.json())
+        .then(setUsers);
+    }, []);
+
+    return (  // 渲染职责
+      <ul>
+        {users.map(user => <li key={user.id}>{user.name}</li>)}
+      </ul>
+    );
+  }
+
+  // 正确：分离关注点
+  function useUsers() {  // 数据Hook
+    const [users, setUsers] = useState([]);
+    useEffect(() => { /* 获取数据 */ }, []);
+    return users;
+  }
+
+  function UserList({ users }) {  // 纯UI组件
+    return (
+      <ul>{users.map(user => <UserItem key={user.id} user={user} />)}</ul>
+    );
+  }
+  ```
+
+#### 开放封闭原则（OCP）
+  **定义**：软件实体（类、模块、函数等）应该对扩展开放，对修改封闭,通过抽象应对变化
+  **前端实现模式**：
+  - **高阶组件（HOC）扩展**：
+    ```javascript
+    const withLogging = (WrappedComponent) => {
+      return (props) => {
+        console.log('Rendered:', WrappedComponent.name);
+        return <WrappedComponent {...props} />;
+      }
+    }
+    ```
+  - **组合式扩展**：
+    ```jsx
+    <Dropdown>
+      <Dropdown.Trigger as={CustomButton}/>
+      <Dropdown.Menu>
+        <Dropdown.Item icon={<StarIcon />}>收藏</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+    ```
+
+#### 依赖倒置原则（DIP）
+  **定义**：高层模块不应该依赖低层模块，两者都应该依赖抽象。抽象不应该依赖细节，细节应该依赖抽象。
+  **前端实现方式**：
+  - 接口定义（Interface）：
+    ```typescript
+      interface DataFetcher{
+        get<T>(url: string): Promise<T>;
+      }
+      class HttpDataFetcher implements DataFetcher {
+        get<T>(url: string): Promise<T> { /* 实现 */ }
+      }
+      class MockDataFetcher implements DataFetcher {
+        get<T>(url: string): Promise<T> { /* 实现 */ }
+      }
+    ```
+  - 依赖注入（DI）：
+    ```javascript
+      const ApiContext = createContext<DataFetcher>(new HttpDataFetcher());
+      function UserProfile(){
+        const api = useContext(ApiContext); // 依赖抽象
+        const [user, setUser] = useState();
+
+        useEffect(() => {
+            api.get('user').then(setUser); 
+        },[api]);
+      }
+    ```
+
+#### 最小知识原则（LoD）
+  **定义**：组件只应与直接关联的组件交互，避免过多的依赖。
+  **实施方法**：
+  |通信场景|正确方式        |错误方式                  |    
+  |--------|---------------|--------------------------|
+  |父子组件|Props传递       |子组件直接修改父组件状态   |
+  |兄弟组件|状态提升        |组件A -> 组件B -> 组件C传递|
+  |跨层级  |Context/状态管理|逐层传递props             |    
+  **案例**：
+  - 使用Pub/Sub模式解耦：
+    ```javascript
+      // event-bus.js 
+      const bus = new EventEmitter();
+      export const PRODUCT_ADDED = 'product_added';
+
+      // ProductComponent.js
+      bus.emit(PRODUCT_ADDED, product);
+
+      // CartComponent.js
+      bus.on(PRODUCT_ADDED, updateCart);
+    ```
+
+#### 逐渐增强（Progress Enhancement）
+  **分层实现策略**：
+    - 基础层：语义化HTML + 核心功能
+    ```html
+      <form>
+        <input type="text" name="query">
+        <button type="submit">搜索</button>
+      </form>
+    ```
+
+    - 增强层：样式CSS + 交互JS
+    ```javascript
+      document.getElementById('search').addEventListener('submit',handleSearch);
+    ```
+
+    - 体验层：高级交互（如动画、WebSocket）
+  
+  **性能收益**
+    - 核心功能JS包体积可减少40-60%
+    - 交互响应速度提升20-30%
+    - 加载速度提升30-40%
 
 
 
@@ -424,30 +426,30 @@
 
 ## 五、组件设计
 ### 1.组件分类
-- 基础组件（components/common/）
-  - 定位：与业务解耦的纯UI组件
-  - 特点：
+- **基础组件**（components/common/）
+  - **定位**：与业务解耦的纯UI组件
+  - **特点**：
     - 基于ElementPlus进行二次封装
     - 提供最基础的交互功能
     - 通过Props/Slots暴露定制能力
-  - 示例：
+  - **示例**：
     - BaseTable：增强型表格组件
     - BaseForm：动态表单生成器
     - BaseUpload：文件上传封装
 
-- 业务组件
-  定位：与业务逻辑耦合的可复用组件
-  - 特点：
+- **业务组件**
+  **定位**：与业务逻辑耦合的可复用组件
+  - **特点**：
     - 组合多个基础组件
     - 包含领域业务逻辑
     - 通过Pinia与状态管理交互
-  - 示例：
+  - **示例**：
     - OrderStatusBadge：订单状态标签
     - UserAvatar：用户头像（带权限控制）
     - ProductCard：商品卡片（含购物车操作）
 
 ### 2.组件规范
-- 组件设计原则
+- **组件设计原则**
   - 单一职责：每个组件只做一件事
   - 明确边界：
   - UI组件：只关注展示逻辑
@@ -456,7 +458,7 @@
   - 组合优于配置：通过插槽而非props传递复杂UI
   - 类型安全：100% TypeScript支持
 
-- 组件API设计
+- **组件API设计**
 ```vue
   <script setup lang="ts">
   // 类型定义优先
@@ -483,13 +485,191 @@
   })
   </script>
 ```
-- 组件文档要求
+
+- **组件文档要求**
 ......
 
 ### 3.组件通信
-- 父子组件通信
-- 跨组件通信
-- 全局事件机制
+- **父子组件通信**
+  - Props 传递数据（父 → 子） 
+    ```vue
+    <!-- 父组件 Parent.vue -->
+    <template>
+      <Child :title="msg" :count="num" />
+    </template>
+
+    <script setup lang="ts">
+      import Child from './Child.vue';
+      const msg = ref('Hello');
+      const num = ref(0);
+    </script>
+
+    <!-- 子组件 Child.vue -->
+    <script setup lang="ts">
+      defineProps<{
+        title: string;
+        count: number;
+      }>();
+    </script>
+    ```
+    关键点：
+    使用 defineProps + TypeScript 类型注解，无需额外导入。
+    复杂对象建议使用 PropType 定义详细类型：
+    ```typescript
+    import type { PropType } from 'vue';
+    defineProps({
+      data: Object as PropType<{ id: number; name: string }>
+    });
+    ```
+
+  - 事件传递（子 → 父）
+  ```vue
+    <!-- 子组件 Child.vue -->
+  <template>
+    <button @click="emit('update', value)">提交</button>
+  </template>
+
+  <script setup lang="ts">
+    const emit = defineEmits<{
+      (e: 'update', value: number): void;
+    }>();
+  </script>
+
+  <!-- 父组件 Parent.vue -->
+  <template>
+    <Child @update="handleUpdate" />
+  </template>
+  ```
+  最佳实践：
+  事件名建议使用 kebab-case（如 update-count）。
+  复杂数据通过对象传递，避免多个参数。
+
+- **跨组件通信**
+  2.1 Pinia 状态管理（推荐）
+ts
+// stores/counter.ts
+export const useCounterStore = defineStore('counter', {
+  state: () => ({ count: 0 }),
+  actions: {
+    increment() {
+      this.count++;
+    }
+  }
+});
+
+<!-- 组件A -->
+<script setup lang="ts">
+const counter = useCounterStore();
+</script>
+
+<!-- 组件B -->
+<script setup lang="ts">
+const counter = useCounterStore();
+counter.increment(); // 修改状态后自动同步到所有组件
+</script>
+优势：
+
+天然支持 TypeScript，类型推断完善。
+
+脱离组件层级限制，任意组件均可访问。
+
+2.2 Provide/Inject（深层嵌套组件）
+ts
+<!-- 祖先组件 -->
+<script setup lang="ts">
+import { provide } from 'vue';
+provide('theme', 'dark');
+</script>
+
+<!-- 后代组件 -->
+<script setup lang="ts">
+import { inject } from 'vue';
+const theme = inject<string>('theme', 'light'); // 默认值 'light'
+</script>
+适用场景：
+
+主题、国际化等全局配置。
+
+避免滥用，优先考虑 Pinia。
+- **全局事件机制**
+  3.1 Event Bus（小型项目备用）
+ts
+// utils/eventBus.ts
+import mitt from 'mitt';
+export default mitt();
+
+<!-- 组件A：触发事件 -->
+<script setup lang="ts">
+import eventBus from '@/utils/eventBus';
+eventBus.emit('save-data', { id: 1 });
+</script>
+
+<!-- 组件B：监听事件 -->
+<script setup lang="ts">
+import eventBus from '@/utils/eventBus';
+eventBus.on('save-data', (data) => {
+  console.log(data);
+});
+onUnmounted(() => eventBus.off('save-data')); // 必须手动解绑！
+</script>
+注意：
+
+需手动管理事件解绑，否则易导致内存泄漏。
+
+中大型项目优先使用 Pinia 替代。
+
+3.2 全局指令（特殊场景）
+ts
+// 注册全局指令
+app.directive('focus', {
+  mounted(el) {
+    el.focus();
+  }
+});
+
+<!-- 使用指令 -->
+<input v-focus />
+适用场景：
+
+DOM 操作相关逻辑复用。
+
+通信方案选型指南
+场景	推荐方案	优点
+父子组件数据传递	Props + Events	直观、类型安全
+跨组件共享状态	Pinia	响应式、DevTools 支持、类型完善
+深层嵌套组件传值	Provide/Inject	避免逐层传递
+全局事件通知	Pinia Actions	替代 Event Bus，更可控
+临时通信（如弹窗交互）	事件总线（谨慎使用）	快速实现，需注意内存管理
+Element Plus 集成示例
+vue
+<!-- 使用 Pinia 管理表格数据 -->
+<template>
+  <el-table :data="userStore.list">
+    <el-table-column prop="name" label="姓名" />
+  </el-table>
+</template>
+
+<script setup lang="ts">
+import { useUserStore } from '@/stores/user';
+const userStore = useUserStore();
+userStore.fetchUsers(); // 在 Store 中封装 API 请求
+</script>
+最佳实践
+优先使用 Pinia：避免 Props 层层传递，减少耦合。
+
+TypeScript 强化：所有通信数据定义明确类型。
+
+性能优化：
+
+大数据量 Props 使用 shallowRef。
+
+频繁事件用 mitt 的 once 或防抖。
+
+代码隔离：
+
+状态逻辑集中存储在 Pinia。
+
+UI 交互相关状态可用组件局部状态。
 
 ## 六、路由与导航[暂定]
 ### 1.路由方案
