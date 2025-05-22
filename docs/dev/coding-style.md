@@ -52,7 +52,7 @@
 ```
 
 ## 二、TypeScript规范
-### 1. **类型定义优先**
+### 1. 类型定义优先
 - 所有接口、组件 Props、Store 状态必须定义类型
 - 使用 interface 定义对象类型，type 定义基础类型或联合类型
 ```typescript
@@ -70,7 +70,7 @@ const props = defineProps<{
 }>();
 ```
 
-### 2. **避免 any 类型**
+### 2. 避免 any 类型
 - 严格模式下禁止使用 any，使用 unknown 替代不确定类型
 ```typescript
 // 错误：使用 any
@@ -81,7 +81,7 @@ let data: unknown = {};
 if (typeof data === 'object') data = data as Record<string, any>;
 ```
 
-### 3. **泛型使用**
+### 3. 泛型使用
 - 封装工具函数或组件时使用泛型提高复用性
 ```typescript
 // 通用响应类型
@@ -99,7 +99,7 @@ const getUser = async <T>(): Promise<ResponseData<T>> => {
 
 
 ## 三、Vue组件规范
-### 1. **单文件组件结构**
+### 1. 单文件组件结构
 ```vue
 <template>
   <!-- 模板：保持简洁，避免复杂逻辑，使用注释划分区域 -->
@@ -151,12 +151,12 @@ const fetchData = async () => {
 </style>
 ```
 
-### 2. **组件命名**
+### 2. 组件命名
 - 单文件组件使用 帕斯卡命名法（MyComponent.vue）
 - 基础组件以 Base 开头（如 BaseButton.vue）
 - 业务组件放在 views 目录，页面级组件以 Page 结尾（如 UserPage.vue）
 
-### 3. **Props & Emits**
+### 3. Props & Emits
 - Props 定义使用 defineProps 结合类型断言
 - Emits 定义事件类型，避免魔法字符串
 
@@ -176,7 +176,7 @@ const emits = defineEmits<{
 
 
 ## 四、Element Plus规范
-### 1. **按需引入**
+### 1. 按需引入
 - 使用 unplugin-vue-components 自动按需引入组件
 - 避免全量引入（提升打包速度）
 
@@ -197,7 +197,7 @@ export default defineConfig({
 });
 ```
 
-### 2. **样式自定义**
+### 2. 样式自定义
 - 在 assets/styles/element/index.scss 中覆盖 Element Plus 样式
 - 使用官方提供的 CSS 变量（避免直接修改 DOM 选择器）
 
@@ -210,7 +210,7 @@ export default defineConfig({
 ```
 
 ## 五、Pinia 规范
-### 1. **Store 命名**
+### 1. Store 命名
 - Store 文件以 Store 结尾（如 userStore.ts）
 - 状态、getters、actions 分开定义，保持单一职责
 
@@ -243,7 +243,7 @@ export const useUserStore = defineStore('user', {
 });
 ```
 
-### 2. **组合式 API 使用**
+### 2. 组合式 API 使用
 - 复杂逻辑使用组合式 API（defineStore 第二个参数为函数）
 
 ```typescript
@@ -309,11 +309,11 @@ body {
 ```
 
 ## 七、代码风格规范
-### 1. **缩进与换行**
+### 1. 缩进与换行
 - 使用 2 个空格缩进（禁止制表符）
 - 每行代码不超过 120 字符（超出时换行）
 
-### 2. **命名规范**
+### 2. 命名规范
 |类型	      |规范	         |示例                            |
 |-----------|--------------|-------------------------------|
 |变量/函数  |驼峰命名法	    |userInfo, fetchData            |
@@ -323,8 +323,8 @@ body {
 |SCSS       |混合器	       |小写 + 下划线	@mixin box_shadow |
 
 ### 3. 注释规范
-* **Vue注释规范**
-    * **组件头部注释（JSDoc 风格）**
+#### Vue注释规范
+- **组件头部注释（JSDoc 风格）**
     ```vue
     <!-- 
     * @description 用户信息卡片组件
@@ -339,7 +339,7 @@ body {
     </template>
     ```
 
-    * **Props 和 Emits 注释**
+-  **Props 和 Emits 注释**
     ```typescript
     // script setup
     const props = defineProps<{
@@ -361,7 +361,7 @@ body {
     }>();
     ```
 
-    * **复杂逻辑注释**
+- **复杂逻辑注释**
     ```typescript
     // 计算用户等级（根据积分计算）
     const userLevel = computed(() => {
@@ -397,8 +397,8 @@ body {
     };
     ```
 
-* **TypeScript 注释**
-    * **接口和类型定义** 
+#### TypeScript 注释
+-  **接口和类型定义** 
     ```typescript
     /**
      * 用户信息接口
@@ -429,7 +429,7 @@ body {
     };
     ```
     
-    * **函数和方法注释**
+- **函数和方法注释**
     ```typescript
     /**
      * 根据用户ID获取用户信息
@@ -447,8 +447,8 @@ body {
     };
     ```
     
-* **SCSS 注释**
-    * **变量和混合器注释**
+#### SCSS 注释
+- **变量和混合器注释**
     ```typescript
     // 颜色系统
     $primary-color: #165DFF; // 主色调（蓝色）
@@ -466,7 +466,7 @@ body {
     }
     ```
     
-    * **组件样式注释**
+- **组件样式注释**
     ```scss
     /**
      * 用户卡片组件样式
@@ -512,7 +512,7 @@ body {
     }
     ```
 
-    * **全局样式注释**
+- **全局样式注释**
     ```scss
     /**
      * 全局重置样式
@@ -544,7 +544,8 @@ body {
       font-weight: 500;
     }
     ```
-* **注释最佳实践**
+
+#### 注释最佳实践
 - **避免冗余注释**：不要为显而易见的代码添加注释（如 // 增加计数）。
 - **解释意图而非实现**：注释应说明 “为什么” 而非 “怎么做”。
 ```javascript
@@ -559,7 +560,7 @@ for (let i = 0; i < 10; i++) { /* ... */ } // 加载10条数据，API限制最�
 
 
 ## 八、最佳实践
-### 1. **组件设计**
+### 1. 组件设计
 保持组件单一职责（UI 组件和逻辑组件分离）
 使用 defineExpose 显式暴露组件方法
 
@@ -567,11 +568,12 @@ for (let i = 0; i < 10; i++) { /* ... */ } // 加载10条数据，API限制最�
 const handleSubmit = () => { /* ... */ };
 defineExpose({ handleSubmit }); // 对外暴露方法
 ```
-### 2. **性能优化**
+
+### 2. 性能优化
 大列表使用 v-for 时添加 key 和 v-slot:item
 路由组件使用懒加载（() => import('./views/UserPage.vue')）
 
-### 3. **错误处理**
+### 3. 错误处理
 接口请求统一捕获错误（在 utils/request.ts 中封装）
 Store 中的异步方法使用 try/catch
 
@@ -587,7 +589,7 @@ const login = async () => {
 ```
 
 ## 九、开发流程规范
-### 1. **代码提交**：使用 Conventional Commits 规范格式
+### 1. 代码提交：使用 Conventional Commits 规范格式
 ```plaintext
 <类型>(<范围>): <描述>
 // 示例
@@ -605,7 +607,7 @@ fix(router): 修复登录页重定向循环问题
 |test	      |测试相关                   |
 |chore	    |构建/工具链变更            |
 
-### 2. **代码检查**：配置 ESLint + Prettier
+### 2. 代码检查：配置 ESLint + Prettier
 ```bash
 # 安装依赖
 npm install eslint prettier eslint-plugin-vue @typescript-eslint/eslint-plugin --save-dev
@@ -627,14 +629,17 @@ describe('UserStore', () => {
 ```
 
 ## 十、参考资源
-* Vue 3 官方文档
-* Element Plus 样式指南
-* Pinia 最佳实践
-* SCSS 官方迁移指南
+- Vue 3 官方文档
+- Element Plus 样式指南
+- Pinia 最佳实践
+- SCSS 官方迁移指南
 
 ## 十一、附录
 
 ### 1. **版本历史**
+- **v1.0.2** 2025-5-21
+   - 文档大纲优化
+  
 - **v1.0.1** 2025-05-20
   - 文档删除目录结构
   - 代码提交规范添加类型名称
