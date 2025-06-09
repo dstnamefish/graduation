@@ -31,12 +31,12 @@
 **正例:** learn/luoyangr/rmb 等国际通用的名称，可视同英文<br/>
 **反例:** DaZhePromotion[<font color=Orange>打折</font>]/getPingfenByName[<font color=Orange>打折</font>]/int 某变量 = 3<br/>
 杜绝完全不规范的缩写，避免望文不知义:
-**反例:**将 AbstractClass “缩写” 命名成 AbsClass；将 condition “缩写” 命名成 condi ，此类随意缩写严重降低了代码的可阅读性。
+**反例:**将 AbstractClass “缩写” 命名成 AbsClass;将 condition “缩写” 命名成 condi ，此类随意缩写严重降低了代码的可阅读性。
 
 
 ## 二、HTML 规范 （Vue Template 同样适用）
 ### 2.1 HTML 类型
-推荐使用 HTML5 的文档类型申明:
+推荐使用 HTML5 的文档类型申明:<br/>
 **正例:**
 ```html
 <!DOCTYPE html>
@@ -48,19 +48,19 @@
   </head>
   <body> 
      <img src="images/company-logo.png" alt="Company">
- </body> 
-  </html>
+  </body> 
+</html>
 ```
 
 ### 2.2 缩进
-缩进使用 2 个空格（一个 tab）；
+缩进使用 2 个空格（一个 tab）;<br/>
 嵌套的节点应该缩进。
 
 ### 2.3 分块注释
 在每一个块状元素，列表元素和表格元素后，加上一对 HTML 注释。
 
 ### 2.4 语义化标签
-HTML5 中新增很多语义化标签，所以优先使用语义化标签，避免一个页面都是 div 或者 p 标 签。
+HTML5 中新增很多语义化标签，所以优先使用语义化标签，避免一个页面都是 div 或者 p 标 签。<br/>
 **正例**
 ```html
 <header></header> 
@@ -70,11 +70,11 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 ```html
 <div> 
   <p></p>
- </div>
+</div>
 ```
 
 ### 2.5 引号
-使用双引号(" ") 而不是单引号(’ ') 。
+使用双引号(" ") 而不是单引号(’ ') 。<br/>
 **正例:**<div class = "box"></div>
 **反例:**<div class = 'box'><div>
 
@@ -83,7 +83,7 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 - 类名使用小写字母，以中划线分隔
 - id 采用驼峰式命名
 - scss 中的变量、函数、混合、placeholder 采用驼峰式命名
-ID 和 class 的名称总是使用可以反应元素目的和用途的名称，或其他通用的名称，代替表象和晦涩难懂的名称。
+ID 和 class 的名称总是使用可以反应元素目的和用途的名称，或其他通用的名称，代替表象和晦涩难懂的名称。<br/>
 **不推荐:**
 ```css
 .fw-800 {
@@ -104,10 +104,10 @@ ID 和 class 的名称总是使用可以反应元素目的和用途的名称，�
 ```
 
 ### 3.2 选择器
-1. **css 选择器中避免使用标签名**
+1. **css 选择器中避免使用标签名**<br/>
 从结构、表现、行为分离的原则来看，应该尽量避免 css 中出现 HTML 标签，并且在 css 选择器中出现标签名会存在潜在的问题。
-2. **使用直接子选择器**
-很多前端开发人员写选择器链的时候不使用直接子选择器（注:直接子选择器和后代选择器的区别 ）。有时，这可能会导致疼痛的设计问题并且有时候可能会很耗性能。然而，在任何情况下，这是一个非常不好的做法。如果你不写很通用的，需要匹配到 DOM 末端的选择器，你应该总是考虑直接子选择器。
+2. **使用直接子选择器**<br/>
+很多前端开发人员写选择器链的时候不使用直接子选择器（注:直接子选择器和后代选择器的区别 ）。有时，这可能会导致疼痛的设计问题并且有时候可能会很耗性能。然而，在任何情况下，这是一个非常不好的做法。如果你不写很通用的，需要匹配到 DOM 末端的选择器，你应该总是考虑直接子选择器。<br/>
 **不推荐:**
 ```css
 .content .title {
@@ -122,6 +122,7 @@ ID 和 class 的名称总是使用可以反应元素目的和用途的名称，�
 ```
 
 ### 3.3 尽量使用缩写属性
+
 **不推荐:**
 ```css
 border-top-style: none; 
@@ -129,9 +130,10 @@ font-family: palatino, georgia, serif;
 font-size: 100%; line-height: 1.6; 
 padding-bottom: 2em; 
 padding-left: 1em;
- padding-right: 1em; 
- padding-top: 0;
+padding-right: 1em; 
+padding-top: 0;
 ```
+
 **推荐:**
 ```css
 border-top: 0; 
@@ -147,7 +149,7 @@ button {
     height: 50px;
     color: #fff;
     background: #00a0e9;
-  }
+}
 ```
 **推荐:**
 ```css
@@ -161,10 +163,10 @@ button {
 ### 3.5 省略 0 后面的单位
 **不推荐:**
 ```css
- div {
-     padding-bottom: 0px; 
-     margin: 0em;
- }
+div {
+    padding-bottom: 0px; 
+    margin: 0em;
+}
 ```
 **推荐:**
 ```css
@@ -194,13 +196,13 @@ div {
 
 ## 五、Javascript 规范
 ### 5.1 命名
-1. **采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线， 也不能以下划线或美元符号结束**
+1. **采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线， 也不能以下划线或美元符号结束**<br/>
 **反例:** name / name / name$
-2. **方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从驼峰形式**
-**正例:** localValue / getHttpMessage() / inputUserId
-其中 method 方法命名必须是 动词 或者 动词+名词 形式
-**正例:** saveShopCarData /openShopCarInfoDialog
-**反例:** save / open / show / go
+2. **方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从驼峰形式**<br/>
+**正例:** localValue / getHttpMessage() / inputUserId<br/>
+其中 method 方法命名必须是 动词 或者 动词+名词 形式<br/>
+**正例:** saveShopCarData /openShopCarInfoDialog<br/>
+**反例:** save / open / show / go <br>
 **特此说明，增删查改，详情统一使用如下 5 个单词，不得使用其他（目的是为了统一各个端）**
 ```bash
 add / update / delete / detail / get 
@@ -262,7 +264,7 @@ collect 收集/aggregate 聚集
 **反例:** MAX_COUNT
 
 ### 5.2 代码格式
-1. **使用 2 个空格进行缩进**
+1. **使用 2 个空格进行缩进**<br/>
 **正例:**
 ```javascript
 if (x < y) {
@@ -271,11 +273,11 @@ if (x < y) {
    x += 1; 
 }
 ```
-2. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**
+2. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
 说明:任何情形，没有必要插入多个空行进行隔开。
 
 ### 5.3 字符串
-统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处:
+统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处:<br/>
 **正例:**
 ```javascript
    let str = 'foo';
@@ -289,11 +291,11 @@ if (x < y) {
 
 ### 5.4 对象声明
 1. **使用字面值创建对象**
-**正例:** ```let user = {};```
-**反例:** ```let user = new Object();```
+**正例:** <br/>```let user = {};```
+**反例:** <br/>```let user = new Object();```
 2. **使用字面量来代替对象构造器**
-**正例:** ```var user = { age: 0, name: 1, city: 3 };```
-**反例:**
+**正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```
+**反例:**<br/>
 ```javascript
     var user = new Object(); 
     user.age = 0; 
@@ -305,7 +307,7 @@ if (x < y) {
 必须优先使用 ES6+ 中新增的语法糖和函数。这将简化你的程序，并让你的代码更加灵活和可复用。比如箭头函数、await/async，解构，let，for...of 等等。
 
 ### 5.6 括号
-下列关键字后必须有大括号（即使代码块的内容只有一行）:if, else, for, while, do, switch, try, catch, finally, with。
+下列关键字后必须有大括号（即使代码块的内容只有一行）:if, else, for, while, do, switch, try, catch, finally, with。<br/>
 **正例:**
 ```javascript
 if (condition) { 
@@ -320,10 +322,10 @@ if (condition) {
 ```
 
 ### 5.7 undefined 判断
-永远不要直接使用 undefined 进行变量判断；使用 typeof 和字符串’undefined’对变量进行判断。
+永远不要直接使用 undefined 进行变量判断;使用 typeof 和字符串’undefined’对变量进行判断。<br/>
 **正例:**
-```if (typeof person === 'undefined') { ... }```
-**反例:**
+```if (typeof person === 'undefined') { ... }```<br/>
+**反例:**<br/>
 ```if (person === undefined) { ... }```
 
 ### 5.8 条件判断和循环最多三层
@@ -337,9 +339,9 @@ if (condition) {
 
 ## 六、Vue 项目规范
 ### 6.1 组件规范
-1. **组件名为多个单词。**
-组件名应该始终是多个单词组成（大于等于 2），且命名规范为KebabCase格式。
-这样做可以避免跟现有的以及未来的 HTML 元素相冲突，因为所有的 HTML 元素名称都是单个单词的。
+1. **组件名为多个单词。**<br/>
+组件名应该始终是多个单词组成（大于等于 2），且命名规范为KebabCase格式。<br/>
+这样做可以避免跟现有的以及未来的 HTML 元素相冲突，因为所有的 HTML 元素名称都是单个单词的。<br/>
 **正例:**
 ```javascript
 export default {
@@ -359,7 +361,7 @@ export default {
 }
 ```
 
-2. **组件文件名为 pascal-case 格式**
+2. **组件文件名为 pascal-case 格式**<br/>
 **正例:**
 ```bash
 components/
@@ -372,7 +374,7 @@ components/
 |- MyComponent.vue
 ```
 
-3. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**
+3. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
 **正例:**
 ```bash
 components/
@@ -387,7 +389,7 @@ components/
 |- VueTable.vue
 |- Icon.vue
 ```
-4. 和父组件紧密耦合的子组件应该以父组件名作为前缀命名
+4. 和父组件紧密耦合的子组件应该以父组件名作为前缀命名<br/>
 **正例:**
 ```bash
 components/
@@ -404,7 +406,7 @@ components/
 |- TodoButton.vue
 |- UProfOpts.vue （使用了缩写）
 ```
-5. 在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。
+5. 在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。<br/>
 **正例:**
 ```Vue
 <!-- 在单文件组件、字符串模板和 JSX 中 -->
@@ -415,7 +417,7 @@ components/
 ```Vue
 <my-component /> <row><table :column="data"/></row>
 ```
-6. 组件的 data 必须是一个函数
+6. 组件的 data 必须是一个函数<br/>
 **正例:**
 ```javascript
 export default {
@@ -562,7 +564,7 @@ computed: {
 ```
 ### 6.5 必须为 v-for 设置键值 key
 ### 6.6 v-show 与 v-if 选择
-如果运行时，需要非常频繁地切换，使用 v-show ；如果在运行时，条件很少改变，使用 v-if。
+如果运行时，需要非常频繁地切换，使用 v-show ;如果在运行时，条件很少改变，使用 v-if。
 ### 6.7 script 标签内部结构顺序
 components > props > data > computed > watch > filter > 钩子函数（钩子函数按其执行顺序） > methods
 ### 6.8 Vue Router 规范
