@@ -3,8 +3,8 @@
 
 ## 一、编码规约
 ### 1.1 项目命名 
-全部采用小写方式，采用中线分隔。
-**正例：** mail-management-system
+全部采用小写方式，采用中线分隔。<br/>
+**正例：** mail-management-system <br/>
 **反例：** mail_management-system/mailManagementSystem
 
 ### 1.2 目录命名
@@ -359,6 +359,7 @@ export default {
   // ...
 }
 ```
+
 2. **组件文件名为 pascal-case 格式**
 **正例：**
 ```bash
@@ -371,6 +372,7 @@ components/
 |- myComponent.vue
 |- MyComponent.vue
 ```
+
 3. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**
 **正例：**
 ```bash
@@ -386,28 +388,37 @@ components/
 |- VueTable.vue
 |- Icon.vue
 ```
-1) 和父组件紧密耦合的子组件应该以父组件名作为前缀命名
+4. 和父组件紧密耦合的子组件应该以父组件名作为前缀命名
 **正例：**
+```bash
 components/
 |- todo-list.vue
 |- todo-list-item.vue
 |- todo-list-item-button.vue
 |- user-profile-options.vue （完整单词）
+```
 **反例：**
+```bash
 components/
 |- TodoList.vue
 |- TodoItem.vue
 |- TodoButton.vue
 |- UProfOpts.vue （使用了缩写）
-1) 在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。
+```
+5. 在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。
 **正例：**
+```Vue
 <!-- 在单文件组件、字符串模板和 JSX 中 -->
 <MyComponent />
 <Row><table :column="data"/></Row>
+```
 **反例：**
+```Vue
 <my-component /> <row><table :column="data"/></row>
-1) 组件的 data 必须是一个函数
+```
+6. 组件的 data 必须是一个函数
 **正例：**
+```javascript
 export default {
   data () {
     return {
@@ -415,19 +426,24 @@ export default {
     }
   }
 }
+```
 **反例：**
+```javascript
 export default {
   data: {
     name: 'jack'
   }
 }
-1) Prop 定义应该尽量详细
+```
+
+7. Prop 定义应该尽量详细
 必须使用 camelCase 驼峰命名
 必须指定类型
 必须加上注释，表明其含义
 必须加上 required 或者 default，两者二选其一
 如果有业务需要，必须加上 validator 验证
 **正例：**
+```javascript
  props: {
   // 组件状态，用于控制组件的颜色
    status: {
@@ -447,18 +463,24 @@ export default {
       required: true
    }
 }
-1) 为组件样式设置作用域
+```
+
+8. 为组件样式设置作用域
 **正例：**
+```vue
 <template>
   <button class="btn btn-close">X</button>
 </template>
+
 <!-- 使用 `scoped` 特性 -->
 <style scoped>
   .btn-close {
     background-color: red;
   }
 </style>
+```
 **反例：**
+```vue
 <template>
   <button class="btn btn-close">X</button>
 </template>
@@ -468,17 +490,23 @@ export default {
     background-color: red;
   }
 </style>
-1) 如果特性元素较多，应该主动换行。
+```
+9. 如果特性元素较多，应该主动换行。
 **正例：**
-<MyComponent foo="a" bar="b" baz="c"
+```bash
+  <MyComponent foo="a" bar="b" baz="c"
     foo="a" bar="b" baz="c"
     foo="a" bar="b" baz="c"
- />
+  />
+```
+
 **反例：**
-<MyComponent foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c"/>
-2.1.2. 模板中使用简单的表达式
+```<MyComponent foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c"/>```
+
+### 6.2 模板中使用简单的表达式
 组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。复杂表达式会让你的模板变得不那么声明式。我们应该尽量描述应该出现的是什么，而非如何计算那个值。而且计算属性和方法使得代码可以重用。
 **正例：**
+```
 <template>
   <p>{{ normalizedFullName }}</p>
 </template>
@@ -490,7 +518,9 @@ computed: {
     }).join(' ')
   }
 }
+```
 **反例：**
+```vue
 <template>
   <p>
        {{
@@ -500,40 +530,52 @@ computed: {
         }}
   </p>
 </template>
-2.1.3 指令都使用缩写形式
+```
+### 6.3 指令都使用缩写形式
 指令推荐都使用缩写形式，(用 : 表示 v-bind: 、用 @ 表示 v-on: 和用 # 表示 v-slot:)
 **正例：**
+```
 <input
   @input="onInput"
   @focus="onFocus"
 >
+```
 **反例：**
+```
 <input
   v-on:input="onInput"
   @focus="onFocus"
 >
-2.1.4 标签顺序保持一致
+```
+### 6.4 标签顺序保持一致
 单文件组件应该总是让标签顺序保持为 `
 **正例：**
+```
 <template>...</template>
 <script>...</script>
 <style>...</style>
+```
 **反例：**
+```
 <template>...</template>
 <style>...</style>
 <script>...</script>
-2.1.5 必须为 v-for 设置键值 key
-2.1.6 v-show 与 v-if 选择
+```
+### 6.5 必须为 v-for 设置键值 key
+### 6.6 v-show 与 v-if 选择
 如果运行时，需要非常频繁地切换，使用 v-show ；如果在运行时，条件很少改变，使用 v-if。
-2.1.7 script 标签内部结构顺序
+### 6.7 script 标签内部结构顺序
 components > props > data > computed > watch > filter > 钩子函数（钩子函数按其执行顺序） > methods
-2.1.8 Vue Router 规范
-1) 页面跳转数据传递使用路由参数
+### 6.8 Vue Router 规范
+1. 页面跳转数据传递使用路由参数
 页面跳转，例如 A 页面跳转到 B 页面，需要将 A 页面的数据传递到 B 页面，推荐使用 路由参数进行传参，而不是将需要传递的数据保存 vuex，然后在 B 页面取出 vuex 的数据，因为如果在 B 页面刷新会导致 vuex 数据丢失，导致 B 页面无法正常显示数据。
 **正例：**
+```
 let id = ' 123';
 this.$router.push({ name: 'userCenter', query: { id: id } });
-1) 使用路由懒加载（延迟加载）机制
+```
+2. 使用路由懒加载（延迟加载）机制
+```
 {
     path: '/uploadAttachment',
     name: 'uploadAttachment',
@@ -541,10 +583,12 @@ this.$router.push({ name: 'userCenter', query: { id: id } });
       title: '上传附件'
     },
     component: () => import('@/view/components/uploadAttachment/index.vue')
-  },
-1) router 中的命名规范
+  }
+```
+3. router 中的命名规范
 path、childrenPoints 命名规范采用kebab-case命名规范（尽量vue文件的目录结构保持一致，因为目录、文件名都是kebab-case，这样很方便找到对应的文件）
 name 命名规范采用KebabCase命名规范且和component组件名保持一致！（因为要保持keep-alive特性，keep-alive按照component的name进行缓存，所以两者必须高度保持一致）
+```
 // 动态加载
 export const reload = [
   {
@@ -582,10 +626,12 @@ export const reload = [
     ]
   }
 ];
-1) router 中的 path 命名规范
+```
+4. router 中的 path 命名规范
 path除了采用kebab-case命名规范以外，必须以 / 开头，即使是children里的path也要以 / 开头。如下示例
 目的：
 经常有这样的场景：某个页面有问题，要立刻找到这个vue文件，如果不用以/开头，path为parent和children组成的，可能经常需要在router文件里搜索多次才能找到，而如果以/开头，则能立刻搜索到对应的组件
+```
 {
     path: '/file',
     name: 'File',
@@ -612,13 +658,14 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
       }
     ]
   }
-(二) Vue 项目目录规范
-2.2.1 基础
+```
+## 七、Vue 项目目录规范
+### 7.1 基础
 vue 项目中的所有命名一定要与后端命名统一。
 比如权限：后端 privilege, 前端无论 router , store, api 等都必须使用 privielege 单词！
-2.2.2 使用 Vue-cli 脚手架
+### 7.2 使用 Vue-cli 脚手架
 使用 vue-cli3 来初始化项目，项目名按照上面的命名规范。
-2.2.3 目录说明
+### 7.3 目录说明
 目录名按照上面的命名规范，其中 components 组件用大写驼峰，其余除 components 组件目录外的所有目录均使用 kebab-case 命名。
 src                                  源码目录
 |-- api                              所有api接口
@@ -747,7 +794,7 @@ components 中组件要使用 PascalCase 规则
 |   |-- employee                            employee模块
 |   |-- behavior-log                        行为日志log模块
 |   |-- code-generator                      代码生成器模块
-2.2.4 注释说明
+### 7.4 注释说明
 整理必须加注释的地方
 公共组件使用说明
 api 目录的接口 js 文件必须加注释
