@@ -39,8 +39,8 @@
 代码中的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。说明:正确的 英文拼写和语法可以让阅读者易于理解，避免歧义。注意，即使纯拼音命名方式也要避免采用<br/>
 **正例:** learn/luoyangr/rmb 等国际通用的名称，可视同英文<br/>
 **反例:** DaZhePromotion[<font color=Orange>打折</font>]/getPingfenByName[<font color=Orange>评分</font>]/int 某变量 = 3<br/>
-杜绝完全不规范的缩写，避免望文不知义:
-**反例:** 将 AbstractClass “缩写” 命名成 AbsClass;将 condition “缩写” 命名成 condi ，此类随意缩写严重降低了代码的可阅读性。<br/>
+杜绝完全不规范的缩写，避免望文不知义:<br/>
+**反例:** <br/>将 AbstractClass “缩写” 命名成 AbsClass;将 condition “缩写” 命名成 condi ，此类随意缩写严重降低了代码的可阅读性。<br/>
 在**TS/JS**中布尔变量需带判断前缀和事件处理函数语义化。<br/>
 **正例：**
 ```
@@ -103,13 +103,14 @@ function handleSearchInput() {}
 **注释目的**：
 1. 解释代码为什么这样做（而非是什么）。
 2. 说明复杂逻辑、设计决策、潜在风险或替代方案。
-3. 避免注释显而易见的代码（如// 增加计数）。
+3. 避免注释显而易见的代码（如// 增加计数）。<br/>
 **保持更新：**
-1. 代码更新时同步更新注释，过时注释比没有更糟。
+1. 代码更新时同步更新注释，过时注释比没有更糟。<br/>
 **语言一致性：**
 1. 团队统一使用中文或英文（建议中文为主，国际化项目使用英文）。
-JavaScript/TypeScript注释规范
-1.函数/方法注释（TsDoc风格）
+
+#### 2.3.2 JavaScript/TypeScript注释规范
+1. 函数/方法注释（TsDoc风格）
 使用/** ... */块注释，包含参数、返回值和描述：
 ```typescript
 /**
@@ -162,7 +163,7 @@ const message = "操作成功"；
  * - editor: 编辑
  * - viewer: 查看者
  */
-emum UserRole{
+enum UserRole{
   Admin = "admin",
   Editor = "editor",
   Viewer = "viewer",
@@ -177,7 +178,8 @@ interface ApiResponse<T>{
   data: T; //响应数据
 }
 ```
-#### 2.3.2 Vue 组件注释规范
+
+#### 2.3.3 Vue 组件注释规范
 1. 组件文档注释
 ```vue
 /**
@@ -215,7 +217,7 @@ export default defineComponent({
   <Avatar :src = "user.avatar" @click="handleAvatarClick"/>
 
   <!-- 折叠内容（仅管理员可见） -->
-  <div v-if="user.role === "admin"" class="admin-panel">
+  <div v-if="user.role === 'admin' " class="admin-panel">
     <!-- ... -->
   </div>
 </div>
@@ -234,7 +236,8 @@ watch(
   { immediate: true } 
 )
 ```
-#### 2.3.3 CSS/SCSS注释规范
+
+#### 2.3.4 CSS/SCSS注释规范
 1. 区块注释
 ```scss
 /**
@@ -305,6 +308,7 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 使用双引号(" ") 而不是单引号(’ ') 。<br/>
 **正例:**<br/>```<div class = "box"></div>```
 **反例:**<br/>```<div class = 'box'><div>```
+[特殊]属性值内包含引号时：外层用双引号，内层用单引号
 
 ## 三、CSS 规范
 ### 3.1 命名
