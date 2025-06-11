@@ -9,15 +9,15 @@
 **反例:** mail_management-system/mailManagementSystem
 
 ### 1.2 目录命名
-全部采用小写方式， 以中划线分隔，有复数结构时，要采用复数命名法，缩写不用复数。<br/>
+全部采用小写方式，以中划线分隔，有复数结构时，要采用复数命名法，缩写不用复数。<br/>
 **正例:** scripts/styles/components/images/utils/layouts/demo-styles/demo-scripts/img/doc<br/>
 **反例:** script/style/demo-scripts/demoStyles/imgs/docs
 
-[<font color=Orange>特殊</font>]VUE的项目中的components中的组件目录，使用kebab-case命名。<br/>
+[<font color=Orange>特殊</font>]Vue的项目中的components中的组件目录，使用kebab-case命名。<br/>
 **正例:** head-search/page-loading/authorized/notice-icon<br/>
 **反例:** HeadSearch/PageLoading
 
-[<font color=Orange>特殊</font>]VUE的项目中除components组件目录外的所有目录也使用kebab-case命名<br/>
+[<font color=Orange>特殊</font>]Vue的项目中除components组件目录外的所有目录也使用kebab-case命名<br/>
 **正例:** page-one/shopping-car/user-management<br/>
 **反例:** ShoppingCar/UserManagement
 
@@ -26,8 +26,8 @@
 | 文件类型       | 规范                | 正例                          | 反例                  |
 |----------------|---------------------|-------------------------------|-----------------------|
 | Vue组件        | PascalCase.vue      | `UserProfile.vue`             | `userProfile.vue`     |
-| JS/TS工具      | kebab-case.[jt]s    | `format-date.ts`              | `formatDate.js`       |
-| SCSS模块       | `_kebab-case.scss`  | `_color-variables.scss`       | `_colorVariables.scss`|
+| JS/TS工具      | kebabCase.[jt]s    | `formatDate.ts`              | `format-date.js`       |
+| SCSS模块       | `[_]kebab-case.scss`  | `_color-variables.scss`       | `_colorVariables.scss`|
 | HTML入口       | kebab-case.html     | `error-page.html`             | `errorPage.html`      |
 | 图片资源       | [功能]-[描述].[ext] | `icon-close.svg`/`bg-login.webp` | `closeIcon.png`     |
 
@@ -37,13 +37,13 @@
 
 ### 1.4 命名严谨性
 代码中的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。说明:正确的 英文拼写和语法可以让阅读者易于理解，避免歧义。注意，即使纯拼音命名方式也要避免采用<br/>
-**正例:** learn/luoyangr/rmb 等国际通用的名称，可视同英文<br/>
-**反例:** DaZhePromotion[<font color=Orange>打折</font>]/getPingfenByName[<font color=Orange>评分</font>]/int 某变量 = 3<br/>
+**正例:** ```learn/luoyangr/rmb 等国际通用的名称，可视同英文```<br/>
+**反例:** ```DaZhePromotion[<font color=Orange>打折</font>]/getPingfenByName[<font color=Orange>评分</font>]/int 某变量 = 3```<br/>
 杜绝完全不规范的缩写，避免望文不知义:<br/>
 **反例:** <br/>将 AbstractClass “缩写” 命名成 AbsClass;将 condition “缩写” 命名成 condi ，此类随意缩写严重降低了代码的可阅读性。<br/>
 在**TS/JS**中布尔变量需带判断前缀和事件处理函数语义化。<br/>
 **正例：**
-```
+```javascript
 // 布尔变量需带判断前缀
 const isActive = ref(true)
 const hasPermission = computed(() => ...)
@@ -51,7 +51,7 @@ const hasPermission = computed(() => ...)
 function submitSearchForm() {}
 ```
 **反例：**
-```
+```javascript
 function handleSearchInput() {}
 ```
 
