@@ -37,8 +37,8 @@
 
 ### 1.4 命名严谨性
 代码中的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。说明:正确的 英文拼写和语法可以让阅读者易于理解，避免歧义。注意，即使纯拼音命名方式也要避免采用<br/>
-**正例:** ```learn/luoyangr/rmb 等国际通用的名称，可视同英文```<br/>
-**反例:** ```DaZhePromotion[<font color=Orange>打折</font>]/getPingfenByName[<font color=Orange>评分</font>]/int 某变量 = 3```<br/>
+**正例:** learn/luoyangr/rmb 等国际通用的名称，可视同英文<br/>
+**反例:** DaZhePromotion[<font color=Orange>打折</font>]/getPingfenByName[<font color=Orange>评分</font>]/int 某变量 = 3<br/>
 杜绝完全不规范的缩写，避免望文不知义:<br/>
 **反例:** <br/>将 AbstractClass “缩写” 命名成 AbsClass;将 condition “缩写” 命名成 condi ，此类随意缩写严重降低了代码的可阅读性。<br/>
 在**TS/JS**中布尔变量需带判断前缀和事件处理函数语义化。<br/>
@@ -642,7 +642,7 @@ console.log(greeting); // 输出: Hello, John!
 
 ### 5.4 对象声明
 1. **使用字面值创建对象**
-**正例:** <br/>```let user = {};```
+**正例:** <br/>```let user = {};```<br/>
 **反例:** <br/>```let user = new Object();```
 1. **使用字面量来代替对象构造器**
 **正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```
@@ -697,7 +697,27 @@ function(a, b) {}
 
 ## 六、Vue 项目规范
 ### 6.1 组件规范
-1. **组件名为多个单词。**<br/>
+1. **组件文件结构**<br/>
+单文件组件（SFC）的文件结构应该是：
+```vue
+<template>
+  <!-- 组件模板 -->
+</template>
+
+<script>
+// 组件逻辑
+</script>
+
+<style scoped>
+/* 组件样式 */
+</style>
+```
+推荐顺序
+- template (必须)
+- script (必须)
+- style (可选)
+
+2. **组件名为多个单词。**<br/>
 组件名应该始终是多个单词组成（大于等于 2），且命名规范为KebabCase格式。<br/>
 这样做可以避免跟现有的以及未来的 HTML 元素相冲突，因为所有的 HTML 元素名称都是单个单词的。<br/>
 **正例:**
@@ -719,53 +739,36 @@ export default {
 }
 ```
 
-2. **组件文件名为 pascal-case 格式**<br/>
+1. **组件文件名为 PascalCase 格式**<br/>
 **正例:**
 ```bash
 components/
-|- my-component.vue
+|- MyComponent.vue
 ```
 **反例:**
 ```bash
 components/
+|- my-component.vue
 |- myComponent.vue
-|- MyComponent.vue
 ```
 
-3. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
+2. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
 **正例:**
 ```bash
 components/
-|- base-button.vue
-|- base-table.vue
-|- base-icon.vue
+|- BaseButton.vue
+|- BaseTable.vue
+|- BaseIcon.vue
 ```
 **反例:**
 ```bash
 components/
 |- MyButton.vue
-|- VueTable.vue
+|- vue-table.vue
 |- Icon.vue
 ```
 
-4. **和父组件紧密耦合的子组件应该以父组件名作为前缀命名**<br/>
-**正例:**
-```bash
-components/
-|- todo-list.vue
-|- todo-list-item.vue
-|- todo-list-item-button.vue
-|- user-profile-options.vue （完整单词）
-```
-**反例:**
-```bash
-components/
-|- TodoList.vue
-|- TodoItem.vue
-|- TodoButton.vue
-|- UProfOpts.vue （使用了缩写）
-```
-5. **在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。**<br/>
+3. **在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。**<br/>
 **正例:**
 ```vue
 <!-- 在单文件组件、字符串模板和 JSX 中 -->
@@ -777,57 +780,31 @@ components/
 <my-component /> <row><table :column="data"/></row>
 ```
 
-6. **组件的 data 必须是一个函数**<br/>
-当在组件中使用data属性的时候（除了 new Vue 外的任何地方），它的值必须是返回一个对象的函数。因为如果直接是一个对象的话，子组件之间的属性值会互相影响。<br/>
-**正例:**
-```javascript
-export default {
-  data () {
-    return {
-      name: 'jack'
-    }
-  }
-}
-```
-**反例:**
-```javascript
-export default {
-  data: {
-    name: 'jack'
-  }
-}
-```
-
-7. **Prop 定义应该尽量详细**
+4. **Prop 定义应该尽量详细**
 必须使用 camelCase 驼峰命名<br/>
 必须指定类型<br/>
 必须加上注释，表明其含义<br/>
 必须加上 required 或者 default，两者二选其一<br/>
 如果有业务需要，必须加上 validator 验证<br/>
 **正例:**
-```javascript
- props: {
-  // 组件状态，用于控制组件的颜色
-   status: {
-     type: String,
-     required: true,
-     validator: function (value) {
-       return [
-         'succ',
-         'info',
-         'error'
-       ].indexOf(value) !== -1
-     }
-   },
-    // 用户级别，用于显示皇冠个数
-   userLevel:{
-      type: String,
-      required: true
-   }
-}
+```vue
+<script setup>
+// Composition API
+const props = defineProps({
+  // 基础类型检查
+  title: String,
+  
+  // 详细配置
+  user: {
+    type: Object,
+    required: true,
+    default: () => ({ name: 'Guest' })
+  }
+})
+</script>
 ```
 
-8. **为组件样式设置作用域**<br/>
+5. **为组件样式设置作用域**<br/>
 **正例:**
 ```vue
 <template>
@@ -836,8 +813,14 @@ export default {
 
 <!-- 使用 `scoped` 特性 -->
 <style scoped>
+/* 只影响当前组件 */
   .btn-close {
     background-color: red;
+  }
+
+/* 使用 :deep() 穿透作用域 */
+  :deep(.child-class) {
+    color: blue;
   }
 </style>
 ```
@@ -853,7 +836,78 @@ export default {
   }
 </style>
 ```
-9. **如果特性元素较多，应该主动换行。**<br/>
+
+6. **组件事件在Vue2 Options API和Vue3 Composition API的区别:**<br/>
+- 事情定义：
+```vue
+<script setup>
+// Composition API
+const emit = defineEmits(['update:model', 'submit-success'])
+
+// Options API
+export default {
+  emits: ['update:model', 'submit-success']
+}
+</script>
+```
+
+- 事情命名：
+```javascript
+this.$emit('submit-success')  // JavaScript中
+```
+```vue
+<MyComponent @submit-success="submitSuccess"/> <!-- 模板中 -->
+```
+
+7. **组件代码组织规范:**<br/>
+- Composition API组织顺序
+```vue
+<script setup>
+// 1. 导入
+import { ref } from 'vue'
+
+// 2. Props/Emits定义
+const props = defineProps({/*...*/})
+const emit = defineEmits(['...'])
+
+// 3. 响应式状态
+const count = ref(0)
+
+// 4. 计算属性
+const doubleCount = computed(() => count.value * 2)
+
+// 5. 方法
+function increment() {
+  count.value++
+}
+
+// 6. 生命周期
+onMounted(() => {
+  console.log('mounted')
+})
+
+// 7. 暴露给模板
+defineExpose({
+  increment
+})
+</script>
+```
+- Options API组织顺序
+```javascript
+export default {
+  name: 'MyComponent',
+  props: {},
+  data() {
+    return {}
+  },
+  computed: {},
+  watch: {},
+  methods: {},
+  created() {},
+  mounted() {}
+}
+```
+8. **如果特性元素较多，应该主动换行。**<br/>
 **正例:**
 ```bash
   <MyComponent foo="a" bar="b" baz="c"
@@ -868,7 +922,7 @@ export default {
 ### 6.2 模板中使用简单的表达式
 组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。复杂表达式会让你的模板变得不那么声明式。我们应该尽量描述应该出现的是什么，而非如何计算那个值。而且计算属性和方法使得代码可以重用。<br/>
 **正例:**
-```
+```vue
 <template>
   <p>{{ normalizedFullName }}</p>
 </template>
@@ -917,7 +971,7 @@ computed: {
 **正例:**
 ```
 <template>...</template>
-<script>...</script>
+<script>...</scrip>
 <style>...</style>
 ```
 
