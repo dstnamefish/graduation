@@ -88,7 +88,7 @@ function handleSearchInput() {}
 ### 2.2 缩进
 缩进使用 2 个空格（一个 tab）;<br/>
 嵌套的节点应该缩进。
-嵌套层级不超过 4 层。
+嵌套层级不超过 4 层。<br/>
 **工具配置（替代手动检查）：**
 ```json
 // .prettierrc
@@ -295,12 +295,12 @@ $colors: (
 
 ### 2.4 语义化标签
 HTML5 中新增很多语义化标签，所以优先使用语义化标签，避免一个页面都是 div 或者 p 标 签。<br/>
-**正例**
+**正例:**
 ```html
 <header></header> 
 <footer></footer>
 ```
-**反例**
+**反例:**
 ```html
 <div> 
   <p></p>
@@ -309,7 +309,7 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 
 ### 2.5 引号
 使用双引号(" ") 而不是单引号(’ ') 。<br/>
-**正例:**```<div class = "box"></div>```
+**正例:**```<div class = "box"></div>```<br/>
 **反例:**```<div class = 'box'><div>```<br/>
 [特殊]属性值内包含引号时：外层用双引号，内层用单引号
 
@@ -319,6 +319,7 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 - id 采用驼峰式命名
 - scss 中的变量、函数、混合、placeholder 采用驼峰式命名
 ID 和 class 的名称总是使用可以反应元素目的和用途的名称，或其他通用的名称，代替表象和晦涩难懂的名称。<br/>
+
 **不推荐:**
 ```css
 .fw-800 {
@@ -344,6 +345,7 @@ ID 和 class 的名称总是使用可以反应元素目的和用途的名称，�
 
 2. **使用直接子选择器**<br/>
 很多前端开发人员写选择器链的时候不使用直接子选择器（注:直接子选择器和后代选择器的区别 ）。有时，这可能会导致疼痛的设计问题并且有时候可能会很耗性能。然而，在任何情况下，这是一个非常不好的做法。如果你不写很通用的，需要匹配到 DOM 末端的选择器，你应该总是考虑直接子选择器。<br/>
+
 **不推荐:**
 ```css
 .content .title {
@@ -516,14 +518,14 @@ $button-padding: 12px 24px;
 ## 五、Javascript 规范
 ### 5.1 命名
 1. **采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线或美元符号结束**<br/>
-**正例:** name
-**反例:** name_ / name$
+**正例:** ```name```<br/>
+**反例:** ```name_ / name$```
 
 2. **方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从小驼峰形式**<br/>
-**正例:** localValue / getHttpMessage() / inputUserId<br/>
+**正例:** ```localValue / getHttpMessage() / inputUserId```<br/>
 其中 method 方法命名必须是 动词 或者 动词+名词 形式<br/>
-**正例:** saveShopCarData /openShopCarInfoDialog<br/>
-**反例:** save / open / show / go <br/>
+**正例:** ```saveShopCarData /openShopCarInfoDialog```<br/>
+**反例:** ```save / open / show / go``` <br/>
 **特此说明，增删查改，详情统一使用如下 5 个单词，不得使用其他（目的是为了统一各个端）**
 ```
 add / update / delete / detail / get 
@@ -608,27 +610,41 @@ if (x < y) {
    x += 1; 
 }
 ```
-1. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
+2. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
 说明:任何情形，没有必要插入多个空行进行隔开。
 
 ### 5.3 字符串
-统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处:<br/>
+1. 统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处:<br/>
 **正例:**
 ```javascript
-   let str = 'foo';
-   let testDiv = '<div id="test"></div>'; 
+  let str = 'foo';
+  let testDiv = '<div id="test"></div>'; 
 ```
 **反例:**
 ```javascript
-    let str = 'foo'; 
-    let testDiv = "<div id='test'></div>";
+  let str = 'foo'; 
+  let testDiv = "<div id='test'></div>";
+```
+
+2. ES6+引用的模板字符串使得动态字符串和多行字符串采用反引号(``)来表示，并且可以在字符串中使用 ${} 来表示变量。<br/>
+**正例:**
+```javascript
+let name = 'John';
+let greeting = `Hello, ${name}!`;
+console.log(greeting); // 输出: Hello, John!
+```
+**反例:**
+```javascript
+let name = 'John';
+let greeting = 'Hello, ' + name + '!';
+console.log(greeting); // 输出: Hello, John!
 ```
 
 ### 5.4 对象声明
 1. **使用字面值创建对象**
 **正例:** <br/>```let user = {};```
 **反例:** <br/>```let user = new Object();```
-2. **使用字面量来代替对象构造器**
+1. **使用字面量来代替对象构造器**
 **正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```
 **反例:**<br/>
 ```javascript
@@ -655,22 +671,29 @@ if (condition) {
   doSomething();
 }
 ```
+**空格原则:**
+```javascript
+// 关键字后空格
+if (condition) {}
+
+// 运算符两侧空格
+const sum = a + b;
+
+// 函数参数无空格
+function(a, b) {}
+```
 
 ### 5.7 undefined 判断
 永远不要直接使用 undefined 进行变量判断;使用 typeof 和字符串’undefined’对变量进行判断。<br/>
-**正例:**<br/>
-```if (typeof person === 'undefined') { ... }```<br/>
-**反例:**<br/>
-```if (person === undefined) { ... }```
+**正例:**```if (typeof person === 'undefined') { ... }```<br/>
+**反例:**```if (person === undefined) { ... }```
 
 ### 5.8 条件判断和循环最多三层
 条件判断能使用三目运算符和逻辑运算符解决的，就不要使用条件判断，但是谨记不要写太长的三目运算符。如果超过 3 层请抽成函数，并写清楚注释。
 
-### 5.9 this 的转换命名
-对上下文 this 的引用只能使用 “self” 来命名。
-
-### 5.10 慎用 console.log
+### 5.9 慎用 console.log
 因 console.log 大量使用会有性能问题，所以在非 webpack 项目中谨慎使用 log 功能。
+
 
 ## 六、Vue 项目规范
 ### 6.1 组件规范
