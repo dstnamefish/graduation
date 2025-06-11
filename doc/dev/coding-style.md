@@ -84,6 +84,7 @@ function handleSearchInput() {}
 </template>
 ```
 
+
 ### 2.2 缩进
 缩进使用 2 个空格（一个 tab）;<br/>
 嵌套的节点应该缩进。
@@ -100,12 +101,14 @@ function handleSearchInput() {}
 
 ### 2.3 注释
 #### 2.3.1 通用原则
-**注释目的**：
+**注释目的：**
 1. 解释代码为什么这样做（而非是什么）。
 2. 说明复杂逻辑、设计决策、潜在风险或替代方案。
 3. 避免注释显而易见的代码（如// 增加计数）。<br/>
+
 **保持更新：**
 1. 代码更新时同步更新注释，过时注释比没有更糟。<br/>
+
 **语言一致性：**
 1. 团队统一使用中文或英文（建议中文为主，国际化项目使用英文）。
 
@@ -308,7 +311,7 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 使用双引号(" ") 而不是单引号(’ ') 。<br/>
 **正例:**<br/>```<div class = "box"></div>```
 **反例:**<br/>```<div class = 'box'><div>```
-[特殊]属性值内包含引号时：外层用双引号，内层用单引号01
+[特殊]属性值内包含引号时：外层用双引号，内层用单引号
 
 ## 三、CSS 规范
 ### 3.1 命名
@@ -372,10 +375,16 @@ padding-top: 0;
 border-top: 0; 
 font: 100%/1.6 palatino, georgia, serif; 
 padding: 0 1em 2em;
+
+/* 明确指定左右边距 */
+.box {
+  margin: 0 10px; /* 优于 margin-right: 10px; margin-left: 10px; */
+}
 ```
 
-### 3.4 每个选择器及属性独占一行
-**不推荐:**
+### 3.4 代码格式
+每个选择器及属性独占一行<br/>
+**推荐:**
 ```css
 button { 
     width: 100px; 
@@ -384,7 +393,7 @@ button {
     background: #00a0e9;
 }
 ```
-**推荐:**
+**不推荐:**
 ```css
 button {
   width: 100px; height: 50px;
@@ -392,6 +401,12 @@ button {
   background: #00a0e9; 
 }
 ```
+属性排序
+1. 布局属性（display,position...）
+2. 盒模型（width,padding...）
+3. 文本相关（font,color...）
+4. 视觉效果（background,border...）
+5. 其他（animation,transition...）
 
 ### 3.5 省略 0 后面的单位
 **不推荐:**
@@ -425,19 +440,92 @@ div {
 }
 ```
 
-## 四、Sass 规范
+
+## 四、Scss 规范
+### 4.1 代码组织
+1. 将公共的Scss文件放置在assets中
+2. 按以下的顺序组织
+变量声明;<br/>
+@extend占位符;<br/>
+@include引入的混合;<br/>
+自身样式规则;<br/>
+嵌套的子元素样式;<br/>
+媒体查询;
+```scss
+//变量
+$button-padding: 12px 24px;
+
+//占位符
+%button-base{
+  display: inline-block;
+  border-radius: 4px;
+}
+
+// Mixin
+@mixin button-variant($bg, $color){
+  background: $bg;
+  color: $color;
+}
+
+// 基础样式
+.button{
+  @extend %button-base;
+  padding: $button-padding;
+  
+  // 变体
+  &--primary{
+    @include button-variant($color-primary, white);
+  }
+
+  // 状态
+  &:hover{
+    opacity: 0.9;
+  }
+
+  // 媒体查询
+  @media(max-width: 768px){
+    padding: 8px 16px;
+  }
+}
+```
+
+### 4.2 避免嵌套层级过多
+要限制样式嵌套深度为 3 级，若嵌套超 4 级，需重新评估，这样能避免产生过于复杂、冗余的 CSS 选择器，减少大量嵌套规则。当嵌套影响到代码可读性时，就应打断嵌套结构，同时建议别让嵌套规则的代码行数超过 20 行。
+```scss
+// 推荐（不超过3层嵌套）
+.menu {
+  &__item {
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+// 不推荐（嵌套过深）
+.page {
+  .content {
+    .article {
+      .title {
+        // ...
+      }
+    }
+  }
+}
+```
 
 ## 五、Javascript 规范
 ### 5.1 命名
-1. **采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线， 也不能以下划线或美元符号结束**<br/>
-**反例:** name / name / name$
-2. **方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从驼峰形式**<br/>
+1. **采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线或美元符号结束**<br/>
+**正例:** name
+**反例:** name_ / name$
+
+2. **方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从小驼峰形式**<br/>
 **正例:** localValue / getHttpMessage() / inputUserId<br/>
 其中 method 方法命名必须是 动词 或者 动词+名词 形式<br/>
 **正例:** saveShopCarData /openShopCarInfoDialog<br/>
-**反例:** save / open / show / go <br>
+**反例:** save / open / show / go <br/>
 **特此说明，增删查改，详情统一使用如下 5 个单词，不得使用其他（目的是为了统一各个端）**
-```bash
+```
 add / update / delete / detail / get 
 附: 函数方法常用的动词: 
 get 获取/set 设置, 
@@ -492,9 +580,14 @@ abort 放弃/quit 离开,
 obsolete 废弃/depreciate 废旧, 
 collect 收集/aggregate 聚集
 ```
+
 3. **常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚， 不要嫌名字长**<br/>
 **正例:** <br/>MAX_STOCK_COUNT
 **反例:** <br/>MAX_COUNT
+
+4. **类与构造函数统一采用LowerCamelCase风格，必须遵守大骆峰形式**<br/>
+**正例:** <br/>LowerCamelCase/Lower/LowerCamel
+**反例:** <br/>
 
 ### 5.2 代码格式
 1. **使用 2 个空格进行缩进**<br/>
