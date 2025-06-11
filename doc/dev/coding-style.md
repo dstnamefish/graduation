@@ -309,8 +309,8 @@ HTML5 中新增很多语义化标签，所以优先使用语义化标签，避�
 
 ### 2.5 引号
 使用双引号(" ") 而不是单引号(’ ') 。<br/>
-**正例:**<br/>```<div class = "box"></div>```
-**反例:**<br/>```<div class = 'box'><div>```
+**正例:**```<div class = "box"></div>```
+**反例:**```<div class = 'box'><div>```<br/>
 [特殊]属性值内包含引号时：外层用双引号，内层用单引号
 
 ## 三、CSS 规范
@@ -582,12 +582,21 @@ collect 收集/aggregate 聚集
 ```
 
 3. **常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚， 不要嫌名字长**<br/>
-**正例:** <br/>MAX_STOCK_COUNT
-**反例:** <br/>MAX_COUNT
+**正例:** ```MAX_STOCK_COUNT```<br/>
+**反例:** ```MAX_COUNT```
 
 4. **类与构造函数统一采用LowerCamelCase风格，必须遵守大骆峰形式**<br/>
-**正例:** <br/>LowerCamelCase/Lower/LowerCamel
-**反例:** <br/>
+**正例:** ```LowerCamelCase/Lower/LowerCamel```<br/>
+**反例:** ```lowercamelcase/lower/lowercamel```<br/>
+
+5. **私有成员前缀下划线**<br/>
+**正例:** ```_privateProperty / _privateMethod()```<br/>
+**反例:** ```privateProperty / privateMethod()```<br/>
+
+6. **布尔值命名 (is/has/can 开头)**<br/>
+**正例:** ```isLoading / hasError / canSubmit```<br/>
+**反例:** ```loading / error / submit```<br/>
+
 
 ### 5.2 代码格式
 1. **使用 2 个空格进行缩进**<br/>
@@ -599,7 +608,7 @@ if (x < y) {
    x += 1; 
 }
 ```
-2. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
+1. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
 说明:任何情形，没有必要插入多个空行进行隔开。
 
 ### 5.3 字符串
