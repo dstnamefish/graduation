@@ -739,7 +739,7 @@ export default {
 }
 ```
 
-1. **组件文件名为 PascalCase 格式**<br/>
+3. **组件文件名为 PascalCase 格式**<br/>
 **正例:**
 ```bash
 components/
@@ -752,7 +752,7 @@ components/
 |- myComponent.vue
 ```
 
-2. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
+4. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
 **正例:**
 ```bash
 components/
@@ -768,7 +768,7 @@ components/
 |- Icon.vue
 ```
 
-3. **在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。**<br/>
+5. **在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。**<br/>
 **正例:**
 ```vue
 <!-- 在单文件组件、字符串模板和 JSX 中 -->
@@ -780,7 +780,7 @@ components/
 <my-component /> <row><table :column="data"/></row>
 ```
 
-4. **Prop 定义应该尽量详细**
+6. **Prop 定义应该尽量详细**
 必须使用 camelCase 驼峰命名<br/>
 必须指定类型<br/>
 必须加上注释，表明其含义<br/>
@@ -804,7 +804,7 @@ const props = defineProps({
 </script>
 ```
 
-5. **为组件样式设置作用域**<br/>
+7. **为组件样式设置作用域**<br/>
 **正例:**
 ```vue
 <template>
@@ -837,7 +837,7 @@ const props = defineProps({
 </style>
 ```
 
-6. **组件事件在Vue2 Options API和Vue3 Composition API的区别:**<br/>
+8. **组件事件在Vue2 Options API和Vue3 Composition API的区别:**<br/>
 - 事情定义：
 ```vue
 <script setup>
@@ -859,7 +859,152 @@ this.$emit('submit-success')  // JavaScript中
 <MyComponent @submit-success="submitSuccess"/> <!-- 模板中 -->
 ```
 
-7. **组件代码组织规范:**<br/>
+9. **如果特性元素较多，应该主动换行。**<br/>
+**正例:**
+```bash
+  <MyComponent foo="a" bar="b" baz="c"
+    foo="a" bar="b" baz="c"
+    foo="a" bar="b" baz="c"
+  />
+```
+
+**反例:**<br/>
+```<MyComponent foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c"/>```
+
+10. **组件通信原则:**
+```vue
+<!-- 父组件 -->
+<template>
+  <child-component 
+    :title="pageTitle" 
+    @update-title="handleUpdate"
+  />
+</template>
+
+<!-- 子组件 -->
+<script setup>
+defineProps(['title'])
+const emit = defineEmits(['update-title'])
+</script>
+```
+
+11. **组件设计原则:**
+- 单一职责原则
+每个组件只做一件事<br/>
+保持组件精简（建议不超过300行）<br/>
+- 可复用性
+通过props控制行为<br/>
+提供适当的插槽<br/>
+- 无副作用
+避免直接修改props<br/>
+副作用操作应在方法中明确声明<br/>
+
+### 6.2 模板中使用简单的表达式
+组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。复杂表达式会让你的模板变得不那么声明式。我们应该尽量描述应该出现的是什么，而非如何计算那个值。而且计算属性和方法使得代码可以重用。<br/>
+**正例:**
+```vue
+<template>
+  <p>{{ normalizedFullName }}</p>
+</template>
+// 复杂表达式已经移入一个计算属性
+computed: {
+  normalizedFullName: function () {
+    return this.fullName.split(' ').map(function (word) {
+      return word[0].toUpperCase() + word.slice(1)
+    }).join(' ')
+  }
+}
+```
+**反例:**
+```vue
+<template>
+  <p>
+       {{
+          fullName.split(' ').map(function (word) {
+             return word[0].toUpperCase() + word.slice(1)
+           }).join(' ')
+        }}
+  </p>
+</template>
+```
+
+### 6.3 指令都使用缩写形式
+指令推荐都使用缩写形式
+|完整形式	      | 缩写形式	 |用途说明    |  
+|--------------|------------|-----------|    
+|v-bind:	     | :	        |属性绑定    |
+|v-on:	       | @	        |事件绑定    |
+|v-slot:	     | #	        |插槽定义    |
+|v-bind:[attr] |	:[attr]	  |动态属性绑定|
+|v-on:[event]  | @[event]	  |动态事件绑定|
+
+**正例:**
+```javascript
+<input
+  @input="onInput"
+  @focus="onFocus"
+>
+```
+
+**反例:**
+```javascript
+<input
+  v-on:input="onInput"
+  @focus="onFocus"
+>
+```
+
+### 6.4 标签顺序保持一致
+单文件组件应该总是让标签顺序保持为 `<br/>
+**正例:**
+```
+<template>...</template>
+<script>...</scrip>
+<style>...</style>
+```
+
+**反例:**
+```
+<template>...</template>
+<style>...</style>
+<script>...</script>
+```
+
+### 6.5 必须为 v-for 设置键值 key
+在 Vue 的 v-for 列表中，key 是一个特殊的属性，它帮助 Vue 识别每个节点的身份，从而：
+1. 高效更新：精确追踪元素变化，减少不必要的 DOM 操作
+2. 状态保持：确保组件状态在重新渲染时正确保留
+3. 动画过渡：使过渡动画能正确工作
+**正例:**<br/>
+```vue
+<li v-for="item in items" :key="item.id">
+  {{ item.text }}
+</li>
+```
+**反例：**<br/>
+```vue
+<li v-for="item in items">
+  {{ item.text }}
+</li>
+```
+正确选择key值
+|数据类型	      |推荐 key	        |示例                 | 
+|---------------|----------------|---------------------|
+|对象数组	      |唯一ID属性	      |:key="item.id"       |
+|基本类型数组	  |值本身 + 索引	   |:key="item + index"  |
+|无唯一标识数据	|索引 (最后选择)   |:key="index"         |
+
+### 6.6 v-show 与 v-if 选择
+如果运行时，需要非常频繁地切换，使用 v-show ;如果在运行时，条件很少改变，使用 v-if。
+|特性	    |v-if	               |v-show                   |
+|---------|--------------------|-------------------------|
+|DOM操作  |条件为假时移除DOM	  |始终保留DOM，仅切换display |
+|初始渲染	|惰性渲染	            |无论条件如何都会渲染       |
+|切换开销	|高（重建/销毁组件）	 |低（仅CSS切换）           |
+|生命周期	|触发创建/销毁钩子	   |不触发生命周期钩子         |
+|适用场景	|运行时条件很少改变	   |需要频繁切换显示状态        | 
+
+### 6.7 script 标签内部结构顺序
 - Composition API组织顺序
 ```vue
 <script setup>
@@ -892,6 +1037,7 @@ defineExpose({
 })
 </script>
 ```
+
 - Options API组织顺序
 ```javascript
 export default {
@@ -907,88 +1053,6 @@ export default {
   mounted() {}
 }
 ```
-8. **如果特性元素较多，应该主动换行。**<br/>
-**正例:**
-```bash
-  <MyComponent foo="a" bar="b" baz="c"
-    foo="a" bar="b" baz="c"
-    foo="a" bar="b" baz="c"
-  />
-```
-
-**反例:**<br/>
-```<MyComponent foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c"/>```
-
-### 6.2 模板中使用简单的表达式
-组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。复杂表达式会让你的模板变得不那么声明式。我们应该尽量描述应该出现的是什么，而非如何计算那个值。而且计算属性和方法使得代码可以重用。<br/>
-**正例:**
-```vue
-<template>
-  <p>{{ normalizedFullName }}</p>
-</template>
-// 复杂表达式已经移入一个计算属性
-computed: {
-  normalizedFullName: function () {
-    return this.fullName.split(' ').map(function (word) {
-      return word[0].toUpperCase() + word.slice(1)
-    }).join(' ')
-  }
-}
-```
-**反例:**
-```vue
-<template>
-  <p>
-       {{
-          fullName.split(' ').map(function (word) {
-             return word[0].toUpperCase() + word.slice(1)
-           }).join(' ')
-        }}
-  </p>
-</template>
-```
-
-### 6.3 指令都使用缩写形式
-指令推荐都使用缩写形式，(用 : 表示 v-bind: 、用 @ 表示 v-on: 和用 # 表示 v-slot:)<br/>
-**正例:**
-```
-<input
-  @input="onInput"
-  @focus="onFocus"
->
-```
-
-**反例:**
-```
-<input
-  v-on:input="onInput"
-  @focus="onFocus"
->
-```
-
-### 6.4 标签顺序保持一致
-单文件组件应该总是让标签顺序保持为 `<br/>
-**正例:**
-```
-<template>...</template>
-<script>...</scrip>
-<style>...</style>
-```
-
-**反例:**
-```
-<template>...</template>
-<style>...</style>
-<script>...</script>
-```
-
-### 6.5 必须为 v-for 设置键值 key
-
-### 6.6 v-show 与 v-if 选择
-如果运行时，需要非常频繁地切换，使用 v-show ;如果在运行时，条件很少改变，使用 v-if。
-
-### 6.7 script 标签内部结构顺序
-components > props > data > computed > watch > filter > 钩子函数（钩子函数按其执行顺序） > methods
 
 ### 6.8 Vue Router 规范
 1. **页面跳转数据传递使用路由参数**
@@ -1088,13 +1152,113 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
   }
 ```
 
+### 6.9 状态管理
+1. **状态管理选型与架构:**
+**技术选型**<br/>
+- Vue 3 项目：推荐使用 Pinia (官方推荐的状态管理库)
+- Vue 2 项目：可使用 Vuex 4 (兼容版本)
+
+2. **Pinia 核心规范:**
+**Store 定义规范:**
+```vue
+// stores/modules/user.ts
+import { defineStore } from 'pinia'
+
+export const useUserStore = defineStore('user', {
+  // 状态定义
+  state: () => ({
+    id: null as number | null,
+    name: '',
+    token: ''
+  }),
+
+  // 计算属性
+  getters: {
+    isLoggedIn: (state) => !!state.token,
+    username: (state) => state.name || 'Guest'
+  },
+
+  // 操作方法
+  actions: {
+    async login(credentials: LoginForm) {
+      const { data } = await api.login(credentials)
+      this.token = data.token
+      this.name = data.username
+    },
+    
+    logout() {
+      this.$reset()
+    }
+  }
+})
+```
+
+**类型安全(TypeScript):**
+```typescript
+interface UserState {
+  id: number | null
+  name: string
+  token: string
+}
+
+interface LoginForm {
+  username: string
+  password: string
+  remember?: boolean
+}
+```
+
+3. **状态使用规范:**
+**在组件中使用:**
+```vue
+<script setup>
+import { useUserStore } from '@/stores/modules/user'
+
+const userStore = useUserStore()
+
+// 访问状态
+const username = computed(() => userStore.name)
+
+// 调用action
+function handleLogin() {
+  userStore.login({
+    username: 'admin',
+    password: '123456'
+  })
+}
+</script>
+```
+
+**状态修改规则:**
+- 直接修改：仅限简单赋值
+```typescript
+userStore.name = "新名字"
+```
+- 复杂修改：使用 $patch 或 actions
+```typescript
+// 方式1： $patch
+userStore.$patch({
+  name: "新名字",
+  token: "new-token"
+})
+
+// 方式2： action
+userStore.updateProfile({ name: "新名字" })
+```
+
 ## 七、Vue 项目目录规范
 ### 7.1 基础
 vue 项目中的所有命名一定要与后端命名统一。<br/>
 比如权限:后端 privilege, 前端无论 router , store, api 等都必须使用 privielege 单词！<br/>
 
-### 7.2 使用 Vue-cli 脚手架
-使用 vue-cli3 来初始化项目，项目名按照上面的命名规范。
+### 7.2 使用 Vite 脚手架
+使用 Vite 来初始化项目，项目名按照上面的命名规范，配置文件路径的规范如下：
+```plaintext
+project-root/
+├── vite.config.ts       # Vite 配置文件
+├── tsconfig.json        # TypeScript 配置
+└── package.json         # 依赖管理
+```
 
 ### 7.3 目录说明
 目录名按照上面的命名规范，其中 components 组件用大写驼峰，其余除 components 组件目录外的所有目录均使用 kebab-case 命名。
@@ -1122,6 +1286,53 @@ src                                  源码目录
 |   |-- |-- index.less                       role模块样式
 |   |-- |-- components                       role模块通用组件文件夹
 |   |-- employee                             employee模块
+
+├─.vscode/
+│  └─extensions.json           # VS Code 扩展配置
+├─docs/                        #          
+│  ├─cmd-docs/                 # 命令文档
+│  ├─design-docs/              # 设计文档
+│  ├─dev-docs/                 # 开发文档
+│  ├─user-docs/                # 用户文档
+│  └─Vite-docs/                # Vite文档
+├─public/
+│  └─favicon.ico               # 网站图标
+├─src/
+│  ├─assets/
+│  │  ├─styles/                # 样式文件                     
+│  │  │  ├─base/               # 基础样式（变量、混合器）
+│  │  │  │  ├─_variables.scss  # 变量
+│  │  │  │  └─_mixins.scss     # 混合器
+│  │  │  ├─components/         # 通用组件样式
+│  │  │  ├─pages/              # 页面样式
+│  │  │  │  └─Home.scss        # 首页样式
+│  │  │  └─global.scss         # 全局样式
+│  │  ├─icons/                 # 图标资源
+│  │  └─images/                # 图片资源
+│  ├─components/               # 通用组件
+│  ├─hooks/                    # 自定义钩子
+│  ├─router/                   # 路由配置
+│  │  └─index.ts               # 路由主文件
+│  ├─store/                    # Pinia 状态管理
+│  ├─types/                    # 类型定义
+│  ├─utils/                    # 工具函数目录
+│  ├─views/                    # 页面组件（业务逻辑）
+│  │  └─Home.vue               # 首页组件
+│  ├─vite-env.d.ts             # Vite 环境变量类型
+│  ├─main.ts                   # 应用入口文件
+│  └─App.vue                   # 根组件
+├─package.json                 # 依赖配置文件
+├─package-lock.json            # 依赖锁文件
+├─tsconfig.json                # TypeScript 全局配置
+├─tsconfig.app.json            # 应用专属 TypeScript 配置
+├─tsconfig.node.json           # Node.js 专属 TypeScript 配置
+├─vite.config.ts               # Vite 构建配置
+├─README.md                    # 项目说明文档
+├─coding-style.md              # 编码规范主文档
+├─.gitignore                   # Git 忽略规则
+├─index.html                   # 入口 HTML 文件
+├─.env.production              # 生产环境变量
+└─.env.development             # 开发环境变量
 ```
 1. **api 目录**
 文件、变量命名要与后端保持一致。<br/>
@@ -1249,7 +1460,8 @@ components 中组件要使用 PascalCase 规则<br/>
 ```
 
 ### 7.4 注释说明
-整理必须加注释的地方<br/><br/>
+**在Vue项目中:**<br/>
+整理必须加注释的地方<br/>
 公共组件使用说明<br/>
 api 目录的接口 js 文件必须加注释<br/>
 store 中的 state, mutation, action 等必须加注释<br/>
@@ -1257,8 +1469,39 @@ vue 文件中的 template 必须加注释，若文件较大添加 start end 注�
 vue 文件的 methods，每个 method 必须添加注释<br/>
 vue 文件的 data, 非常见单词要加注释
 
+**在Vue3项目中:**<br/>
+**公共组件：** 在<script>标签顶部添加功能说明、参数说明、事件说明。<br/>
+**API 接口：**每个方法添加 JSDoc 注释，说明功能、参数、返回值。<br/>
+**Store 状态：**在 state 中对关键字段添加注释。<br/>
+**复杂逻辑：**超过 10 行的方法或复杂算法添加逻辑说明。<br/>
+**TypeScript 类型：**对非自解释的类型定义添加注释。
+
 ### 7.5 其他
 1. **尽量不要手动操作 DOM**<br/>
 因使用 vue 框架，所以在项目开发中尽量使用 vue 的数据驱动更新 DOM，尽量（不到万不得已）不要手动操作 DOM，包括:增删改 dom 元素、以及更改样式、添加事件等。
 2. **删除无用代码**<br/>
 因使用了 git/svn 等代码版本工具，对于无用代码必须及时删除，例如:一些调试的 console 语句、无用的弃用功能代码。
+
+## 八、编码流程和协作规范
+### 8.1 代码提交规范
+```plaintext
+<类型>(<范围>): <描述>
+// 示例
+feat(store): 添加用户登录状态管理
+fix(router): 修复登录页重定向循环问题
+```
+**常用 type 类型**:
+|类型	      |用途                       |
+|-----------|---------------------------|
+|feat	      |新增功能                   |
+|fix	      |修复 bug                   |
+|docs	      |文档变更                   |
+|style	    |代码格式（空格、分号等）     |
+|refactor	  |重构（非功能新增/修复）      |
+|test	      |测试相关                    |
+|chore	    |构建/工具链变更             |
+|style      |代码风格调整                |
+|pref       |性能优化                    |
+|revert     |回退之前的提交               |
+|wip        |开发中临时提交               |
+### 8.2 静态检查与格式化
