@@ -1321,6 +1321,7 @@ project-root/
 │  ├─App.vue                   # 根组件
 │  ├─main.ts                   # 应用入口文件
 │  └─vite-env.d.ts             # Vite 环境变量类型
+│
 ├─.env                         # 基础环境变量
 ├─.env.development             # 开发环境变量
 ├─.env.production              # 生产环境变量
