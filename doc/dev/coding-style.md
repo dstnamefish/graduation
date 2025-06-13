@@ -1263,54 +1263,54 @@ project-root/
 ### 7.3 目录说明
 目录名按照上面的命名规范，其中 components 组件用大写驼峰，其余除 components 组件目录外的所有目录均使用 kebab-case 命名。
 ```
-src                                  源码目录
-|-- api                              所有api接口
-|-- assets                           静态资源，images, icons, styles等
-|-- components                       公用组件
-|-- config                           配置信息
-|-- constants                        常量信息，项目所有Enum, 全局常量等
-|-- directives                       自定义指令
-|-- filters                          过滤器，全局工具
-|-- datas                            模拟数据，临时存放
-|-- lib                              外部引用的插件存放及修改文件
-|-- mock                             模拟接口，临时存放
-|-- plugins                          插件，全局使用
-|-- router                           路由，统一管理
-|-- store                            vuex, 统一管理
-|-- themes                           自定义样式主题
-|-- views                            视图目录
-|   |-- role                                 role模块名
-|   |-- |-- role-list.vue                    role列表页面
-|   |-- |-- role-add.vue                     role新建页面
-|   |-- |-- role-update.vue                  role更新页面
-|   |-- |-- index.less                       role模块样式
-|   |-- |-- components                       role模块通用组件文件夹
-|   |-- employee                             employee模块
-
 ├─.vscode/
-│  └─extensions.json           # VS Code 扩展配置
-├─docs/                        #          
-│  ├─cmd-docs/                 # 命令文档
-│  ├─design-docs/              # 设计文档
-│  ├─dev-docs/                 # 开发文档
-│  ├─user-docs/                # 用户文档
-│  └─Vite-docs/                # Vite文档
-├─public/
-│  └─favicon.ico               # 网站图标
-├─src/
-│  ├─assets/
-│  │  ├─styles/                # 样式文件                     
-│  │  │  ├─base/               # 基础样式（变量、混合器）
-│  │  │  │  ├─_variables.scss  # 变量
-│  │  │  │  └─_mixins.scss     # 混合器
-│  │  │  ├─components/         # 通用组件样式
-│  │  │  ├─pages/              # 页面样式
-│  │  │  │  └─Home.scss        # 首页样式
-│  │  │  └─global.scss         # 全局样式
+│  ├─extensions.json           # VS Code 扩展推荐
+│  └─settings.json             # 统一编辑器配置
+│     ├─templates/             # 代码模板片段
+│     ├─component.vue          # Vue组件模板
+│     └─composable.ts          # 组合式函数模板
+│
+├─docs/                        # 文档        
+│  ├─cmd/                      # 命令文档
+│  │  ├─development.md         # 开发相关命令
+│  │  ├─build.md               # 构建相关命令
+│  │  └─deployment.md          # 部署相关命令
+│  ├─design/                   # 设计文档
+│  │  ├─architecture.md        # 开发相关命令
+│  │  └─database.md            # 数据库设计文档
+│  ├─dev/                      # 开发文档
+│  │  ├─api-specification.md   # 接口文档
+│  │  └─coding-style.md        # 编码规范文档
+│  ├─learn/                    # 学习文档
+│  │  ├─es6+/                  # es6+文档
+│  │  ├─vite/                  # vite文档
+│  │  └─...                    # 其他文档
+│  ├─question/                 # 问题文档
+│  └─user/                     # 用户文档
+│     ├─faq.md                 # 常见问题解答
+│     └─user-guide.md          # 用户使用指南 
+│
+├─public/                      # 静态资源
+│  ├─favicon.ico               # 网站图标
+│  ├─assets/                   # 不参与构建的静态资源
+│  │  ├─fonts                  # 静态字体文件
+│  │  └─locales                # 多语言静态资源
+│  └─robot.txt                 # 爬虫协议
+│
+├─src/                         # 项目源代码
+│  ├─assets/                   # 项目静态资源（会经过构建处理）
 │  │  ├─icons/                 # 图标资源
-│  │  └─images/                # 图片资源
+│  │  ├─images/                # 图片资源
+│  │  └─styles/                # 样式文件                     
+│  │     ├─base/               # 基础样式（变量、混合器）
+│  │     │  ├─_variables.scss  # 变量
+│  │     │  └─_mixins.scss     # 混合器
+│  │     ├─components/         # 通用组件样式
+│  │     ├─pages/              # 页面样式
+│  │     │  └─Home.scss        # 首页样式
+│  │     └─global.scss         # 全局样式
 │  ├─components/               # 通用组件
-│  ├─hooks/                    # 自定义钩子
+│  ├─composables/              # 组合式函数
 │  ├─router/                   # 路由配置
 │  │  └─index.ts               # 路由主文件
 │  ├─store/                    # Pinia 状态管理
@@ -1318,21 +1318,21 @@ src                                  源码目录
 │  ├─utils/                    # 工具函数目录
 │  ├─views/                    # 页面组件（业务逻辑）
 │  │  └─Home.vue               # 首页组件
-│  ├─vite-env.d.ts             # Vite 环境变量类型
+│  ├─App.vue                   # 根组件
 │  ├─main.ts                   # 应用入口文件
-│  └─App.vue                   # 根组件
-├─package.json                 # 依赖配置文件
-├─package-lock.json            # 依赖锁文件
-├─tsconfig.json                # TypeScript 全局配置
-├─tsconfig.app.json            # 应用专属 TypeScript 配置
-├─tsconfig.node.json           # Node.js 专属 TypeScript 配置
-├─vite.config.ts               # Vite 构建配置
-├─README.md                    # 项目说明文档
-├─coding-style.md              # 编码规范主文档
+│  └─vite-env.d.ts             # Vite 环境变量类型
+├─.env                         # 基础环境变量
+├─.env.development             # 开发环境变量
+├─.env.production              # 生产环境变量
 ├─.gitignore                   # Git 忽略规则
 ├─index.html                   # 入口 HTML 文件
-├─.env.production              # 生产环境变量
-└─.env.development             # 开发环境变量
+├─package-lock.json            # 依赖锁文件
+├─package.json                 # 依赖配置文件
+├─README.md                    # 项目说明文档
+├─tsconfig.app.json            # 应用专属 TypeScript 配置
+├─tsconfig.json                # TypeScript 全局配置        
+├─tsconfig.node.json           # Node.js 专属 TypeScript 配置
+└─vite.config.ts               # Vite 构建配置
 ```
 1. **api 目录**
 文件、变量命名要与后端保持一致。<br/>
@@ -1360,103 +1360,6 @@ updateEmployee: (data) => {
 deleteEmployee: (employeeId) => {
   return postAxios('/employee/delete/' + employeeId)
 },
-```
-2. **assets 目录**
-assets 为静态资源，里面存放 images, styles, icons 等静态资源，静态资源命名格式为 kebab-case<br/>
-```
-|assets
-|-- icons
-|-- images
-|   |-- background-color.png
-|   |-- upload-header.png
-|-- styles
-```
-
-3. **components 目录**
-此目录应按照组件进行目录划分，目录命名为 KebabCase，组件命名规则也为 KebabCase
-```
-|components
-|-- error-log
-|   |-- index.vue
-|   |-- index.less
-|-- markdown-editor
-|   |-- index.vue
-|   |-- index.js
-|-- kebab-case
-```
-
-4. **constants 目录**
-此目录存放项目所有常量，如果常量在 vue 中使用，请使用 vue-enum 插件(https://www.npmjs.com/package/vue-enum)<br/>
-目录结构:<br/>
-```
-|constants
-|-- index.js
-|-- role.js
-|-- employee.js
-```
-
-例子: employee.js
-```
-export const EMPLOYEE_STATUS = {
-  NORMAL: {
-    value: 1,
-    desc: '正常'
-  },
-  DISABLED: {
-    value: 1,
-    desc: '禁用'
-  },
-  DELETED: {
-    value: 2,
-    desc: '已删除'
-  }
-};
-export const EMPLOYEE_ACCOUNT_TYPE = {
-  QQ: {
-    value: 1,
-    desc: 'QQ登录'
-  },
-  WECHAT: {
-    value: 2,
-    desc: '微信登录'
-  },
-  DINGDING: {
-    value: 3,
-    desc: '钉钉登录'
-  },
-  USERNAME: {
-    value: 4,
-    desc: '用户名密码登录'
-  }
-};
-export default {
-  EMPLOYEE_STATUS,
-  EMPLOYEE_ACCOUNT_TYPE
-};
-```
-
-5. **router 与 store 目录**
-这两个目录一定要将业务进行拆分，不能放到一个 js 文件里。<br/>
-router 尽量按照 views 中的结构保持一致<br/>
-store 按照业务进行拆分不同的 js 文件
-
-6. **views 目录**
-命名要与后端、router、api 等保持一致<br/>
-components 中组件要使用 PascalCase 规则<br/>
-
-```
-|-- views                                    视图目录
-|   |-- role                                 role模块名
-|   |   |-- role-list.vue                    role列表页面
-|   |   |-- role-add.vue                     role新建页面
-|   |   |-- role-update.vue                  role更新页面
-|   |   |-- index.less                      role模块样式
-|   |   |-- components                      role模块通用组件文件夹
-|   |   |   |-- role-header.vue             role头部组件
-|   |   |   |-- role-modal.vue              role弹出框组件
-|   |-- employee                            employee模块
-|   |-- behavior-log                        行为日志log模块
-|   |-- code-generator                      代码生成器模块
 ```
 
 ### 7.4 注释说明
