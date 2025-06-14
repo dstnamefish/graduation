@@ -113,7 +113,7 @@ function handleSearchInput() {}
 1. 团队统一使用中文或英文（建议中文为主，国际化项目使用英文）。
 
 #### 2.3.2 JavaScript/TypeScript注释规范
-1) 单行注释
+**1. 单行注释**
 单行注释使用 //，<br/>注释应单独一行写在被注释对象的上方，不要追加在某条语句的后面。<br/>
 **推荐:**
 ```javascript
@@ -151,7 +151,7 @@ function getType () {
   return type
 }
 ```
-1. 多行注释
+**2. 多行注释**
 多行注释使用 /** ... */，而不是多行的 //。<br/>
 **推荐:**
 ```javascript
@@ -173,7 +173,7 @@ function make (tag) {
   return element
 }
 ```
-1. 注释空格
+**3. 注释空格**
 注释内容和注释符之间需要有一个空格，以增加可读性。eslint: ```spaced-comment```。<br/>
 **推荐:**
 ```javascript
@@ -201,7 +201,7 @@ function make(tag) {
   return element
 }
 ```
-1. 特殊标记
+**4. 特殊标记**
 有时我们发现某个可能的 bug，但因为一些原因还没法修复；或者某个地方还有一些待完成的功能，这时我们需要使用相应的特殊标记注释来告知未来的自己或合作者。常用的特殊标记有两种：<br/>
 - // FIXME : 说明问题是什么
 - // TODO : 说明还要做什么或者问题的解决方案
@@ -216,7 +216,7 @@ class Calculator extends Abacus {
   }
 }
 ```
-1. 文档类注释
+**5. 文档类注释**
 文档类注释，如函数、类、文件、事件等；都使用 jsdoc/tsdoc 规范。<br/>
 **推荐:**
 ```javascript
