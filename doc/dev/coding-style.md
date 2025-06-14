@@ -113,105 +113,143 @@ function handleSearchInput() {}
 1. 团队统一使用中文或英文（建议中文为主，国际化项目使用英文）。
 
 #### 2.3.2 JavaScript/TypeScript注释规范
-1. 函数/方法注释（TsDoc风格）
-使用/** ... */块注释，包含参数、返回值和描述：
-```typescript
-/**
- * 获取用户信息
- * @param userId - 用户ID
- * @param options - 请求配置（可选）
- * @returns 包含用户详情的 Promise
- * @throws {Error} 当用户不存在时抛出异常
- */
-  async function getUserInfo(userId: string, options?:RequestOptions):Promise<UserInfo>{
-    //...
-  }
-```
-2. 类注释
-```typescript
-/**
- * 用户管理类，提供用户信息获取、更新等功能
- * @example
- * const userManager = new UserManager();
- * userManager.getUser(123);
- */
-  class UserManager{
-    // ...
-  }
-```
-3. 复杂逻辑注释
+1. 单行注释
+单行注释使用 //，注释应单独一行写在被注释对象的上方，不要追加在某条语句的后面。<br/>
+**推荐:**
 ```javascript
-// 使用二分法查找目标值，时间复杂度 O(log n)
-function binarySearch(arr,target){
-  let left = 0;
-  let right = arr.length - 1;
-  // ...
-}
+// is current tab
+const active = true
 ```
-4. TODO/FIXME标记
+**不推荐:**
 ```javascript
-// TODO: 后续优化性能
-function processLargeData(){
+const active = true // is current tab
+```
+注释行的上方需要有一个空行 **（除非注释行上方是一个块的顶部）**，以增加可读性。<br/>
+**推荐:**
+```javascript
+function getType () {  
+  console.log('fetching type...')
+  
+  // set the default type to 'no type'
+  const type = this.type || 'no type'
+  return type
+}
+
+// 注释行上面是一个块的顶部时不需要空行
+function getType () {  
+  // set the default type to 'no type'
+  const type = this.type || 'no type'            
+  return type
+}
+```
+**不推荐:**
+```javascript
+function getType () {  
+  console.log('fetching type...')
+  // set the default type to 'no type'
+  const type = this.type || 'no type'
+  return type
+}
+```
+2. 多行注释
+多行注释使用 /** ... */，而不是多行的 //。<br/>
+**推荐:**
+```javascript
+/**
+ * make() returns a new element
+ * based on the passed-in tag name
+ */
+function make (tag) {
   // ...
-}
-
-// FIXME: 临时处理，后续需要支持国际化
-const message = "操作成功"；
-```
-5. 类型定义注释
-```typescript
-/**
- * 用户角色枚举
- * - admin: 管理员
- * - editor: 编辑
- * - viewer: 查看者
- */
-enum UserRole{
-  Admin = "admin",
-  Editor = "editor",
-  Viewer = "viewer",
-}
-
-/**
- * API响应结构
- */
-interface ApiResponse<T>{
-  code：number; // 状态码
-  message: string; // 提示信息
-  data: T; //响应数据
+  return element
 }
 ```
-
-#### 2.3.3 Vue 组件注释规范
-1. 组件文档注释
-```vue
+**不推荐:**
+```javascript
+// make() returns a new element
+// based on the passed in tag name
+function make (tag) {
+  // ...
+  return element
+}
+```
+3. 注释空格
+注释内容和注释符之间需要有一个空格，以增加可读性。eslint: ```spaced-comment```。<br/>
+**推荐:**
+```javascript
+// is current tab
+const active = true
 /**
- * 用户头像组件
- * @prop {string} src - 头像图片地址
- * @prop {number} size - 头像尺寸（默认 40px）
- * @prop {boolean} rounded - 是否圆形（默认 true）
- * @event click - 点击头像时触发
+ * make() returns a new element
+ * based on the passed-in tag name
  */
-export default defineComponent({
-  props:{
-    src:{
-      type: String,
-      required: true
-    },
-    size:{
-      type: Number,
-      default: 40
-    },
-    rounded:{
-      type: Boolean,
-      default: true
-    },
+function make(tag) {  
+  // ...
+  return element
+}
+```
+**不推荐:**
+```javascript
+//is current tab
+const active = true
+/**
+ *make() returns a new element
+ *based on the passed-in tag name
+ */
+function make(tag) {  
+  // ...
+  return element
+}
+```
+4. 特殊标记
+有时我们发现某个可能的 bug，但因为一些原因还没法修复；或者某个地方还有一些待完成的功能，这时我们需要使用相应的特殊标记注释来告知未来的自己或合作者。常用的特殊标记有两种：<br/>
+- // FIXME : 说明问题是什么
+- // TODO : 说明还要做什么或者问题的解决方案
+```javascript
+class Calculator extends Abacus {
+  constructor () {
+    super ()
+      // FIXME: shouldn’t use a global here
+      total = 0
+      // TODO: total should be configurable by an options param
+      this.total = 0
   }
-  emits: ["click"],
-  //...
-})
+}
 ```
-2. 模板注释
+5. 文档类注释
+文档类注释，如函数、类、文件、事件等；都使用 jsdoc/tsdoc 规范。<br/>
+**推荐:**
+```javascript
+/**
+ * Book类，代表一个书本.
+ * @constructor
+ * @param {string} title - 书本的标题.
+ * @param {string} author - 书本的作者.
+ */
+function Book (title, author) {
+  this.title = title
+  this.author = author
+}
+Book.prototype = {
+  /**
+   * 获取书本的标题
+   * @returns {string|*}
+   */
+  getTitle: function () {
+    return this.title
+  },
+  /**
+   * 设置书本的页数
+   * @param pageNum {number} 页数
+   */
+  setPageNum: function (pageNum) {
+    this.pageNum=pageNum
+  }
+}
+```
+
+#### 2.3.3 Vue 注释规范
+1. 模板注释
 ```vue
 <template>
 <!-- 用户信息卡片-->
@@ -226,40 +264,34 @@ export default defineComponent({
 </div>
 </template>
 ```
-3. 逻辑注释
-```javascript
-// 监听路由变化，刷新用户信息
-watch(
-  () => route.params.id,
-  async (newId) => {
-    if (newId){
-      await fetchUserInfo(newId); //获取用户详情
-    }
-  },
-  { immediate: true } 
-)
-```
 
 #### 2.3.4 CSS/SCSS注释规范
-1. 区块注释
+1. 单行注释
 ```scss
-/**
- * 导航栏样式
- * ==================================
- */
-.header {
-  // ...
-}
-
-/**
- * 按钮组件
- * ------------------------------
- */
-.btn {
-  // ...
-}
+/* Comment Text */ 
+.jdc {} 
+/* Comment Text */ 
+.jdc {}
 ```
-2. 特殊说明
+2. 文件注释
+```scss
+@charset "UTF-8";
+/**
+ * @desc File Info
+ * @author Author Name
+ * @date 2015-10-10
+ */
+```
+3. 模块注释
+```scss
+/* Module A
+---------------------------------------------------------------- */
+.mod_a {}
+/* Module B
+---------------------------------------------------------------- */
+.mod_b {}
+```
+4. 特殊说明
 ```scss
 .btn-primary {
   // 修复 iOS 上的圆角问题
@@ -270,7 +302,7 @@ watch(
   background: linear-gradient(to bottom, #fff 0%, #eee 100%);
 }
 ```
-3. SCSS 变量 / 混合器注释
+5. SCSS 变量 / 混合器注释
 ```scss
 /**
  * 颜色变量
@@ -1430,6 +1462,10 @@ fix(router): 修复登录页重定向循环问题
 - 次版本号（Minor）：当你做了向下兼容的功能性新增
 - 修订号（Patch）：当你做了向下兼容的问题修正 
 ### 1. **版本历史**
+- **v2.0.3** 2025-06-14
+  - 文档注释规范修改
+- **v2.0.2** 2025-06-13
+  - 目录大调整
 - **v2.0.1** 2025-06-12
   - 文档目录大更新
   - 结合阿里vue2规范
