@@ -84,7 +84,6 @@ function handleSearchInput() {}
 </template>
 ```
 
-
 ### 2.2 缩进
 缩进使用 2 个空格（一个 tab）;<br/>
 嵌套的节点应该缩进。
@@ -276,9 +275,9 @@ function logout() { /* ... */ }
 #### 2.3.4 CSS/SCSS注释规范
 1. 单行注释
 ```scss
-/* Comment Text */ 
+// Comment Text  
 .jdc {} 
-/* Comment Text */ 
+// Comment Text 
 .jdc {}
 ```
 2. 文件注释
