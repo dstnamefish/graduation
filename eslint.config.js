@@ -199,11 +199,28 @@ export default defineConfig([
       },
     },
   },
+
+
   {
     files: ['eslint.config.js'],
     rules: {
       // 禁用TypeScript的consistent-type-imports规则
       '@typescript-eslint/consistent-type-imports': 'off',
     },
+  },
+  
+  {
+    files: ['vite.config.ts'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: './tsconfig.vite.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-imports': 'error',
+    }
   }
+  
 ]);
