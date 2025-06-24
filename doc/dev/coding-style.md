@@ -741,7 +741,7 @@ function(a, b) {}
 
 ## 六、Vue 项目规范
 ### 6.1 组件规范
-1. **组件文件结构**<br/>
+**1. 组件文件结构**<br/>
 单文件组件（SFC）的文件结构应该是：
 ```vue
 <template>
@@ -761,7 +761,7 @@ function(a, b) {}
 - script (必须)
 - style (可选)
 
-2. **组件名为多个单词。**<br/>
+**2. 组件名为多个单词。**<br/>
 组件名应该始终是多个单词组成（大于等于 2），且命名规范为KebabCase格式。<br/>
 这样做可以避免跟现有的以及未来的 HTML 元素相冲突，因为所有的 HTML 元素名称都是单个单词的。<br/>
 **正例:**
@@ -783,7 +783,7 @@ export default {
 }
 ```
 
-3. **组件文件名为 PascalCase 格式**<br/>
+**3. 组件文件名为 PascalCase 格式**<br/>
 **正例:**
 ```bash
 components/
@@ -796,7 +796,7 @@ components/
 |- myComponent.vue
 ```
 
-4. **基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
+**4. 基础组件文件名为 base 开头，使用完整单词而不是缩写。**<br/>
 **正例:**
 ```bash
 components/
@@ -812,7 +812,7 @@ components/
 |- Icon.vue
 ```
 
-5. **在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。**<br/>
+**5. 在 Template 模版中使用组件，应使用 PascalCase 模式，并且使用自闭合组件。**<br/>
 **正例:**
 ```vue
 <!-- 在单文件组件、字符串模板和 JSX 中 -->
@@ -824,7 +824,7 @@ components/
 <my-component /> <row><table :column="data"/></row>
 ```
 
-6. **Prop 定义应该尽量详细**
+**6. Prop 定义应该尽量详细**<br/>
 必须使用 camelCase 驼峰命名<br/>
 必须指定类型<br/>
 必须加上注释，表明其含义<br/>
@@ -848,7 +848,7 @@ const props = defineProps({
 </script>
 ```
 
-7. **为组件样式设置作用域**<br/>
+**7. 为组件样式设置作用域**<br/>
 **正例:**
 ```vue
 <template>
@@ -881,7 +881,7 @@ const props = defineProps({
 </style>
 ```
 
-8. **组件事件在Vue2 Options API和Vue3 Composition API的区别:**<br/>
+**8. 组件事件在Vue2 Options API和Vue3 Composition API的区别:**<br/>
 - 事情定义：
 ```vue
 <script setup>
@@ -903,7 +903,7 @@ this.$emit('submit-success')  // JavaScript中
 <MyComponent @submit-success="submitSuccess"/> <!-- 模板中 -->
 ```
 
-9. **如果特性元素较多，应该主动换行。**<br/>
+**9. 如果特性元素较多，应该主动换行。**<br/>
 **正例:**
 ```bash
   <MyComponent foo="a" bar="b" baz="c"
@@ -915,7 +915,7 @@ this.$emit('submit-success')  // JavaScript中
 **反例:**<br/>
 ```<MyComponent foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c" foo="a" bar="b" baz="c"/>```
 
-10. **组件通信原则:**
+**10. 组件通信原则:**
 ```vue
 <!-- 父组件 -->
 <template>
@@ -932,7 +932,7 @@ const emit = defineEmits(['update-title'])
 </script>
 ```
 
-11. **组件设计原则:**
+**11. 组件设计原则:**
 - 单一职责原则
 每个组件只做一件事<br/>
 保持组件精简（建议不超过300行）<br/>
@@ -1003,7 +1003,7 @@ computed: {
 **正例:**
 ```
 <template>...</template>
-<script>...</scrip>
+<script>...</script>
 <style>...</style>
 ```
 
@@ -1018,7 +1018,7 @@ computed: {
 在 Vue 的 v-for 列表中，key 是一个特殊的属性，它帮助 Vue 识别每个节点的身份，从而：
 1. 高效更新：精确追踪元素变化，减少不必要的 DOM 操作
 2. 状态保持：确保组件状态在重新渲染时正确保留
-3. 动画过渡：使过渡动画能正确工作<br/>
+3. 动画过渡：使过渡动画能正确工作<br/><br/>
 **正例:**<br/>
 ```vue
 <li v-for="item in items" :key="item.id">
@@ -1098,7 +1098,7 @@ export default {
 }
 ```
 
-### 6.8 Vue Router 规范
+### 6.8 Vue Router 规范 （error）
 1. **页面跳转数据传递使用路由参数**
 页面跳转，例如 A 页面跳转到 B 页面，需要将 A 页面的数据传递到 B 页面，推荐使用 路由参数进行传参，而不是将需要传递的数据保存 vuex，然后在 B 页面取出 vuex 的数据，因为如果在 B 页面刷新会导致 vuex 数据丢失，导致 B 页面无法正常显示数据。<br/>
 **正例:**
@@ -1196,7 +1196,7 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
   }
 ```
 
-### 6.9 状态管理
+### 6.9 状态管理 （error）
 1. **状态管理选型与架构:**<br/>
 **技术选型**<br/>
 - Vue 3 项目：推荐使用 Pinia (官方推荐的状态管理库)
