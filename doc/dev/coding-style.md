@@ -1111,11 +1111,11 @@ this.$router.push({ name: 'userCenter', query: { id: id } });
 ```javascript
 {
     path: '/upload-attachment',
-    name: 'uploadAttachment',
+    name: 'UploadAttachment',
     meta: {
       title: '上传附件'
     },
-    component: () => import('@/view/components/uploadAttachment/index.vue')
+    component: () => import('@/view/components/UploadAttachment.vue')
   }
 ```
 
@@ -1178,7 +1178,7 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
 |对象	          |   命名规范 |示例	          |强制要求          |
 |---------------|-----------|----------------|-----------------|
 |Store ID	      |kebab-case	|use-user-store	 |必须全局唯一      |
-|Store 文件	    |PascalCase	|UserStore.ts	   |以 Store 结尾     |
+|Store 文件	    |camelCase	|userStore.ts	   |以 Store 结尾     |
 |Action 方法	  |camelCase	|fetchUserData	 |必须为动词前缀    |
 |Getter 属性	  |camelCase	|userList	       |必须为名词/形容词 |
 |Mutation 方法	|camelCase	|setUserList	   |必须为动词前缀    |
@@ -1186,7 +1186,7 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
 **2. Pinia 核心规范:**<br/>
 **Store 定义规范:**
 ```javascript
-// src/stores/UserStore.ts
+// src/stores/userStore.ts
 export const useUserStore = defineStore('use-user-store', {
   state: () => ({
     userList: [] as User[],  // State 用名词
@@ -1225,7 +1225,7 @@ interface LoginForm {
 **在组件中使用:**
 ```vue
 <script setup>
-import { useUserStore } from '@/stores/modules/UserStore'
+import { useUserStore } from '@/stores/modules/userStore'
 
 const userStore = useUserStore()
 
@@ -1488,6 +1488,8 @@ fix(router): 修复登录页重定向循环问题
 ### 版本历史
 - **v2.0.4** 2025-06-24
   - 代码提交规范更新
+  - 路由规范更新
+  - 状态规范更新
   - 文档样式优化
 - **v2.0.3** 2025-06-14
   - 文档注释规范修改
