@@ -16,7 +16,7 @@ import vueParser from 'vue-eslint-parser';                     // Vue 解析器
  * tseslint.configs.recommended：TypeScript 推荐规则（类似 @typescript-eslint/recommended）。
  * pluginVue.configs["flat/essential"]：Vue 基础规则（如模板语法检查）。
  * parserOptions.parser：Vue 文件使用 typescript-eslint 解析器（支持 <script lang="ts">）。 
- * */ 
+ **/ 
 export default defineConfig([
   /* ---------------------------------------------------- 
     1. 基础规则 
@@ -71,7 +71,7 @@ export default defineConfig([
       },
     },
 
-    // 代码风格规则
+    // 规则配置
     rules: {
       // 强制单引号（允许字符串中包含其他引号）
       'quotes': ['error', 'single', { avoidEscape: true }],
@@ -105,55 +105,155 @@ export default defineConfig([
         }
       }],
 
-      /* ---------------
+      /* -----------------------------------------------------------------------
         vue特定规则
-      --------------- */
-      // 多单词组件名（白名单例外）
+      ----------------------------------------------------------------------- */
+      // 模板中组件名帕斯卡命名 
+      'vue/component-name-in-template-casing': ['error', 'PascalCase', {
+        // 对所有组件生效（包括全局注册的）
+        registeredComponentsOnly: false, 
+        // 可忽略的组件名
+        ignores: [], 
+      }], 
+      // 多单词组件名
       'vue/multi-word-component-names': ['error', {
-        ignores: ['Breadcrumb', 'SideBar'],
+        ignores: [],
       }],
       // 模板中使用双引号
       'vue/html-quotes': ['error', 'double'],
+      // 强制 Composition API 风格
       'vue/component-api-style': ['error', ['script-setup']],
+      // SFC 组件中强制顺序 强制script为setup 强制style为scoped script setup 中的代码块顺序规则
+      'vue/block-order': ['error', { order: [
+        // 模板
+        'template',
+        // 脚本 
+        'script[setup]',
+        // 优先scoped 
+        'style[scoped]',
+        // 全局样式
+        'style',
+        // 文档
+        'docs'
+      ] 
+      }],
+      // script/style块语言
+      'vue/block-lang': ['error', {
+        script: {
+          // 允许 ts/js
+          lang: ['ts', 'js'], 
+          allowNoLang: true
+        },
+        style: {
+          // 允许 css/scss
+          lang: ['css', 'scss'], 
+          // 允许不指定 lang
+          allowNoLang: true
+        }
+      }],
+      // 每行最多属性数
+      'vue/max-attributes-per-line': ['error', {
+        // 单行最多3个属性
+        singleline: 3, 
+        // 多行每行最多1个属性
+        multiline: 3,
+      }],
+      // 强制 v-bind 使用缩写 (:)
+      'vue/v-bind-style': ['error', 'shorthand'],
+      // 强制 v-on 使用缩写 (@)
+      'vue/v-on-style': ['error', 'shorthand'],    
+      // 强制 v-slot 使用缩写 (#) 
+      'vue/v-slot-style': ['error', 'shorthand'],
+      // 强制 v-for 必须设置 key
+      'vue/require-v-for-key': 'error',
+      // 定义宏的顺序
+      'vue/define-macros-order': ['error', {
+        order: [
+          'import',
+          'defineProps',
+          'defineEmits',
+          'defineExpose',
+          'withDefaults'
+        ]
+      }], 
 
-      /* -------------------
+      /* -----------------------------------------------------------------------
+        Prop 规范规则
+      ----------------------------------------------------------------------- */
+      // Prop 名称使用 camelCase
+      'vue/prop-name-casing': ['error', 'camelCase'], 
+      // Prop 指定类型
+      'vue/require-prop-types': 'error',
+      // 必须添加 required 或 default
+      'vue/require-default-prop': 'error',  
+      // validator 验证 
+      'vue/require-valid-default-prop': 'error',
+
+      /* -----------------------------------------------------------------------
         TypeScript特定规则
-      ------------------ */
+      ----------------------------------------------------------------------- */
       // 不强制显式返回类型
       '@typescript-eslint/explicit-function-return-type': 'off',
       // 使用any时警告
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/consistent-type-imports': 'error',
 
-      /* -------------------
+      /* -----------------------------------------------------------------------
         导入/导出规则
-      ------------------ */
+      ----------------------------------------------------------------------- */
       // 导入分组排序
       'import/order': ['error', {
         groups: [
           'builtin',    // Node内置模块
-          'external',   // npm包
-          'internal',   // 项目内部模块
+          'external',   // 外部依赖 (node_modules)
+          'internal',   // 内部路径别名引用
           'parent',     // 父目录模块
           'sibling',    // 同级目录模块
-          'index',      // 目录下的index文件
+          'index',      // 目录索引文件
+          'object',     // 对象导入
+          'type'        // 类型导入
         ],
-        'newlines-between': 'always', // 组间空行
-        alphabetize: { order: 'asc' }
+        pathGroups: [
+          // 将 Vue 相关导入放在 external 组前面
+          {
+            pattern: 'vue',
+            group: 'external',
+            position: 'before'
+          },
+          // 处理 @/ 别名路径的组排序
+          {
+            pattern: '@/**',
+            group: 'internal'
+          },
+          // 将样式文件归入 object 组
+          {
+            pattern: '*.{css,scss,sass,less}',
+            group: 'object',
+            patternOptions: { matchBase: true }
+          } 
+        ],
+        // 字母顺序排序 (a-z)
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        },
+        // 组间需要空行分隔
+        'newlines-between': 'always',
+        // 允许未分组的导入出现在任意位置
+        warnOnUnassignedImports: true,
       }],
 
-      /* -------------------
+      /* ----------------------------------------------------------------------- 
         其他规则
-      ------------------- */
+      ----------------------------------------------------------------------- */
       // 生产环境禁止console，开发环境警告
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
 
     }
   },
 
-  /* ---------------------------------------------------- 
+  /* ----------------------------------------------------------------------- 
     2. 纯JavaScript文件配置 
-  ---------------------------------------------------- */
+  ----------------------------------------------------------------------- */
   {
     // 仅适用于.js/.mjs/.cjs文件
     files: ['**/*.{js,mjs,cjs}'],
@@ -161,9 +261,9 @@ export default defineConfig([
     extends: [js.configs.recommended],
   },
 
-  /* ---------------------------------------------------- 
+  /* -----------------------------------------------------------------------
     3. TypeScript文件配置
-  ---------------------------------------------------- */
+  ----------------------------------------------------------------------- */
   {
     // 仅适用于.ts/.mts/.cts文件
     files: ['**/*.{ts,mts,cts}'],
@@ -178,9 +278,9 @@ export default defineConfig([
     },
   },
   
-  /* ---------------------------------------------------- 
+  /* ----------------------------------------------------------------------- 
     4. Vue文件配置
-  ---------------------------------------------------- */
+  ----------------------------------------------------------------------- */
   {
     // 仅适用于.vue文件
     files: ['**/*.vue'],
@@ -198,8 +298,8 @@ export default defineConfig([
         extraFileExtensions: ['.vue'], // 额外识别.vue扩展名
       },
     },
-  },
 
+  },
 
   {
     files: ['eslint.config.js'],
