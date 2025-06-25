@@ -384,10 +384,10 @@ ID 和 class 的名称总是使用可以反应元素目的和用途的名称，�
 ```
 
 ### 3.2 选择器
-1. **css 选择器中避免使用标签名**<br/>
+**1. css 选择器中避免使用标签名**<br/>
 从结构、表现、行为分离的原则来看，应该尽量避免 css 中出现 HTML 标签，并且在 css 选择器中出现标签名会存在潜在的问题。
 
-2. **使用直接子选择器**<br/>
+**2. 使用直接子选择器**<br/>
 很多前端开发人员写选择器链的时候不使用直接子选择器（注:直接子选择器和后代选择器的区别 ）。有时，这可能会导致疼痛的设计问题并且有时候可能会很耗性能。然而，在任何情况下，这是一个非常不好的做法。如果你不写很通用的，需要匹配到 DOM 末端的选择器，你应该总是考虑直接子选择器。<br/>
 
 **不推荐:**
@@ -561,11 +561,11 @@ $button-padding: 12px 24px;
 
 ## 五、Javascript 规范
 ### 5.1 命名
-1. **采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线或美元符号结束**<br/>
+**1. 采用小写驼峰命名 lowerCamelCase，代码中的命名均不能以下划线或美元符号结束**<br/>
 **正例:** ```name```<br/>
 **反例:** ```name_ / name$```
 
-2. **方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从小驼峰形式**<br/>
+**2. 方法名、参数名、成员变量、局部变量都统一使用 lowerCamelCase 风 格，必须遵从小驼峰形式**<br/>
 **正例:** ```localValue / getHttpMessage() / inputUserId```<br/>
 其中 method 方法命名必须是 动词 或者 动词+名词 形式<br/>
 **正例:** ```saveShopCarData /openShopCarInfoDialog```<br/>
@@ -627,25 +627,25 @@ obsolete 废弃/depreciate 废旧,
 collect 收集/aggregate 聚集
 ```
 
-3. **常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚， 不要嫌名字长**<br/>
+**3. 常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚， 不要嫌名字长**<br/>
 **正例:** ```MAX_STOCK_COUNT```<br/>
 **反例:** ```MAX_COUNT```
 
-4. **类与构造函数统一采用LowerCamelCase风格，必须遵守大骆峰形式**<br/>
+**4. 类与构造函数统一采用LowerCamelCase风格，必须遵守大骆峰形式**<br/>
 **正例:** ```LowerCamelCase/Lower/LowerCamel```<br/>
 **反例:** ```lowercamelcase/lower/lowercamel```<br/>
 
-5. **私有成员前缀下划线**<br/>
+**5. 私有成员前缀下划线**<br/>
 **正例:** ```_privateProperty / _privateMethod()```<br/>
 **反例:** ```privateProperty / privateMethod()```<br/>
 
-6. **布尔值命名 (is/has/can 开头)**<br/>
+**6. 布尔值命名 (is/has/can 开头)**<br/>
 **正例:** ```isLoading / hasError / canSubmit```<br/>
 **反例:** ```loading / error / submit```<br/>
 
 
 ### 5.2 代码格式
-1. **使用 2 个空格进行缩进**<br/>
+**1. 使用 2 个空格进行缩进**<br/>
 **正例:**
 ```javascript
 if (x < y) {
@@ -654,11 +654,11 @@ if (x < y) {
    x += 1; 
 }
 ```
-2. **不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
+**2. 不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
 说明:任何情形，没有必要插入多个空行进行隔开。
 
 ### 5.3 字符串
-1. 统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处:<br/>
+1.统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处:<br/>
 **正例:**
 ```javascript
   let str = 'foo';
@@ -670,7 +670,7 @@ if (x < y) {
   let testDiv = "<div id='test'></div>";
 ```
 
-2. ES6+引用的模板字符串使得动态字符串和多行字符串采用反引号(``)来表示，并且可以在字符串中使用 ${} 来表示变量。<br/>
+2.ES6+引用的模板字符串使得动态字符串和多行字符串采用反引号(``)来表示，并且可以在字符串中使用 ${} 来表示变量。<br/>
 **正例:**
 ```javascript
 let name = 'John';
@@ -685,11 +685,11 @@ console.log(greeting); // 输出: Hello, John!
 ```
 
 ### 5.4 对象声明
-1. **使用字面值创建对象**
+**1. 使用字面值创建对象**<br/>
 **正例:** <br/>```let user = {};```<br/>
 **反例:** <br/>```let user = new Object();```
-1. **使用字面量来代替对象构造器**
-**正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```
+**2. 使用字面量来代替对象构造器**<br/>
+**正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```<br/>
 **反例:**<br/>
 ```javascript
     var user = new Object(); 
@@ -1098,19 +1098,19 @@ export default {
 }
 ```
 
-### 6.8 Vue Router 规范 （error）
-1. **页面跳转数据传递使用路由参数**
+### 6.8 Vue Router 规范
+**1. 页面跳转数据传递使用路由参数**<br/>
 页面跳转，例如 A 页面跳转到 B 页面，需要将 A 页面的数据传递到 B 页面，推荐使用 路由参数进行传参，而不是将需要传递的数据保存 vuex，然后在 B 页面取出 vuex 的数据，因为如果在 B 页面刷新会导致 vuex 数据丢失，导致 B 页面无法正常显示数据。<br/>
 **正例:**
-```
+```javascript
 let id = ' 123';
 this.$router.push({ name: 'userCenter', query: { id: id } });
 ```
 
-2. **使用路由懒加载（延迟加载）机制**
-```
+**2. 使用路由懒加载（延迟加载）机制**
+```javascript
 {
-    path: '/uploadAttachment',
+    path: '/upload-attachment',
     name: 'uploadAttachment',
     meta: {
       title: '上传附件'
@@ -1119,55 +1119,37 @@ this.$router.push({ name: 'userCenter', query: { id: id } });
   }
 ```
 
-3. **router 中的命名规范**
-path、childrenPoints 命名规范采用kebab-case命名规范（尽量vue文件的目录结构保持一致，因为目录、文件名都是kebab-case，这样很方便找到对应的文件）<br/>
-name 命名规范采用KebabCase命名规范且和component组件名保持一致！（因为要保持keep-alive特性，keep-alive按照component的name进行缓存，所以两者必须高度保持一致）<br/>
+**3. router 中的命名规范**<br/>
+path、childrenPoints 命名规范采用kebab-case命名规范<br/>
+name 命名规范采用KebabCase命名规范且和component组件名保持一致！<br/>
 
-```
-// 动态加载
-export const reload = [
+```typescript
+import type { RouteRecordRaw } from 'vue-router'
+
+const routes: RouteRecordRaw[] = [
   {
-    path: '/reload',
-    name: 'reload',
-    component: Main,
+    path: '/dashboard',
+    name: 'Dashboard', // PascalCase 命名
+    component: () => import('@/views/Dashboard.vue'),
     meta: {
-      title: '动态加载',
-      icon: 'icon iconfont'
+      title: '控制台',
+      requiresAuth: true,  // 需要登录
+      roles: ['admin'],    // 权限角色
+      keepAlive: true      // 缓存页面
     },
-    children: [
-      {
-        path: '/reload/smart-reload-list',
-        name: 'SmartReloadList',
-        meta: {
-          title: 'SmartReload',
-          childrenPoints: [
-            {
-              title: '查询',
-              name: 'smart-reload-search'
-            },
-            {
-              title: '执行reload',
-              name: 'smart-reload-update'
-            },
-            {
-              title: '查看执行结果',
-              name: 'smart-reload-result'
-            }
-          ]
-        },
-        component: () =>
-          import('@/views/reload/smart-reload/smart-reload-list.vue')
-      }
-    ]
+    props: route => ({ query: route.query.id }), // 推荐函数形式
+    children: [] // 嵌套路由
   }
-];
+]
+
+export default routes
 ```
 
-4. **router 中的 path 命名规范**
+**4. router 中的 path 命名规范**
 path除了采用kebab-case命名规范以外，必须以 / 开头，即使是children里的path也要以 / 开头。如下示例<br/>
 **目的:**<br/>
 经常有这样的场景:某个页面有问题，要立刻找到这个vue文件，如果不用以/开头，path为parent和children组成的，可能经常需要在router文件里搜索多次才能找到，而如果以/开头，则能立刻搜索到对应的组件<br/>
-```
+```javascript
 {
     path: '/file',
     name: 'File',
@@ -1180,58 +1162,45 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
       {
         path: '/file/file-list',
         name: 'FileList',
-        component: () => import('@/views/file/file-list.vue')
+        component: () => import('@/views/file/FileList.vue')
       },
-      {
-        path: '/file/file-add',
-        name: 'FileAdd',
-        component: () => import('@/views/file/file-add.vue')
-      },
-      {
-        path: '/file/file-update',
-        name: 'FileUpdate',
-        component: () => import('@/views/file/file-update.vue')
-      }
     ]
   }
 ```
 
-### 6.9 状态管理 （error）
-1. **状态管理选型与架构:**<br/>
+### 6.9 状态管理 
+**1. 状态管理选型与架构:**<br/>
 **技术选型**<br/>
 - Vue 3 项目：推荐使用 Pinia (官方推荐的状态管理库)
 - Vue 2 项目：可使用 Vuex 4 (兼容版本)
 
-2. **Pinia 核心规范:**<br/>
+**命名规范**
+|对象	          |   命名规范 |示例	          |强制要求          |
+|---------------|-----------|----------------|-----------------|
+|Store ID	      |kebab-case	|use-user-store	 |必须全局唯一      |
+|Store 文件	    |PascalCase	|UserStore.ts	   |以 Store 结尾     |
+|Action 方法	  |camelCase	|fetchUserData	 |必须为动词前缀    |
+|Getter 属性	  |camelCase	|userList	       |必须为名词/形容词 |
+|Mutation 方法	|camelCase	|setUserList	   |必须为动词前缀    |
+
+**2. Pinia 核心规范:**<br/>
 **Store 定义规范:**
 ```javascript
-// stores/modules/user.ts
-import { defineStore } from 'pinia'
-
-export const useUserStore = defineStore('user', {
-  // 状态定义
+// src/stores/UserStore.ts
+export const useUserStore = defineStore('use-user-store', {
   state: () => ({
-    id: null as number | null,
-    name: '',
-    token: ''
+    userList: [] as User[],  // State 用名词
   }),
-
-  // 计算属性
-  getters: {
-    isLoggedIn: (state) => !!state.token,
-    username: (state) => state.name || 'Guest'
-  },
-
-  // 操作方法
   actions: {
-    async login(credentials: LoginForm) {
-      const { data } = await api.login(credentials)
-      this.token = data.token
-      this.name = data.username
-    },
-    
-    logout() {
-      this.$reset()
+    // Action 用动词前缀
+    async fetchUserList() {
+      this.userList = await api.getUsers()
+    }
+  },
+  getters: {
+    // Getter 用形容词/名词
+    activeUsers(): User[] {
+      return this.userList.filter(u => u.isActive)
     }
   }
 })
@@ -1252,11 +1221,11 @@ interface LoginForm {
 }
 ```
 
-3. **状态使用规范:**
+**3. 状态使用规范:**
 **在组件中使用:**
 ```vue
 <script setup>
-import { useUserStore } from '@/stores/modules/user'
+import { useUserStore } from '@/stores/modules/UserStore'
 
 const userStore = useUserStore()
 
@@ -1289,6 +1258,48 @@ userStore.$patch({
 // 方式2： action
 userStore.updateProfile({ name: "新名字" })
 ```
+
+### 6.10 导入规范
+**1. 导入分组与排序规则**
+每组之间用空行分隔<br/>
+按字母顺序排序<br/>
+类型导入置于最后<br/>
+```vue
+<script setup>
+// 1. 内置模块 (builtin)
+import path from 'path'
+
+// 2. 外部依赖 (external)
+import { ref } from 'vue'
+import axios from 'axios'
+
+// 3. 内部路径 (internal)
+import { useUserStore } from '@/stores/user'
+import AppButton from '@/components/Button.vue'
+
+// 4. 父级目录引用 (parent)
+import helper from '../utils/helper'
+
+// 5. 同级目录引用 (sibling)
+import logger from './logger'
+
+// 6. 样式文件 (object)
+import styles from './styles.module.scss'
+
+// 7. 类型导入 (type)
+import type { User } from '@/types'
+</script>
+```
+**2. 导入语法规范**
+|场景	    |正确示例	                                |错误示例                          |
+|---------|--------------------------------------- |--------------------------------|
+|默认导入	|`import App from './App.vue'`	          |`import { App } from './App.vue`  |
+|按需导入	|`import { ref } from 'vue'`              |`import ref from 'vue'         `  |
+|动态导入	|`const module = await import('./module')`|`	-                           `  |
+|别名路径	|`import utils from '@/utils'`            |`import utils from '../../utils`  |
+**注意:**
+- 禁止混用默认导入和按需导入（如 `import App, { ref } from 'vue'`）
+- `.vue` 文件必须显式写扩展名 
 
 ## 七、Vue 项目目录规范
 ### 7.1 基础
@@ -1468,11 +1479,16 @@ fix(router): 修复登录页重定向循环问题
 |Volar	        |VS Code 插件，实时语法校验、类型提示（需结合 TypeScript）	   |settings.json（IDE）|
 
 ## 附录
+### 工具清单
+代码审查
 ### 版本号规范
 - 主版本号（Major）：当你做了不兼容的 API 修改
 - 次版本号（Minor）：当你做了向下兼容的功能性新增
 - 修订号（Patch）：当你做了向下兼容的问题修正 
-### 1. **版本历史**
+### 版本历史
+- **v2.0.4** 2025-06-24
+  - 代码提交规范更新
+  - 文档样式优化
 - **v2.0.3** 2025-06-14
   - 文档注释规范修改
 - **v2.0.2** 2025-06-13
@@ -1480,17 +1496,13 @@ fix(router): 修复登录页重定向循环问题
 - **v2.0.1** 2025-06-12
   - 文档目录大更新
   - 结合阿里vue2规范
-  
 - **v1.0.3** 2025-06-04
   - 文档标题修改问题
-
 - **v1.0.2** 2025-05-21
    - 文档大纲优化
-  
 - **v1.0.1** 2025-05-20
   - 文档删除目录结构
   - 代码提交规范添加类型名称
-
 - **v1.0.0** 2025-05-19
   - 初始发布
   - 编辑文档生成代码规范文档
