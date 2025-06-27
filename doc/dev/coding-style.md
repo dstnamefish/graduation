@@ -627,13 +627,13 @@ obsolete 废弃/depreciate 废旧,
 collect 收集/aggregate 聚集
 ```
 
-**3. 常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚， 不要嫌名字长**<br/>
+**3. 基本类型常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚， 不要嫌名字长**<br/>
 **正例:** ```MAX_STOCK_COUNT```<br/>
 **反例:** ```MAX_COUNT```
 
-**4. 类与构造函数统一采用LowerCamelCase风格，必须遵守大骆峰形式**<br/>
-**正例:** ```LowerCamelCase/Lower/LowerCamel```<br/>
-**反例:** ```lowercamelcase/lower/lowercamel```<br/>
+**4. 类与接口统一采用PascalCase风格，必须遵守帕斯卡形式**<br/>
+**正例:** ```PascalCase```<br/>
+**反例:** ```camelCase/```<br/>
 
 **5. 私有成员前缀下划线**<br/>
 **正例:** ```_privateProperty / _privateMethod()```<br/>
@@ -687,7 +687,7 @@ console.log(greeting); // 输出: Hello, John!
 ### 5.4 对象声明
 **1. 使用字面值创建对象**<br/>
 **正例:** <br/>```let user = {};```<br/>
-**反例:** <br/>```let user = new Object();```
+**反例:** <br/>```let user = new Object();```<br/>
 **2. 使用字面量来代替对象构造器**<br/>
 **正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```<br/>
 **反例:**<br/>
