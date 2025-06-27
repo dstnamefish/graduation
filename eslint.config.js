@@ -16,10 +16,10 @@ import vueParser from 'vue-eslint-parser';                     // Vue 解析器
  * tseslint.configs.recommended：TypeScript 推荐规则（类似 @typescript-eslint/recommended）。
  * pluginVue.configs["flat/essential"]：Vue 基础规则（如模板语法检查）。
  * parserOptions.parser：Vue 文件使用 typescript-eslint 解析器（支持 <script lang="ts">）。 
- **/ 
+ */ 
 export default defineConfig([
   /* ---------------------------------------------------- 
-    1. 基础规则 
+    1. 全局规则 
   ---------------------------------------------------- */
   { 
     // 适用于所有 JS/TS/Vue 文件 
@@ -39,20 +39,13 @@ export default defineConfig([
       globals: {
         ...globals.browser, // window/document等
         ...globals.node, // require/module等
-        ...globals.es2025, // ES2021全局对象    
-        // Vue 3 宏编辑器 
-        // 1.防止被意外修改（如 defineProps = {} 会导致错误）
-        // 2.提示开发者这些是特殊语法，不是普通函数或变量。
-        defineProps: 'readonly',
-        defineEmits: 'readonly',
-        defineExpose: 'readonly',
-        withDefaults: 'readonly'
+        ...globals.es2025, // ES2025全局对象    
       },
       // 解析器选项
       parserOptions: {
         ecmaVersion: 'latest', // 使用最新ECMAScript标准
         sourceType: 'module', // 使用ES模块语法
-        extraFileExtensions: ['.vue']
+        extraFileExtensions: ['.vue'],
       },
     },
     // 插件特定设置
@@ -73,20 +66,10 @@ export default defineConfig([
 
     // 规则配置
     rules: {
-      // 强制单引号（允许字符串中包含其他引号）
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      // 必须使用分号
-      'semi': ['error', 'always'],
       // 2空格缩进（switch case特殊处理）
       'indent': ['error', 2, { SwitchCase: 1 }],
       // 仅多行时允许尾随逗号
       'comma-dangle': ['error', 'only-multiline'],
-      // 对象花括号内强制空格
-      'object-curly-spacing': ['error', 'always'],
-      // 函数定义时括号前空格
-      'space-before-function-paren': ['error', 'never'],
-      // 箭头函数参数括号前空格
-      'arrow-parens': ['error', 'as-needed'],
       // 强制注释风格（* 开头）
       'spaced-comment': ['error', 'always', {
         'line':{
@@ -106,8 +89,211 @@ export default defineConfig([
       }],
 
       /* -----------------------------------------------------------------------
-        vue特定规则
+        JavaScript/TypeScript 代码风格规则
       ----------------------------------------------------------------------- */
+      // 强制单引号（允许字符串中包含其他引号）
+      'quotes': ['error', 'single', { avoidEscape: true }],
+      // 必须使用分号
+      'semi': ['error', 'always'],
+      // 对象花括号内强制空格
+      'object-curly-spacing': ['error', 'always'],
+      // 函数定义时括号前空格
+      'space-before-function-paren': ['error', 'never'],
+      // 箭头函数参数括号前空格
+      'arrow-parens': ['error', 'as-needed'],
+      // 强制所有控制语句使用大括号
+      'curly': ['error', 'all'],
+
+
+      /* -----------------------------------------------------------------------
+        导入/导出规则
+      ----------------------------------------------------------------------- */
+      // 导入分组排序
+      'import/order': ['error', {
+        groups: [
+          'builtin',    // Node内置模块
+          'external',   // 外部依赖 (node_modules)
+          'internal',   // 内部路径别名引用
+          'parent',     // 父目录模块
+          'sibling',    // 同级目录模块
+          'index',      // 目录索引文件
+          'object',     // 对象导入
+          'type'        // 类型导入
+        ],
+        pathGroups: [
+          // 将 Vue 相关导入放在 external 组前面
+          {
+            pattern: 'vue',
+            group: 'external',
+            position: 'before'
+          },
+          // 处理 @/ 别名路径的组排序
+          {
+            pattern: '@/**',
+            group: 'internal'
+          },
+          // 将样式文件归入 object 组
+          {
+            pattern: '*.{css,scss,sass,less}',
+            group: 'object',
+            patternOptions: { matchBase: true }
+          } 
+        ],
+        // 字母顺序排序 (a-z)
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true
+        },
+        // 组间需要空行分隔
+        'newlines-between': 'always',
+        // 允许未分组的导入出现在任意位置
+        warnOnUnassignedImports: true,
+      }],
+
+      /* ----------------------------------------------------------------------- 
+        其他规则
+      ----------------------------------------------------------------------- */
+      // 生产环境禁止console，开发环境警告
+      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+
+    }
+  },
+
+  /* -----------------------------------------------------------------------
+    2. TypeScript文件特定配置
+  ----------------------------------------------------------------------- */
+  {
+    // 仅适用于.ts/.mts/.cts文件
+    files: ['**/*.{ts,mts,cts}'],
+    // 继承TypeScript推荐规则
+    extends: [
+      tseslint.configs.recommended
+    ],
+    languageOptions: {
+      // 使用TS专用解析器
+      parser: tsParser, 
+      parserOptions: {
+        // 关联TS配置文件
+        project: './tsconfig.app.json', 
+        tsconfigRootDir: import.meta.dirname
+      },
+    },
+    rules: {
+      // 命名规范规则
+      '@typescript-eslint/naming-convention': ['error',
+        // 禁止下划线/美元符结尾
+        {
+          selector: ['variable', 'function', 'parameter', 'property', 'method'],
+          // 禁用默认format检查
+          format: null, 
+          custom: {
+            // 不能以下划线或美元符结束
+            regex: '^[a-zA-Z][a-zA-Z0-9]*(?<![_$])$', 
+            match: true
+          }
+        },
+
+        // 全局常量（全大写+下划线）
+        {
+          selector: 'variable',
+          modifiers: ['const'],
+          types: ['boolean', 'number', 'string'], 
+          format: ['UPPER_CASE'],
+          custom: {
+            regex: '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$', 
+            match: true
+          },
+          // 通过文件名/路径限定全局常量
+          filter: {
+            // 仅匹配特定文件名或路径
+            regex: '',
+            match: true
+          }
+        },
+
+        // 普通变量/参数/方法使用小驼峰 
+        {
+          selector: ['variable', 'function', 'parameter', 'property', 'method'],
+          // 排除私有成员
+          modifiers: ['private'], 
+          format: ['camelCase'],
+          // 禁止下划线前缀
+          leadingUnderscore: 'forbid' 
+        },
+
+        // 私有成员必须下划线前缀
+        {
+          selector: 'memberLike',
+          modifiers: ['private'],
+          format: ['camelCase'],
+          // 必须下划线前缀
+          leadingUnderscore: 'require' 
+        },
+
+        // 类/接口
+        {
+          selector: ['class', 'interface'],
+          format: ['PascalCase']
+        },
+
+        // 布尔值前缀
+        {
+          selector: ['variable', 'property'],
+          types: ['boolean'],
+          format: ['camelCase'],
+          // 前缀指定
+          prefix: ['is', 'has', 'can'] 
+        },
+
+        // 枚举成员
+        {
+          selector: 'enumMember',
+          format: ['PascalCase', 'UPPER_CASE']
+        },
+
+      ],
+      // 禁止使用 any 类型，如果使用了会发出 警告（warn），但不会阻止代码运行
+      '@typescript-eslint/no-explicit-any': 'warn',
+      // 关闭强制要求函数必须显式声明返回类型
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    }
+
+  },
+  
+  /* ----------------------------------------------------------------------- 
+    3. Vue文件配置
+  ----------------------------------------------------------------------- */
+  {
+    // 仅适用于.vue文件
+    files: ['**/*.vue'],
+    plugins: {
+      vue: pluginVue,
+    },
+    // 继承Vue基础规则
+    ...pluginVue.configs['vue3-recommended'],
+    languageOptions: {
+      // 使用Vue专用解析器
+      parser: vueParser, 
+      parserOptions: {
+        // Vue文件中<script>部分使用TS解析器
+        parser: tsParser, 
+        // 关联TS配置
+        project: './tsconfig.app.json', 
+        tsconfigRootDir: import.meta.dirname,
+        // 额外识别.vue扩展名
+        extraFileExtensions: ['.vue'], 
+      },
+      globals: {
+      // Vue 3 宏编辑器 
+      // 1.防止被意外修改（如 defineProps = {} 会导致错误）
+      // 2.提示开发者这些是特殊语法，不是普通函数或变量。
+        defineProps: 'readonly',
+        defineEmits: 'readonly',
+        defineExpose: 'readonly',
+        withDefaults: 'readonly',                                                                                                                                                                                                                                                                                                                                                                       
+      }
+    },
+    rules: {
       // 模板中组件名帕斯卡命名 
       'vue/component-name-in-template-casing': ['error', 'PascalCase', {
         // 对所有组件生效（包括全局注册的）
@@ -176,6 +362,11 @@ export default defineConfig([
           'withDefaults'
         ]
       }], 
+      // Vue 中属性小驼峰
+      'vue/attribute-hyphenation': ['error', 'never', {
+        // 允许特定前缀
+        ignore: ['data-', 'aria-', 'slot-scope'] 
+      }],
 
       /* -----------------------------------------------------------------------
         Prop 规范规则
@@ -187,120 +378,13 @@ export default defineConfig([
       // 必须添加 required 或 default
       'vue/require-default-prop': 'error',  
       // validator 验证 
-      'vue/require-valid-default-prop': 'error',
-
-      /* -----------------------------------------------------------------------
-        TypeScript特定规则
-      ----------------------------------------------------------------------- */
-      // 不强制显式返回类型
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      // 使用any时警告
-      '@typescript-eslint/no-explicit-any': 'warn',
-
-      /* -----------------------------------------------------------------------
-        导入/导出规则
-      ----------------------------------------------------------------------- */
-      // 导入分组排序
-      'import/order': ['error', {
-        groups: [
-          'builtin',    // Node内置模块
-          'external',   // 外部依赖 (node_modules)
-          'internal',   // 内部路径别名引用
-          'parent',     // 父目录模块
-          'sibling',    // 同级目录模块
-          'index',      // 目录索引文件
-          'object',     // 对象导入
-          'type'        // 类型导入
-        ],
-        pathGroups: [
-          // 将 Vue 相关导入放在 external 组前面
-          {
-            pattern: 'vue',
-            group: 'external',
-            position: 'before'
-          },
-          // 处理 @/ 别名路径的组排序
-          {
-            pattern: '@/**',
-            group: 'internal'
-          },
-          // 将样式文件归入 object 组
-          {
-            pattern: '*.{css,scss,sass,less}',
-            group: 'object',
-            patternOptions: { matchBase: true }
-          } 
-        ],
-        // 字母顺序排序 (a-z)
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true
-        },
-        // 组间需要空行分隔
-        'newlines-between': 'always',
-        // 允许未分组的导入出现在任意位置
-        warnOnUnassignedImports: true,
-      }],
-
-      /* ----------------------------------------------------------------------- 
-        其他规则
-      ----------------------------------------------------------------------- */
-      // 生产环境禁止console，开发环境警告
-      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-
+      'vue/require-valid-default-prop': 'error',// 禁止使用 v-html
     }
   },
 
-  /* ----------------------------------------------------------------------- 
-    2. 纯JavaScript文件配置 
-  ----------------------------------------------------------------------- */
-  {
-    // 仅适用于.js/.mjs/.cjs文件
-    files: ['**/*.{js,mjs,cjs}'],
-    // 继承ESLint官方推荐规则
-    extends: [js.configs.recommended],
-  },
-
   /* -----------------------------------------------------------------------
-    3. TypeScript文件配置
+     4. 特殊文件覆盖
   ----------------------------------------------------------------------- */
-  {
-    // 仅适用于.ts/.mts/.cts文件
-    files: ['**/*.{ts,mts,cts}'],
-    // 继承TypeScript推荐规则
-    extends: [tseslint.configs.recommended],
-    languageOptions: {
-      parser: tsParser, // 使用TS专用解析器
-      parserOptions: {
-        project: './tsconfig.app.json', // 关联TS配置文件
-        tsconfigRootDir: import.meta.dirname
-      },
-    },
-  },
-  
-  /* ----------------------------------------------------------------------- 
-    4. Vue文件配置
-  ----------------------------------------------------------------------- */
-  {
-    // 仅适用于.vue文件
-    files: ['**/*.vue'],
-    plugins: {
-      vue: pluginVue,
-    },
-    // 继承Vue基础规则
-    ...pluginVue.configs['vue3-recommended'],
-    languageOptions: {
-      parser: vueParser, // 使用Vue专用解析器
-      parserOptions: {
-        parser: tsParser, // Vue文件中<script>部分使用TS解析器
-        project: './tsconfig.app.json', // 关联TS配置
-        tsconfigRootDir: import.meta.dirname,
-        extraFileExtensions: ['.vue'], // 额外识别.vue扩展名
-      },
-    },
-
-  },
-
   {
     files: ['eslint.config.js'],
     rules: {
