@@ -54,9 +54,9 @@ export default defineConfig([
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true, // 优先尝试TypeScript类型解析
-          project: './tsconfig.app.json'
+          project: './tsconfig.app.json',
         },
-        node: true
+        node: true,
       },
       // 指定哪些文件由TS解析器处理
       'import/parsers': {
@@ -66,17 +66,20 @@ export default defineConfig([
 
     // 规则配置
     rules: {
+      /* -----------------------------------------------------------------------
+        默认规则
+      ----------------------------------------------------------------------- */
       // 2空格缩进（switch case特殊处理）
       'indent': ['error', 2, { SwitchCase: 1 }],
-      // 仅多行时允许尾随逗号
-      'comma-dangle': ['error', 'only-multiline'],
+      // 生产环境禁止console，开发环境警告
+      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       // 强制注释风格（* 开头）
       'spaced-comment': ['error', 'always', {
         'line':{
           // 针对 /// 三斜线注释（如 TypeScript）
           'markers': ['/'],
           // 允许注释后紧跟 - 或 +（如 JSDoc）
-          'exceptions': ['-', '+'] 
+          'exceptions': ['-', '+'], 
         },
         'block':{
           // 针对 /*! 特殊注释（如 LICENSE 声明）
@@ -84,13 +87,15 @@ export default defineConfig([
           // 允许 /* 后紧跟 * 
           'exceptions': ['*'], 
           // 要求 /* 和 */ 对称
-          'balanced': true 
-        }
+          'balanced': true, 
+        },
       }],
 
       /* -----------------------------------------------------------------------
         JavaScript/TypeScript 代码风格规则
       ----------------------------------------------------------------------- */
+      // 强制多行结构必须尾随逗号，单行禁止
+      'comma-dangle': ['error', 'always-multiline'],
       // 强制单引号（允许字符串中包含其他引号）
       'quotes': ['error', 'single', { avoidEscape: true }],
       // 必须使用分号
@@ -103,7 +108,6 @@ export default defineConfig([
       'arrow-parens': ['error', 'as-needed'],
       // 强制所有控制语句使用大括号
       'curly': ['error', 'all'],
-
 
       /* -----------------------------------------------------------------------
         导入/导出规则
@@ -118,45 +122,38 @@ export default defineConfig([
           'sibling',    // 同级目录模块
           'index',      // 目录索引文件
           'object',     // 对象导入
-          'type'        // 类型导入
+          'type',        // 类型导入
         ],
         pathGroups: [
           // 将 Vue 相关导入放在 external 组前面
           {
             pattern: 'vue',
             group: 'external',
-            position: 'before'
+            position: 'before',
           },
           // 处理 @/ 别名路径的组排序
           {
             pattern: '@/**',
-            group: 'internal'
+            group: 'internal',
           },
           // 将样式文件归入 object 组
           {
             pattern: '*.{css,scss,sass,less}',
             group: 'object',
-            patternOptions: { matchBase: true }
-          } 
+            patternOptions: { matchBase: true },
+          }, 
         ],
         // 字母顺序排序 (a-z)
         alphabetize: {
           order: 'asc',
-          caseInsensitive: true
+          caseInsensitive: true,
         },
         // 组间需要空行分隔
         'newlines-between': 'always',
         // 允许未分组的导入出现在任意位置
         warnOnUnassignedImports: true,
       }],
-
-      /* ----------------------------------------------------------------------- 
-        其他规则
-      ----------------------------------------------------------------------- */
-      // 生产环境禁止console，开发环境警告
-      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-
-    }
+    },
   },
 
   /* -----------------------------------------------------------------------
@@ -167,7 +164,7 @@ export default defineConfig([
     files: ['**/*.{ts,mts,cts}'],
     // 继承TypeScript推荐规则
     extends: [
-      tseslint.configs.recommended
+      tseslint.configs.recommended,
     ],
     languageOptions: {
       // 使用TS专用解析器
@@ -175,7 +172,7 @@ export default defineConfig([
       parserOptions: {
         // 关联TS配置文件
         project: './tsconfig.app.json', 
-        tsconfigRootDir: import.meta.dirname
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
@@ -183,14 +180,14 @@ export default defineConfig([
       '@typescript-eslint/naming-convention': ['error',
         // 禁止下划线/美元符结尾
         {
-          selector: ['variable', 'function', 'parameter', 'property', 'method'],
+          selector: ['variable', 'function', 'parameter', 'method'],
           // 禁用默认format检查
           format: null, 
           custom: {
             // 不能以下划线或美元符结束
             regex: '^[a-zA-Z][a-zA-Z0-9]*(?<![_$])$', 
-            match: true
-          }
+            match: true,
+          },
         },
 
         // 全局常量（全大写+下划线）
@@ -201,14 +198,14 @@ export default defineConfig([
           format: ['UPPER_CASE'],
           custom: {
             regex: '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$', 
-            match: true
+            match: true,
           },
           // 通过文件名/路径限定全局常量
           filter: {
             // 仅匹配特定文件名或路径
             regex: '',
-            match: true
-          }
+            match: true,
+          },
         },
 
         // 普通变量/参数/方法使用小驼峰 
@@ -218,7 +215,7 @@ export default defineConfig([
           modifiers: ['private'], 
           format: ['camelCase'],
           // 禁止下划线前缀
-          leadingUnderscore: 'forbid' 
+          leadingUnderscore: 'forbid', 
         },
 
         // 私有成员必须下划线前缀
@@ -227,13 +224,13 @@ export default defineConfig([
           modifiers: ['private'],
           format: ['camelCase'],
           // 必须下划线前缀
-          leadingUnderscore: 'require' 
+          leadingUnderscore: 'require', 
         },
 
         // 类/接口
         {
           selector: ['class', 'interface'],
-          format: ['PascalCase']
+          format: ['PascalCase'],
         },
 
         // 布尔值前缀
@@ -242,13 +239,13 @@ export default defineConfig([
           types: ['boolean'],
           format: ['camelCase'],
           // 前缀指定
-          prefix: ['is', 'has', 'can'] 
+          prefix: ['is', 'has', 'can'], 
         },
 
         // 枚举成员
         {
           selector: 'enumMember',
-          format: ['PascalCase', 'UPPER_CASE']
+          format: ['PascalCase', 'UPPER_CASE'],
         },
 
       ],
@@ -256,7 +253,7 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'warn',
       // 关闭强制要求函数必须显式声明返回类型
       '@typescript-eslint/explicit-function-return-type': 'off',
-    }
+    },
 
   },
   
@@ -291,7 +288,7 @@ export default defineConfig([
         defineEmits: 'readonly',
         defineExpose: 'readonly',
         withDefaults: 'readonly',                                                                                                                                                                                                                                                                                                                                                                       
-      }
+      },
     },
     rules: {
       // 模板中组件名帕斯卡命名 
@@ -320,22 +317,22 @@ export default defineConfig([
         // 全局样式
         'style',
         // 文档
-        'docs'
-      ] 
+        'docs',
+      ], 
       }],
       // script/style块语言
       'vue/block-lang': ['error', {
         script: {
           // 允许 ts/js
           lang: ['ts', 'js'], 
-          allowNoLang: true
+          allowNoLang: true,
         },
         style: {
           // 允许 css/scss
           lang: ['css', 'scss'], 
           // 允许不指定 lang
-          allowNoLang: true
-        }
+          allowNoLang: true,
+        },
       }],
       // 每行最多属性数
       'vue/max-attributes-per-line': ['error', {
@@ -359,13 +356,31 @@ export default defineConfig([
           'defineProps',
           'defineEmits',
           'defineExpose',
-          'withDefaults'
-        ]
+          'withDefaults',
+        ],
       }], 
       // Vue 中属性小驼峰
       'vue/attribute-hyphenation': ['error', 'never', {
         // 允许特定前缀
-        ignore: ['data-', 'aria-', 'slot-scope'] 
+        ignore: [        
+          'data-*',
+          'aria-*',
+          'slot-scope',
+          'v-bind:*',
+          'v-slot',
+          'v-for',
+          'v-if',
+          'v-else',
+          'v-else-if',
+          'v-show',
+          'v-model',
+          'v-on:*',
+          'v-text',
+          'v-html',
+          'v-pre',
+          'v-cloak',
+          'v-once',
+        ], 
       }],
 
       /* -----------------------------------------------------------------------
@@ -379,7 +394,7 @@ export default defineConfig([
       'vue/require-default-prop': 'error',  
       // validator 验证 
       'vue/require-valid-default-prop': 'error',// 禁止使用 v-html
-    }
+    },
   },
 
   /* -----------------------------------------------------------------------
@@ -404,7 +419,7 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
-    }
-  }
+    },
+  },
   
 ]);
