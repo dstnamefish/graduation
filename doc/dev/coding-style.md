@@ -158,7 +158,17 @@ function handleSearchInput() {}
 /* TODO: 图文混排 comm: img-text */
 .img-text { sRules; }
 ```
-
+用 FIXME 标示需要修复问题和已知的问题。
+```javascript
+class Calculator extends Abacus {
+  constructor () {
+    super ()
+      // FIXME: shouldn’t use a global here
+      total = 0
+      this.total = 0
+  }
+}
+```
 ### 1.10 行尾空格
 删除行尾空格，这些空格没有必要存在
 
@@ -957,22 +967,8 @@ function make(tag) {
   return element
 }
 ```
-**4. 特殊标记**<br/>
-有时我们发现某个可能的 bug，但因为一些原因还没法修复；或者某个地方还有一些待完成的功能，这时我们需要使用相应的特殊标记注释来告知未来的自己或合作者。常用的特殊标记有两种：<br/>
-- // FIXME : 说明问题是什么
-- // TODO : 说明还要做什么或者问题的解决方案
-```javascript
-class Calculator extends Abacus {
-  constructor () {
-    super ()
-      // FIXME: shouldn’t use a global here
-      total = 0
-      // TODO: total should be configurable by an options param
-      this.total = 0
-  }
-}
-```
-**5. 文档类注释**<br/>
+
+**4. 文档类注释**<br/>
 文档类注释，如函数、类、文件、事件等；都使用 jsdoc/tsdoc 规范。<br/>
 **推荐:**
 ```javascript
