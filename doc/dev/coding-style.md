@@ -174,8 +174,9 @@ class Calculator extends Abacus {
 删除行尾空格，这些空格没有必要存在
 
 ### 1.11 代码有效性
-- 在eslint.config.js中检验javascript/typescript、vue文件
-- 在stylelint.config.js中检验css/scss文件
+- 在`eslint.config.js`中检验javascript/typescript、vue文件
+- 在`stylelint.config.js`中检验css/scss文件
+- 在`prettier.config.js`中格式化代码，无需纠结风格细节
 > 代码验证不是最终目的，真的目的在于让开发者在经过多次的这种验证过程后，能够深刻理解到怎样的语法或写法是非标准和不推荐的，即使在某些场景下被迫要使用非标准写法，也可以做到心中有数。
 
 ## 二、HTML规范
