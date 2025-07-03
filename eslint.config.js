@@ -27,7 +27,11 @@ export default defineConfig([
     // 适用于所有 JS/TS/Vue 文件 
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'], 
     // 忽略dist和node_modules目录
-    ignores: ['**/dist/**', '**/node_modules/**','vite.config.ts'],
+    ignores: [
+      '**/dist/**', 
+      '**/node_modules/**',
+      'vite.config.ts'
+    ],
     plugins: { 
       js, // ESLint官方JS规则
       vue: pluginVue, // Vue.js支持
@@ -74,7 +78,7 @@ export default defineConfig([
        * --------------------------------------------------------------------- 
        */
       // 2空格缩进（switch case特殊处理）
-      'indent': ['error', 2, { SwitchCase: 1 }],
+      /* 'indent': ['error', 2, { SwitchCase: 1 }], */
       // 生产环境禁止console，开发环境警告
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       // 强制注释风格
@@ -101,17 +105,17 @@ export default defineConfig([
        * --------------------------------------------------------------------- 
        */
       // 强制多行结构必须尾随逗号，单行禁止
-      'comma-dangle': ['error', 'always-multiline'],
+      /* 'comma-dangle': ['error', 'always-multiline'], */
       // 强制单引号（允许字符串中包含其他引号）
-      'quotes': ['error', 'single', { avoidEscape: true }],
+      /* 'quotes': ['error', 'single', { avoidEscape: true }], */
       // 必须使用分号
-      'semi': ['error', 'always'],
+      /* 'semi': ['error', 'always'], */
       // 对象花括号内强制空格
-      'object-curly-spacing': ['error', 'always'],
+      /* 'object-curly-spacing': ['error', 'always'], */
       // 函数定义时括号前空格
-      'space-before-function-paren': ['error', 'never'],
+      /* 'space-before-function-paren': ['error', 'never'], */
       // 箭头函数参数括号前空格
-      'arrow-parens': ['error', 'as-needed'],
+      /* 'arrow-parens': ['error', 'as-needed'], */
       // 强制所有控制语句使用大括号
       'curly': ['error', 'all'],
 

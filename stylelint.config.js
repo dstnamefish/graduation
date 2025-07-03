@@ -11,12 +11,12 @@ export default {
     'stylelint-config-standard',
     'stylelint-config-standard-scss',
     'stylelint-config-clean-order',
+    'stylelint-config-prettier',
   ],
   plugins: [
     'stylelint-scss',
     'stylelint-no-unsupported-browser-features',
     'stylelint-order',
-    '@stylistic/stylelint-plugin',
   ],
   ignoreFiles: [
     '**/dist/**', 
@@ -40,16 +40,6 @@ export default {
      */
     // 允许空样式文件
     'no-empty-source': null,
-  
-    // 文件末尾必须有空行  
-    'rule-empty-line-before': ['always', {
-      'except': ['first-nested'],
-      'ignore': ['after-comment'],
-    }],
-
-    // 禁止行尾空格
-    '@stylistic/no-eol-whitespace': true,
-
 
     /**
      * ------------------------------------------
@@ -105,17 +95,6 @@ export default {
      * 属性相关
      * ------------------------------------------
      */
-    // 长度为0时不要单位
-    'length-zero-no-unit': true,
-  
-    // 小数必须有前导0  
-    /* 'number-leading-zero': 'always', */
-  
-    // 颜色值使用大写字母
-    /* 'color-hex-case': 'upper', */
-  
-    // url()必须加引号  
-    'function-url-quotes': 'always',
   
     // 禁止冗余的缩写属性值
     'shorthand-property-no-redundant-values': true,
@@ -211,8 +190,6 @@ export default {
      * 注释规范
      * ------------------------------------------
      */
-    // 强制注释内容与星号间有空格: /* 正确 */
-    'comment-whitespace-inside': 'always', 
 
     // 禁止行内 // 注释（只允许在代码上方）
     'scss/double-slash-comment-inline': 'never',  
