@@ -11,7 +11,6 @@ export default {
     'stylelint-config-standard',
     'stylelint-config-standard-scss',
     'stylelint-config-clean-order',
-    'stylelint-config-prettier',
   ],
   plugins: [
     'stylelint-scss',
@@ -63,35 +62,6 @@ export default {
 
     /**
      * ------------------------------------------
-     * 书写格式
-     * ------------------------------------------
-     */
-    /*     // 块开括号前必须有空格
-    'block-opening-brace-space-before': 'always',
-  
-    // 属性冒号后必须有空格
-    'stylistic/declaration-colon-space-after': 'always',
-  
-    // 属性冒号前不能有空格  
-    'stylistic/declaration-colon-space-before': 'never',
-  
-    // 分号前不能有空格
-    'stylistic/declaration-block-semicolon-space-before': 'never',
-  
-    // 分号后必须换行
-    'stylistic/declaration-block-semicolon-newline-after': 'always',
-  
-    // 选择器列表逗号后换行
-    'stylistic/selector-list-comma-newline-after': 'always',
-  
-    // 组合器后必须有空格
-    'stylistic/selector-combinator-space-after': 'always',
-  
-    // 组合器前必须有空格  
-    'stylistic/selector-combinator-space-before': 'always', */
-
-    /**
-     * ------------------------------------------
      * 属性相关
      * ------------------------------------------
      */
@@ -133,6 +103,7 @@ export default {
         name: 'media',      
       },
     ],
+
     /**
      * ------------------------------------------
      * 禁止规则
@@ -197,20 +168,7 @@ export default {
     // 只允许  /** ... */ 区块注释
     'scss/comment-no-loud': [true, { 
       'allow': [ '/**' ],
-    }], 
-
-    // 强制文档注释用 /** ... */
-    /* 'scss/comment-no-redundant': [true, {
-      'style': 'docblock', 
-      'tags': ['@description', '@param', '@return'],
-    }], */
-
-    // 强制注释内容必须包含特定关键词（如 hack、fixme、magic）
-    /* 'scss/comment-required': [true, {
-      'terms': ['hack', 'fixme', 'magic'], 
-      'severity': 'error',
-    }],  */
-  
+    }],
 
     /**
      * ------------------------------------------
@@ -223,6 +181,7 @@ export default {
       {
         // 警告级别
         severity: 'warning',  
+
         // 忽略 flexbox 和 CSS 嵌套、css-grid 特性
         ignore: ['flexbox', 'css-nesting', 'css-grid'], 
       },
