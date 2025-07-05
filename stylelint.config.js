@@ -170,6 +170,18 @@ export default {
       'allow': [ '/**' ],
     }],
 
+    // 要求注释前必须有空行（可配置例外）
+    'comment-empty-line-before': ['always', {
+      ignore: ['stylelint-commands', 'after-comment'],
+      except: ['first-nested'],
+    }],
+
+    // 注释内容前后需要留空格
+    'comment-whitespace-inside': 'always',
+
+    // 禁止空注释
+    'no-empty-comment': true,
+
     /**
      * ------------------------------------------
      * 浏览器兼容

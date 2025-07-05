@@ -224,7 +224,10 @@ export default defineConfig([
       'quote-props': ['error', 'consistent'], 
 
       // JSX 使用双引号  
-      'jsx-quotes': ['error', 'prefer-double'], 
+      'jsx-quotes': ['error', 'prefer-double'],
+
+      // 禁止文件末尾换行
+      'eol-last': ['error', 'never'], 
     },
   },
 

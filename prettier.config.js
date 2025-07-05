@@ -35,6 +35,9 @@ export default {
   // 换行符使用 LF
   endOfLine: 'lf',            
   
+  // 禁止在末尾换行
+  insertFinalNewline: false,
+
   // 覆盖特定文件类型的配置
   overrides: [
     {
