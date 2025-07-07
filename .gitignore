@@ -26,5 +26,5 @@ dist-ssr
 
 # 依赖目录
 node_modules/
-
+package-lock.json
 # 构建工具
