@@ -1582,22 +1582,25 @@ import type { User } from '@/types'
 ### 6.1 代码提交规范
 ```plaintext
 <类型>(<范围>): <描述>
+[可选的 body]
+[可选的 footer]
 // 示例
 feat(store): 添加用户登录状态管理
-fix(router): 修复登录页重定向循环问题
+fix: 修复登录页重定向循环问题
 ```
 **常用 type 类型**:
-| 文件后缀 / 目录                              | 推荐 type      | 推荐 scope 示例                | 说明                                          |
-| --------------------------------------      | ------------ | -------------------------- | ------------------------------------------- |
-| `.vue` 单文件组件                            | `feat`/`fix` | `component/`、`ui/`、`page/` | UI 组件或页面的增删改；`feat(component/NavBar): …`    |
-| `.js` / `.ts` （业务逻辑）                   | `feat`/`fix` | `service/`、`logic/`        | 核心业务、API 调用、状态管理等；`fix(service/auth): …`    |
-| `.scss` / `.css`                            | `style`      | `style/`、`theme/`          | 纯样式改动；`style(style/main): …`                |
-| `.md` / 文档文件                             | `docs`       | `docs/`                    | README、设计文档、注释；`docs(README): …`            |
-| `.spec.ts` / 测试                            | `test`       | `test/`                    | 单元/集成测试；`test(service/user): …`             |
-| 构建/配置文件 (`.config.js`, CI、Vite、ESLint) | `chore`      | `build/`、`config/`         | 构建脚本、依赖升级、工具链；`chore(config): …`            |
-| 性能优化                                      | `perf`       | `perf/`                    | 接口/渲染性能调优；`perf(service/search): …`         |
-| 回退提交                                      | `revert`     | 无 scope 或原 scope           | `revert: feat(ui/LoginForm) …`              |
-| 开发中临时提交                                | `wip`        | 任意 scope                   | `wip(service/user): partial implementation` |
+| 文件后缀 / 目录                                | 推荐 type    | 推荐 scope 示例              | 说明                                                   |
+| --------------------------------------         | ------------ | --------------------------   | -------------------------------------------            |
+| `.vue` 单文件组件                              | `feat`/`fix` | `component/`、`ui/`、`page/` | UI 组件或页面的增删改；`feat(component/NavBar): …`     |
+| `.js` / `.ts` （业务逻辑）                     | `feat`/`fix` | `service/`、`logic/`         | 核心业务、API 调用、状态管理等；`fix(service/auth): …` |
+| `.scss` / `.css`                               | `style`      | `style/`、`theme/`           | 纯样式改动；`style(style/main): …`                     |
+| `.md` / 文档文件                               | `docs`       | `docs/`                      | README、设计文档、注释；`docs(README): …`              |
+| `.spec.ts` / 测试                              | `test`       | `test/`                      | 单元/集成测试；`test(service/user): …`                 |
+| 构建/配置文件 (`.config.js`, CI、Vite、ESLint) | `chore`      | `build/`、`config/`          | 构建脚本、依赖升级、工具链；`chore(config): …`         |
+| 性能优化                                       | `perf`       | `perf/`                      | 接口/渲染性能调优；`perf(service/search): …`           |
+| 回退提交                                       | `revert`     | 无 scope 或原 scope          | `revert: feat(ui/LoginForm) …`                         |
+| 开发中临时提交                                 | `wip`        | 任意 scope                   | `wip(service/user): partial implementation`            |
+| 代码重构                                       | `refactor`   | 任意 scope                   | `refactor(service/user): …`                            |
 
 ### 6.2 静态检查与格式化
 静态检查（ESLint）和格式化（Prettier）是保障代码一致性、规避低级错误的核心手段。通过工具链自动化校验，可强制团队代码风格统一，减少人工 CodeReview 成本。<br/>
