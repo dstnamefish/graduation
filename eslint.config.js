@@ -238,6 +238,9 @@ export default defineConfig([
 
       // 禁止文件末尾换行
       'eol-last': ['error', 'never'],
+
+      // 禁止使用空格缩进
+      'no-trailing-spaces': ['error', { skipBlankLines: false, ignoreComments: false }],
     },
   },
 
