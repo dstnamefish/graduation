@@ -31,7 +31,7 @@ export default {
      * ------------------------------------------
      */
     // 允许空样式文件
-    'no-empty-source': null,
+    'no-empty-source': true,
 
     /**
      * ------------------------------------------
@@ -111,6 +111,9 @@ export default {
     // 禁止未知类型选择器
     'selector-type-no-unknown': [true, { ignoreTypes: [] }],
 
+    // 允许文件前缀带_
+    'scss/load-no-partial-leading-underscore': null,
+
     /**
      * ------------------------------------------
      * 属性顺序
@@ -175,18 +178,13 @@ export default {
      * ------------------------------------------
      */
 
-    // 禁止行内 // 注释（只允许在代码上方）
+    // 允许单行注释 (//)
+    'no-invalid-double-slash-comments': null,
+
+    // 禁止行内 // 注释（只允许独占行）
     'scss/double-slash-comment-inline': 'never',
 
-    // 只允许  /** ... */ 区块注释
-    'scss/comment-no-loud': [
-      true,
-      {
-        allow: ['/**'],
-      },
-    ],
-
-    // 要求注释前必须有空行（可配置例外）
+    // 注释前后空行规则
     'comment-empty-line-before': [
       'always',
       {
@@ -195,11 +193,11 @@ export default {
       },
     ],
 
-    // 注释内容前后需要留空格
+    // 注释内容前后空格
     'comment-whitespace-inside': 'always',
 
     // 禁止空注释
-    'no-empty-comment': true,
+    'comment-no-empty': true,
 
     /**
      * ------------------------------------------
@@ -213,8 +211,19 @@ export default {
         // 警告级别
         severity: 'warning',
 
-        // 忽略 flexbox 和 CSS 嵌套、css-grid 特性
-        ignore: ['flexbox', 'css-nesting', 'css-grid'],
+        // 忽略
+        ignore: [
+          'css-nesting',
+          'border-radius',
+          'css3-cursors',
+          'css-selection',
+          'css-overflow',
+          'css-media-range-syntax',
+          'text-size-adjust',
+          'outline',
+          'css-transitions',
+          'css-boxshadow',
+        ],
       },
     ],
   },
