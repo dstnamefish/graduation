@@ -1,36 +1,44 @@
 @charset "UTF-8";
-// 引入变量和混合器
-@use 'base/variables' as variables;
-@use 'base/mixins' as mixins;
 
-/* -------------------------------------- 
-  全局基础样式 
-  1rem = 10px，方便计算
-  ------------------------------------ */
+// 引入变量和混合器
+@use 'base/variables.scss' as variables;
+@use 'base/mixins.scss' as mixins;
+
+/**
+ * ------------------------------------
+ * 全局基础样式
+ * 1rem = 10px，方便计算
+ * ------------------------------------
+ */
 *, *::before, *::after {
-  box-sizing: inherit;
   margin: 0;
   padding: 0;
+  box-sizing: inherit;
 }
 
 html {
   font-size: 62.5%;
-  box-sizing: border-box; 
-  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
 }
 
 body {
-  font-family: variables.$base-font-family; 
-  font-size: variables.$base-font-size;     
-  line-height: 1.5;
-  color: variables.$dark-color;             
-  background-color: variables.$light-color; 
   margin: 0;
   padding: 0;
+  color: variables.$dark-color;
+  line-height: 1.5;
+  font-family: variables.$base-font-family;
+  font-size: variables.$base-font-size;
+  background-color: variables.$light-color;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: variables.$heading-font-family; 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: variables.$heading-font-family;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
@@ -41,40 +49,49 @@ p {
 }
 
 a {
-  color: variables.$primary-color; 
+  color: variables.$primary-color;
   text-decoration: none;
+
   &:hover {
     text-decoration: underline;
   }
 }
 
-input, textarea, select, button {
+input,
+textarea,
+select,
+button {
   font-family: inherit;
   font-size: inherit;
   outline: none;
 }
 
-input, textarea, select {
-  border: 1px solid variables.$secondary-color;
-  border-radius: variables.$border-radius-base;
+input,
+textarea,
+select {
   padding: 0.8rem 1.2rem;
+  border: 1px solid variables.$secondary-color;
   transition: border-color 0.3s ease;
+  border-radius: variables.$border-radius-base;
+
   &:focus {
     border-color: variables.$primary-color;
   }
 }
 
 button {
-  background: none;
   border: none;
+  background: none;
   cursor: pointer;
+
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
   }
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
   height: auto;
@@ -89,78 +106,24 @@ img, svg {
   width: 0.8rem;
   height: 0.8rem;
 }
+
 ::-webkit-scrollbar-track {
   background: variables.$light-color;
 }
+
 ::-webkit-scrollbar-thumb {
   background: variables.$secondary-color;
   border-radius: variables.$border-radius-base;
+
   &:hover {
     background: variables.$dark-color;
   }
 }
 
-
-
-
-
-
-// 8. 实用工具类
-// 居中容器
-.u-container {
-  width: 100%;
-  max-width: variables.$container-max-width;
-  margin: 0 auto;
-  padding: 0 1.6rem;
-}
-// 清除浮动
-.u-clearfix {
+.clearfix {
   &::after {
     content: '';
     display: block;
     clear: both;
   }
-}
-// 辅助隐藏文本
-.u-screen-reader {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-}
-
-// 9. 响应式根字体
-@media screen and (max-width: 1200px) {
-  html { font-size: 56.25%; }
-}
-@media screen and (max-width: 768px) {
-  html { font-size: 50%; }
-}
-
-// 10. Element Plus 全局覆盖示例
-.el-button {
-  @include mixins.border-radius(variables.$border-radius-base);
-  font-weight: 500;
-  &--primary {
-    background-color: variables.$primary-color;
-    border-color: variables.$primary-color;
-    &:hover {
-      background-color: variables.$primary-color-hover;
-      border-color: variables.$primary-color-hover;
-    }
-  }
-}
-
-// 11. 全局动画变量与过渡
-$transition-duration-base: 0.3s;
-$transition-easing-base: ease-in-out;
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity $transition-duration-base $transition-easing-base;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
