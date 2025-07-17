@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-// 引入变量和混合器
+
 @use 'base/variables.scss' as variables;
 @use 'base/mixins.scss' as mixins;
 
@@ -13,11 +13,11 @@
 *, *::before, *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 10px;
   box-sizing: border-box;
   text-size-adjust: 100%;
 }

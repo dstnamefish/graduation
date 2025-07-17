@@ -1,13 +1,9 @@
 // 圆角混合器
 @mixin border-radius($radius) {
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
     border-radius: $radius;
 }
   
 // 盒子阴影混合器
 @mixin box-shadow($x, $y, $blur, $spread, $color) {
-    -webkit-box-shadow: $x $y $blur $spread $color;
-    -moz-box-shadow: $x $y $blur $spread $color;
     box-shadow: $x $y $blur $spread $color;
 }    
