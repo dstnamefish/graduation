@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/h"
+
+npx --no-install commitlint --edit "$1"
+if [ $? -ne 0 ]; then
+  echo "提交信息不符合规范，终止提交。"
+  exit 1
+fi

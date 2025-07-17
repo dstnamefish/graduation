@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/h"
+
+# 运行 ESLint 检查
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "Lint 检查未通过，终止 push。"
+  exit 1
+fi
+
+# 运行单元测试
+npm test
+if [ $? -ne 0 ]; then
+  echo "单元测试未通过，终止 push。"
+  exit 1
+fi
