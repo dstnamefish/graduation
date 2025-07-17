@@ -1,0 +1,48 @@
+{
+  // 启用 Flat Config 模式的 ESLint
+  "eslint.useFlatConfig": true,
+  "eslint.validate": ["javascript", "typescript", "vue"],
+  "eslint.run": "onType",
+  "eslint.options": {
+    "overrideConfigFile": "./config/eslint.config.mjs"
+  },
+
+  // Stylelint 适配多种前端样式文件
+  "stylelint.validate": ["css", "scss", "sass", "less", "vue"],
+  "stylelint.enable": true,
+  "stylelint.config": {
+    "extends": "./config/stylelint.config.mjs"
+  },
+  "stylelint.configBasedir": "./config",
+
+  // 保存时自动格式化代码（使用 Prettier）
+  "editor.formatOnSave": true,
+  "prettier.configPath": "./config/prettier.config.mjs",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  //  保存时自动修复 ESLint 和 Stylelint 错误
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+
+  // 启用字符串中的快速建议（如内联样式、类名等）
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+  // Prettier 设置（强制项目必须存在配置）
+  "prettier.enable": true,
+  "prettier.requireConfig": true,
+
+  // 关闭 VS Code 自带 CSS 校验，避免和 Stylelint 冲突（可选）
+  "css.validate": false,
+  "scss.validate": false,
+
+  // 禁用文件末尾自动添加换行符
+  "files.insertFinalNewline": false,
+  "files.trimTrailingWhitespace": true,
+  "editor.trimAutoWhitespace": true,
+  "cSpell.words": ["boxshadow", "isabled", "ishidden"]
+}
