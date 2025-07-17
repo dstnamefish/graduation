@@ -1,22 +1,24 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import { createPinia } from 'pinia'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import './assets/styles/global.scss'
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+import { createPinia } from 'pinia';
+import { createApp } from 'vue';
 
-const app = createApp(App)
+import App from './App.vue';
+import router from './router';
 
-//配置路由
-app.use(router)
+import './assets/styles/global.scss';
 
-//配置Pinia
-const pinia = createPinia()
-app.use(pinia)
+const app = createApp(App);
 
-//配置ElementPlus
-app.use(ElementPlus)
+// 配置路由
+app.use(router);
 
-//挂载应用
-app.mount('#app')
+// 配置Pinia
+const pinia = createPinia();
+app.use(pinia);
+
+// 配置ElementPlus
+app.use(ElementPlus);
+
+// 挂载应用
+app.mount('#app');
