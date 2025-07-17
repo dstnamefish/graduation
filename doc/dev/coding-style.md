@@ -12,7 +12,7 @@
 │     ├─component.vue          # Vue组件模板
 │     └─composable.ts          # 组合式函数模板
 │
-├─docs/                        # 文档        
+├─docs/                        # 文档
 │  ├─cmd/                      # 命令文档
 │  │  ├─development.md         # 开发相关命令
 │  │  ├─build.md               # 构建相关命令
@@ -30,7 +30,7 @@
 │  ├─question/                 # 问题文档
 │  └─user/                     # 用户文档
 │     ├─faq.md                 # 常见问题解答
-│     └─user-guide.md          # 用户使用指南 
+│     └─user-guide.md          # 用户使用指南
 │
 ├─public/                      # 静态资源
 │  ├─favicon.ico               # 网站图标
@@ -43,7 +43,7 @@
 │  ├─assets/                   # 项目静态资源（会经过构建处理）
 │  │  ├─icons/                 # 图标资源
 │  │  ├─images/                # 图片资源
-│  │  └─styles/                # 样式文件                     
+│  │  └─styles/                # 样式文件
 │  │     ├─base/               # 基础样式（变量、混合器）
 │  │     │  ├─_variables.scss  # 变量
 │  │     │  └─_mixins.scss     # 混合器
@@ -73,7 +73,7 @@
 ├─package.json                 # 依赖配置文件
 ├─README.md                    # 项目说明文档
 ├─tsconfig.app.json            # 应用专属 TypeScript 配置
-├─tsconfig.json                # TypeScript 全局配置        
+├─tsconfig.json                # TypeScript 全局配置
 ├─tsconfig.node.json           # Node.js 专属 TypeScript 配置
 └─vite.config.ts               # Vite 构建配置
 ```
@@ -83,7 +83,7 @@
 >
 >
 
-### 1.2 项目命名 
+### 1.2 项目命名
 全部采用小写方式，采用中线分隔。<br/>
 **适用范围**：项目根目录,Git仓库名称,部署包文件名<br/>
 **正例:** mail-management-system <br/>
@@ -186,14 +186,14 @@ class Calculator extends Abacus {
 ```html
 <!DOCTYPE html>
 <html>
-  <head> 
-      <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 
-      <meta charset="UTF-8" /> 
-      <title>Page title</title> 
+  <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+      <meta charset="UTF-8" />
+      <title>Page title</title>
   </head>
-  <body> 
+  <body>
      <img src="images/company-logo.png" alt="Company">
-  </body> 
+  </body>
 </html>
 ```
 
@@ -231,12 +231,12 @@ class Calculator extends Abacus {
 HTML5 中新增很多语义化标签，所以优先使用语义化标签，避免一个页面都是 div 或者 p 标 签。<br/>
 **正例:**
 ```html
-<header></header> 
+<header></header>
 <footer></footer>
 ```
 **反例:**
 ```html
-<div> 
+<div>
   <p></p>
 </div>
 ```
@@ -685,7 +685,7 @@ $button-padding: 12px 24px;
 .button{
   @extend %button-base;
   padding: $button-padding;
-  
+
   // 变体
   &--primary{
     @include button-variant($color-primary, white);
@@ -716,58 +716,58 @@ $button-padding: 12px 24px;
 **反例:** ```save / open / show / go``` <br/>
 **特此说明，增删查改，详情统一使用如下 5 个单词，不得使用其他（目的是为了统一各个端）**
 ```
-add / update / delete / detail / get 
-附: 函数方法常用的动词: 
-get 获取/set 设置, 
-add 增加/remove 删除, 
-create 创建/destory 销毁, 
-start 启动/stop 停止, 
-open 打开/close 关闭, 
-read 读取/write 写入, 
+add / update / delete / detail / get
+附: 函数方法常用的动词:
+get 获取/set 设置,
+add 增加/remove 删除,
+create 创建/destory 销毁,
+start 启动/stop 停止,
+open 打开/close 关闭,
+read 读取/write 写入,
 load 载入/save 保存,
-begin 开始/end 结束, 
+begin 开始/end 结束,
 backup 备份/restore 恢复,
-import 导入/export 导出, 
+import 导入/export 导出,
 split 分割/merge 合并,
 inject 注入/extract 提取,
-attach 附着/detach 脱离, 
-bind 绑定/separate 分离, 
-view 查看/browse 浏览, 
+attach 附着/detach 脱离,
+bind 绑定/separate 分离,
+view 查看/browse 浏览,
 edit 编辑/modify 修改,
-select 选取/mark 标记, 
+select 选取/mark 标记,
 copy 复制/paste 粘贴,
-undo 撤销/redo 重做, 
+undo 撤销/redo 重做,
 insert 插入/delete 移除,
-add 加入/append 添加, 
+add 加入/append 添加,
 clean 清理/clear 清除,
 index 索引/sort 排序,
-find 查找/search 搜索, 
-increase 增加/decrease 减少, 
-play 播放/pause 暂停, 
-launch 启动/run 运行, 
-compile 编译/execute 执行, 
-debug 调试/trace 跟踪, 
+find 查找/search 搜索,
+increase 增加/decrease 减少,
+play 播放/pause 暂停,
+launch 启动/run 运行,
+compile 编译/execute 执行,
+debug 调试/trace 跟踪,
 observe 观察/listen 监听,
 build 构建/publish 发布,
 input 输入/output 输出,
-encode 编码/decode 解码, 
-encrypt 加密/decrypt 解密, 
-compress 压缩/decompress 解压缩, 
+encode 编码/decode 解码,
+encrypt 加密/decrypt 解密,
+compress 压缩/decompress 解压缩,
 pack 打包/unpack 解包,
 parse 解析/emit 生成,
 connect 连接/disconnect 断开,
-send 发送/receive 接收, 
-download 下载/upload 上传, 
+send 发送/receive 接收,
+download 下载/upload 上传,
 refresh 刷新/synchronize 同步,
-update 更新/revert 复原, 
-lock 锁定/unlock 解锁, 
-check out 签出/check in 签入, 
-submit 提交/commit 交付, 
+update 更新/revert 复原,
+lock 锁定/unlock 解锁,
+check out 签出/check in 签入,
+submit 提交/commit 交付,
 push 推/pull 拉,
-expand 展开/collapse 折叠, 
+expand 展开/collapse 折叠,
 enter 进入/exit 退出,
-abort 放弃/quit 离开, 
-obsolete 废弃/depreciate 废旧, 
+abort 放弃/quit 离开,
+obsolete 废弃/depreciate 废旧,
 collect 收集/aggregate 聚集
 ```
 
@@ -795,7 +795,7 @@ collect 收集/aggregate 聚集
 if (x < y) {
  x += 10;
   } else {
-   x += 1; 
+   x += 1;
 }
 ```
 **2. 不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以 提升可读性**<br/>
@@ -806,11 +806,11 @@ if (x < y) {
 **正例:**
 ```javascript
   let str = 'foo';
-  let testDiv = '<div id="test"></div>'; 
+  let testDiv = '<div id="test"></div>';
 ```
 **反例:**
 ```javascript
-  let str = 'foo'; 
+  let str = 'foo';
   let testDiv = "<div id='test'></div>";
 ```
 
@@ -836,10 +836,10 @@ console.log(greeting); // 输出: Hello, John!
 **正例:** <br/>```var user = { age: 0, name: 1, city: 3 };```<br/>
 **反例:**<br/>
 ```javascript
-    var user = new Object(); 
-    user.age = 0; 
-    user.name = 0; 
-    user.city = 0; 
+    var user = new Object();
+    user.age = 0;
+    user.name = 0;
+    user.city = 0;
 ```
 
 ### 4.5 使用 ES6+
@@ -849,7 +849,7 @@ console.log(greeting); // 输出: Hello, John!
 下列关键字后必须有大括号（即使代码块的内容只有一行）:if, else, for, while, do, switch, try, catch, finally, with。<br/>
 **正例:**
 ```javascript
-if (condition) { 
+if (condition) {
 doSomething();
  }
 ```
@@ -897,24 +897,24 @@ const active = true // is current tab
 注释行的上方需要有一个空行 **（除非注释行上方是一个块的顶部）**，以增加可读性。<br/>
 **推荐:**
 ```javascript
-function getType () {  
+function getType () {
   console.log('fetching type...')
-  
+
   // set the default type to 'no type'
   const type = this.type || 'no type'
   return type
 }
 
 // 注释行上面是一个块的顶部时不需要空行
-function getType () {  
+function getType () {
   // set the default type to 'no type'
-  const type = this.type || 'no type'            
+  const type = this.type || 'no type'
   return type
 }
 ```
 **不推荐:**
 ```javascript
-function getType () {  
+function getType () {
   console.log('fetching type...')
   // set the default type to 'no type'
   const type = this.type || 'no type'
@@ -953,7 +953,7 @@ const active = true
  * make() returns a new element
  * based on the passed-in tag name
  */
-function make(tag) {  
+function make(tag) {
   // ...
   return element
 }
@@ -966,7 +966,7 @@ const active = true
  *make() returns a new element
  *based on the passed-in tag name
  */
-function make(tag) {  
+function make(tag) {
   // ...
   return element
 }
@@ -1007,8 +1007,8 @@ Book.prototype = {
 模块注释:用于将一系列相关功能的函数、枚举、结构等归入一个模块并进行描述。<br/>
 **正例:**
 ```javascript
-/* -------------------- 
-  认证服务 
+/* --------------------
+  认证服务
 -------------------- */
 function login() { /* ... */ }
 function logout() { /* ... */ }
@@ -1113,7 +1113,7 @@ components/
 const props = defineProps({
   // 基础类型检查
   title: String,
-  
+
   // 详细配置
   user: {
     type: Object,
@@ -1195,8 +1195,8 @@ this.$emit('submit-success')  // JavaScript中
 ```vue
 <!-- 父组件 -->
 <template>
-  <child-component 
-    :title="pageTitle" 
+  <child-component
+    :title="pageTitle"
     @update-title="handleUpdate"
   />
 </template>
@@ -1250,8 +1250,8 @@ computed: {
 
 ### 5.3 指令都使用缩写形式
 指令推荐都使用缩写形式
-|完整形式	      | 缩写形式	 |用途说明    |  
-|--------------|------------|-----------|    
+|完整形式	      | 缩写形式	 |用途说明    |
+|--------------|------------|-----------|
 |v-bind:	     | :	        |属性绑定    |
 |v-on:	       | @	        |事件绑定    |
 |v-slot:	     | #	        |插槽定义    |
@@ -1308,7 +1308,7 @@ computed: {
 </li>
 ```
 **正确选择key值:**
-|数据类型	      |推荐 key	        |示例                 | 
+|数据类型	      |推荐 key	        |示例                 |
 |---------------|----------------|---------------------|
 |对象数组	      |唯一ID属性	      |:key="item.id"       |
 |基本类型数组	  |值本身 + 索引	   |:key="item + index"  |
@@ -1322,7 +1322,7 @@ computed: {
 |初始渲染	|惰性渲染	            |无论条件如何都会渲染       |
 |切换开销	|高（重建/销毁组件）	 |低（仅CSS切换）           |
 |生命周期	|触发创建/销毁钩子	   |不触发生命周期钩子         |
-|适用场景	|运行时条件很少改变	   |需要频繁切换显示状态        | 
+|适用场景	|运行时条件很少改变	   |需要频繁切换显示状态        |
 
 ### 5.7 script 标签内部结构顺序
 - Composition API组织顺序
@@ -1444,7 +1444,7 @@ path除了采用kebab-case命名规范以外，必须以 / 开头，即使是chi
   }
 ```
 
-### 5.9 状态管理 
+### 5.9 状态管理
 **1. 状态管理选型与架构:**<br/>
 **技术选型**<br/>
 - Vue 3 项目：推荐使用 Pinia (官方推荐的状态管理库)
@@ -1573,9 +1573,11 @@ import type { User } from '@/types'
 |按需导入	|`import { ref } from 'vue'`              |`import ref from 'vue'         `  |
 |动态导入	|`const module = await import('./module')`|`	-                           `  |
 |别名路径	|`import utils from '@/utils'`            |`import utils from '../../utils`  |
+<a class="word"></a>
+
 **注意:**
 - 禁止混用默认导入和按需导入（如 `import App, { ref } from 'vue'`）
-- `.vue` 文件必须显式写扩展名 
+- `.vue` 文件必须显式写扩展名
 
 
 ## 六、编码流程和协作规范
@@ -1625,7 +1627,7 @@ fix: 修复登录页重定向循环问题
 ### 版本号规范
 - 主版本号（Major）：当你做了不兼容的 API 修改
 - 次版本号（Minor）：当你做了向下兼容的功能性新增
-- 修订号（Patch）：当你做了向下兼容的问题修正 
+- 修订号（Patch）：当你做了向下兼容的问题修正
 ### 版本历史
 - **v2.1.0** 2025-06-29
   - 删除scss规范、vue目录规范
