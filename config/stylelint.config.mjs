@@ -198,33 +198,5 @@ export default {
 
     // 禁止空注释
     'comment-no-empty': true,
-
-    /**
-     * ------------------------------------------
-     * 浏览器兼容
-     * ------------------------------------------
-     */
-    // 浏览器特性兼容性检查（不兼容时显示警告）
-    'plugin/no-unsupported-browser-features': [
-      true,
-      {
-        // 警告级别
-        severity: 'warning',
-
-        // 忽略
-        ignore: [
-          'css-nesting',
-          'border-radius',
-          'css3-cursors',
-          'css-selection',
-          'css-overflow',
-          'css-media-range-syntax',
-          'text-size-adjust',
-          'outline',
-          'css-transitions',
-          'css-boxshadow',
-        ],
-      },
-    ],
   },
 };

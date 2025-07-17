@@ -410,7 +410,7 @@ export default defineConfig([
       'vue/multi-word-component-names': [
         'error',
         {
-          ignores: ['Breadcrumb','Header'],
+          ignores: ['Breadcrumb', 'Header'],
         },
       ],
 
@@ -490,7 +490,7 @@ export default defineConfig([
       'vue/define-macros-order': [
         'error',
         {
-          order: ['import', 'defineProps', 'defineEmits', 'defineExpose', 'withDefaults'],
+          order: ['import', 'defineProps', 'withDefaults', 'defineEmits', 'defineExpose'],
         },
       ],
 
