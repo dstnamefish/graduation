@@ -212,7 +212,7 @@ watch(
   margin-top: 0.4rem;
   border-radius: 0.4rem;
   background-color: #fff;
-  max-height: 15rem;
+  max-height: 15.8rem;
   overflow-y: auto;
 
   // 自定义滚动条样式

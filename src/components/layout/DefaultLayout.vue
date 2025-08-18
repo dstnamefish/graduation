@@ -39,7 +39,7 @@ import Sidebar from '../layout/sidebar-menu/SideBar.vue';
     background-color: variables.$third-color;
     flex: 1;
     overflow: hidden;
-    padding: 2rem 3rem;
+    padding: 20px 30px;
   }
 }
 </style>

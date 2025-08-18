@@ -45,14 +45,63 @@ const menuItems: MenuItem[] = [
     icon: ReservationIcon,
     children: [
       { id: 201, label: '预约挂号', path: '/reservation/register' },
-      { id: 202, label: '预约查询', path: '/reservation/query' },
+      { id: 202, label: '预约中心', path: '/reservation/query' },
     ],
   },
-  { id: 3, label: '患者管理', path: '/patient', icon: PatientIcon },
-  { id: 4, label: '医生管理', path: '/doctor', icon: DoctorIcon },
-  { id: 5, label: '科室管理', path: '/department', icon: DepartmentIcon },
-  { id: 6, label: '药品管理', path: '/medicine', icon: MedicineIcon },
-  { id: 7, label: '费用管理', path: '/expense', icon: ExpenseIcon },
+  { id: 3,
+    label: '患者管理',
+    path: '/patient',
+    icon: PatientIcon,
+    children: [
+      { id: 301, label: '患者管理', path: '/patient/manage' },
+      { id: 302, label: '售后回访', path: '/patient/visit' },
+    ],
+  },
+  {
+    id: 4,
+    label: '医生管理',
+    path: '/doctor',
+    icon: DoctorIcon,
+    children: [
+      { id: 401, label: '医生档案', path: '/doctor/profile' },
+      { id: 402, label: '排班管理', path: '/doctor/schedule' },
+      { id: 403, label: '绩效统计', path: '/doctor/performance' },
+    ],
+  },
+  {
+    id: 5,
+    label: '科室管理',
+    path: '/department',
+    icon: DepartmentIcon,
+    children: [
+      { id: 501, label: '科室信息', path: '/department/info' },
+      { id: 502, label: '排班设置', path: '/department/schedule' },
+      { id: 503, label: '运营分析', path: '/department/analysis' },
+    ],
+  },
+  {
+    id: 6,
+    label: '药品管理',
+    path: '/medicine',
+    icon: MedicineIcon,
+    children: [
+      { id: 601, label: '药品库', path: '/medicine/library' },
+      { id: 602, label: '库存监控', path: '/medicine/inventory' },
+      { id: 603, label: '药品统计', path: '/medicine/statistics' },
+    ],
+  },
+  {
+    id: 7,
+    label: '费用管理',
+    path: '/expense',
+    icon: ExpenseIcon,
+    children: [
+      { id: 701, label: '收费结算', path: '/expense/settlement' },
+      { id: 702, label: '退费处理', path: '/expense/refund' },
+      { id: 703, label: '财务统计', path: '/expense/statistics' },
+      { id: 704, label: '医保对接', path: '/expense/medical' },
+    ],
+  },
 ];
 
 const router = useRouter();
@@ -76,13 +125,11 @@ const handleMenuClick = (path: string) => {
 @use '../../../assets/styles/base/_variables.scss' as variables;
 
 .sidebar-container {
-  width: 28rem;
-  height: 100%;
   color: variables.$text-color;
   background-color: variables.$primary-color;
 
   .sidebar-header {
-    padding: 20px;
+    padding: 2rem;
 
     .sidebar-logo {
       font-size: 3.6rem;
@@ -93,6 +140,7 @@ const handleMenuClick = (path: string) => {
 
 .sidebar-menu {
   ul {
+    width: 28rem;
     margin: 0;
     list-style: none;
   }

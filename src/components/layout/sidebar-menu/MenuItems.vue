@@ -13,8 +13,8 @@
 
       <!-- 存在子菜单时，箭头指示器 -->
       <span v-if="item.children" class="menu-arrow">
-        <component v-if="isOpen" :is="DownArrowIcon" class="icon-down" />
-        <component v-else :is="RightArrowIcon" class="icon-right" />
+        <component v-if="isOpen" :is="ArrowDownIcon" class="down-icon" />
+        <component v-else :is="ArrowRightIcon" class="right-icon" />
       </span>
     </div>
 
@@ -34,8 +34,8 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, computed } from 'vue';
 
-import DownArrowIcon from '../../../assets/icons/common/arrow-down.svg';
-import RightArrowIcon from '../../../assets/icons/common/arrow-right.svg';
+import ArrowDownIcon from '../../../assets/icons/common/arrow-down.svg';
+import ArrowRightIcon from '../../../assets/icons/common/arrow-right.svg';
 
 import type { MenuProps } from '../../../types/components/layout/menu-item';
 
@@ -95,6 +95,10 @@ const handleItemClick = () => {
     align-items: center;
     justify-content: center;
 
+    .down-icon {
+      width: 13.2px;
+      height: 7.2px;
+    }
   }
 }
 
