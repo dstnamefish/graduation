@@ -44,5 +44,7 @@
   "files.insertFinalNewline": false,
   "files.trimTrailingWhitespace": true,
   "editor.trimAutoWhitespace": true,
-  "cSpell.words": ["boxshadow", "isabled", "ishidden"]
+  "cSpell.words": ["boxshadow", "isabled", "ishidden"],
+  "trae.tab.enableRename": false,
+  "trae.tab.enableAutoImport": false
 }
