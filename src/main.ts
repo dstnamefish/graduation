@@ -17,6 +17,11 @@ app.use(router);
 const pinia = createPinia();
 app.use(pinia);
 
+// 初始化认证状态
+const { useAuthStore } = await import('./store/auth');
+const authStore = useAuthStore();
+authStore.initAuth();
+
 // 配置ElementPlus
 app.use(ElementPlus);
 
