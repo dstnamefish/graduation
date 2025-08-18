@@ -22,7 +22,7 @@ $body-bg: $light-color;
 // 字体配置
 $base-font-family: "Roboto", sans-serif;
 $heading-font-family: "Montserrat", sans-serif;
-$base-font-size: 1.6rem;
+$base-font-size: 16px;
 
 // 全局字重变量
 $font-weight-light: 300;
@@ -31,12 +31,12 @@ $font-weight-medium: 500;
 $font-weight-bold: 700;
 
 // 边框与圆角
-$border-radius-base: 3rem;
-$border-radius-pill: 50rem;
+$border-radius-base: 30px;
+$border-radius-pill: 500px;
 $border-color-base: #dee2e6;
 
 // 容器宽度
-$container-max-width: 120rem;
+$container-max-width: 1200px;
 
 // 断点（px）
 $screen-sm: 576px;
@@ -45,7 +45,7 @@ $screen-lg: 992px;
 $screen-xl: 1200px;
 
 // 实用间距变量
-$spacer: 1.6rem;
+$spacer: 16px;
 $spacers: (
   0: 0,
   1: (
