@@ -1,71 +1,99 @@
 <template>
   <div class="dashboard-cards">
-    <div class="card" v-for="card in cards" :key="card.title">
-      <div class="card-title">{{ card.title }}</div>
-      <div class="card-value">{{ card.value }}</div>
-      <div class="card-trend" :class="card.trend > 0 ? 'up' : 'down'">
-        <span>{{ card.trend > 0 ? '↑' : '↓' }} {{ Math.abs(card.trend) }}%</span>
-        <span class="card-desc">{{ card.desc }}</span>
+    <div class="dashboard-card" v-for="card in cards" :key="card.title">
+      <div class="card-title">
+        {{ card.title.replace(/\(.*\)/, '') }}
+        <span class="card-unit" v-if="card.title.match(/\(.*\)/)">
+          {{ card.title.match(/\(.*\)/)?.[0] }}
+        </span>
+      </div>
+      <div class="card-value" :style="card.value > 9999999 ? { fontSize: '3.8rem' } : {}">
+        {{ card.value.toLocaleString('en-US') }}
+      </div>
+      <div class="card-desc">
+        <span>{{ card.desc }}</span>
+        <span :class="['card-rate', card.trend > 0 ? 'up' : 'down']">
+          {{ Math.abs(card.trend) }}%
+          <component :is="card.trend > 0 ? ArrowRateUp : ArrowRateDown" class="arrow-icon" />
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const cards = [
-  { title: '今日挂号人次', value: 128, trend: 23, desc: '较昨日上涨' },
-  { title: '今日看诊人次', value: 102, trend: -17, desc: '较昨日下降' },
-  { title: '今日药品出库量', value: 56, trend: -17, desc: '较昨日下降' },
-  { title: '今日收入合计', value: '¥ 12,800', trend: -27, desc: '较昨日下降' },
+import ArrowRateDown from '../../../assets/icons/common/arrow-rate-down.svg';
+import ArrowRateUp from '../../../assets/icons/common/arrow-rate-up.svg';
+
+import type { DashboardCard } from '../../../types/components/business/home/dashboard-card.d.ts';
+
+const cards: DashboardCard[] = [
+  { title: '今日挂号人次(人)', value: 75, trend: 23, desc: '人数较昨日上涨' },
+  { title: '今日看诊人次(人)', value: 64, trend: -17, desc: '人数较昨日下降' },
+  { title: '今日药品出库量(元)', value: 4716999, trend: -17, desc: '出库量较昨日下降' },
+  { title: '今日收入合计(元)', value: 24119, trend: -27, desc: '收入较昨日下降' },
 ];
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use '../../../assets/styles/base/_variables.scss' as variables;
+
 .dashboard-cards {
   display: flex;
-  width: 110rem;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 17px;
 }
 
-.card {
+.dashboard-card {
   display: flex;
   flex: 1;
-  height: 18rem;
-  padding: 20px 24px;
-  background: #fff;
-  box-shadow: 0 2px 8px #f0f1f2;
-  border-radius: 10px;
+  height: 180px;
+  padding: 18px 16px;
+  background: variables.$light-color;
+  border-radius: 12px;
   flex-direction: column;
   align-items: flex-start;
 }
 
 .card-title {
-  font-size: 1.1rem;
-  color: #888;
-  margin-bottom: 8px;
+  font-size: 18px;
+  color: variables.$dark-text-color;
+}
+
+.card-unit {
+  color: #a6a6a6;
+  font-size: 18px;
 }
 
 .card-value {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 48px;
+  font-weight: 700;
+  color: #222;
   margin-bottom: 8px;
 }
 
-.card-trend {
-  font-size: 1rem;
-}
-
-.card-trend.up {
-  color: #2ecc71;
-}
-
-.card-trend.down {
-  color: #e74c3c;
-}
-
 .card-desc {
-  margin-left: 8px;
-  color: #aaa;
+  display: flex;
+  color: #808080;
+  font-size: 14px;
+  align-items: center;
+}
+
+.card-rate.up {
+  display: flex;
+  color: #e74c3c;
+  align-items: center;
+}
+
+.card-rate.down {
+  display: flex;
+  color: #2ecc71;
+  align-items: center;
+}
+
+.arrow-icon {
+  width: 12px;
+  height: 8px;
+  margin-left: 5px;
+  vertical-align: middle;
 }
 </style>
