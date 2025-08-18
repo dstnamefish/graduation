@@ -22,7 +22,6 @@ dist-ssr
 *.sw?
 
 # 开发环境
-.vscode/
 
 # 依赖目录
 node_modules/
