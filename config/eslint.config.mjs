@@ -227,8 +227,8 @@ export default defineConfig([
       // 对象大括号之间有空格
       'object-curly-spacing': ['error', 'always'],
 
-      // 箭头函数参数无括号
-      'arrow-parens': ['error', 'as-needed'],
+      // 箭头函数参数必须括号
+      'arrow-parens': ['error', 'always'],
 
       // 对象属性引号一致
       'quote-props': ['error', 'consistent'],
@@ -330,14 +330,14 @@ export default defineConfig([
         },
 
         // 布尔值前缀
-        {
+/*         {
           selector: ['variable', 'property'],
           types: ['boolean'],
           format: ['PascalCase'],
 
           // 前缀指定
           prefix: ['is', 'has', 'can'],
-        },
+        }, */
 
         // 枚举成员
         {
@@ -487,12 +487,12 @@ export default defineConfig([
       'vue/require-v-for-key': 'error',
 
       // 定义宏的顺序
-      'vue/define-macros-order': [
+/*       'vue/define-macros-order': [
         'error',
         {
           order: ['import', 'defineProps', 'withDefaults', 'defineEmits', 'defineExpose'],
         },
-      ],
+      ], */
 
       // Vue 中属性小驼峰
       'vue/attribute-hyphenation': [
