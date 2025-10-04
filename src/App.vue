@@ -1,43 +1,38 @@
 <template>
-  <div class="screen-bg">
-    <div class="screen-content">
-      <RouterView />
-    </div>
-  </div>
+  <ElConfigProvider size="default" :locale="locales[language]" :zIndex="3000">
+    <RouterView></RouterView>
+  </ElConfigProvider>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import en from 'element-plus/es/locale/lang/en';
+import zh from 'element-plus/es/locale/lang/zh-cn';
+
+import { useUserStore } from './store/modules/user';
+import { checkStorageCompatibility } from './utils/storage';
+import { systemUpgrade } from './utils/sys';
+import { setThemeTransitionClass } from './utils/theme/animation';
+
+const userStore = useUserStore();
+const { language } = storeToRefs(userStore);
+
+const locales = {
+  en: en,
+  zh: zh,
+};
+
+onBeforeMount(() => {
+  setThemeTransitionClass(true);
+});
+
+onMounted(() => {
+  // 检查存储兼容性
+  checkStorageCompatibility();
+
+  // 提升暗黑主题下页面刷新视觉体验
+  setThemeTransitionClass(false);
+
+  // 系统升级
+  systemUpgrade();
+});
 </script>
-
-<style lang="scss">
-@use './assets/styles/base/_variables.scss' as variables;
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-.screen-bg {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  background: variables.$third-color;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-}
-
-.screen-content {
-  display: flex;
-  width: 1920px;
-  height: 1080px;
-  background: transparent;
-  overflow: hidden;
-  flex-direction: column;
-}
-</style>

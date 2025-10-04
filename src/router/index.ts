@@ -1,256 +1,69 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
-import DefaultLayout from '../components/layout/DefaultLayout.vue';
+import { setupAfterEachGuard } from './guards/afterEach';
+import { setupBeforeEachGuard } from './guards/beforeEach';
+import { staticRoutes } from './routes/staticRoutes';
+import { configureNProgress } from './utils/utils';
 
-import type { RouteRecordRaw } from 'vue-router';
+import type { App } from 'vue';
 
-const routes: RouteRecordRaw[] = [
-  {
-    path: '/user',
-    name: 'User',
-    component: () => import('../views/AuthView.vue'),
-    meta: { isRequiresAuth: false },
-    children: [
-      {
-        path: 'login',
-        name: 'Login',
-        component: () => import('../views/LoginView.vue'),
-      },
-      {
-        path: 'register',
-        name: 'Register',
-        component: () => import('../views/RegisterView.vue'),
-      },
-    ],
-  },
-  {
-    path: '/',
-    component: DefaultLayout,
-    redirect: '/home',
-    meta: { isRequiresAuth: true },
-    children: [
-      // 首页
-      {
-        path: '/home',
-        name: 'Home',
-        component: () => import('../views/HomeView.vue'),
-        meta: { title: '首页', isRequiresAuth: true },
-      },
 
-      // 预约管理
-      {
-        path: '/reservation',
-        name: 'Reservation',
-        meta: { title: '预约管理', isRequiresAuth: true },
-        redirect: '/reservation/register',
-        children: [
-          {
-            path: 'register',
-            name: 'ReservationRegister',
-            component: () => import('../views/ReservationRegisterView.vue'),
-            meta: { title: '预约挂号', isRequiresAuth: true },
-          },
-          {
-            path: 'query',
-            name: 'ReservationQuery',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '预约中心', isRequiresAuth: true },
-          },
-        ],
-      },
-
-      // 患者管理
-      {
-        path: '/patient',
-        name: 'Patient',
-        meta: { title: '患者管理', isRequiresAuth: true },
-        redirect: '/patient/manage',
-        children: [
-          {
-            path: 'manage',
-            name: 'PatientManage',
-            component: () => import('../views/PatientView.vue'),
-            meta: { title: '患者管理', isRequiresAuth: true },
-          },
-          {
-            path: 'visit',
-            name: 'PatientVisit',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '售后回访', isRequiresAuth: true },
-          },
-        ],
-      },
-
-      // 医生管理
-      {
-        path: '/doctor',
-        name: 'Doctor',
-        meta: { title: '医生管理', isRequiresAuth: true },
-        redirect: '/doctor/profile',
-        children: [
-          {
-            path: 'profile',
-            name: 'DoctorProfile',
-            component: () => import('../views/DoctorView.vue'),
-            meta: { title: '医生档案', isRequiresAuth: true },
-          },
-          {
-            path: 'schedule',
-            name: 'DoctorSchedule',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '排班管理', isRequiresAuth: true },
-          },
-          {
-            path: 'performance',
-            name: 'DoctorPerformance',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '绩效统计', isRequiresAuth: true },
-          },
-        ],
-      },
-
-      // 科室管理
-      {
-        path: '/department',
-        name: 'Department',
-        meta: { title: '科室管理', isRequiresAuth: true },
-        redirect: '/department/info',
-        children: [
-          {
-            path: 'info',
-            name: 'DepartmentInfo',
-            component: () => import('../views/DepartmentView.vue'),
-            meta: { title: '科室信息', isRequiresAuth: true },
-          },
-          {
-            path: 'schedule',
-            name: 'DepartmentSchedule',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '排班设置', isRequiresAuth: true },
-          },
-          {
-            path: 'analysis',
-            name: 'DepartmentAnalysis',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '运营分析', isRequiresAuth: true },
-          },
-        ],
-      },
-
-      // 药品管理
-      {
-        path: '/medicine',
-        name: 'Medicine',
-        meta: { title: '药品管理', isRequiresAuth: true },
-        redirect: '/medicine/library',
-        children: [
-          {
-            path: 'library',
-            name: 'MedicineLibrary',
-            component: () => import('../views/MedicineView.vue'),
-            meta: { title: '药品库', isRequiresAuth: true },
-          },
-          {
-            path: 'inventory',
-            name: 'MedicineInventory',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '库存监控', isRequiresAuth: true },
-          },
-          {
-            path: 'statistics',
-            name: 'MedicineStatistics',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '药品统计', isRequiresAuth: true },
-          },
-        ],
-      },
-
-      // 费用管理
-      {
-        path: '/expense',
-        name: 'Expense',
-        meta: { title: '费用管理', isRequiresAuth: true },
-        redirect: '/expense/settlement',
-        children: [
-          {
-            path: 'settlement',
-            name: 'ExpenseSettlement',
-            component: () => import('../views/ExpenseView.vue'),
-            meta: { title: '收费结算', isRequiresAuth: true },
-          },
-          {
-            path: 'refund',
-            name: 'ExpenseRefund',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '退费处理', isRequiresAuth: true },
-          },
-          {
-            path: 'statistics',
-            name: 'ExpenseStatistics',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '财务统计', isRequiresAuth: true },
-          },
-          {
-            path: 'medical',
-            name: 'ExpenseMedical',
-            component: () => import('../views/QueryView.vue'),
-            meta: { title: '医保对接', isRequiresAuth: true },
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
+/**
+ * 创建并配置 Vue Router 实例
+ *
+ * 使用哈希模式(createWebHashHistory)创建路由实例，配置静态路由表。
+ * 哈希模式提供更好的浏览器兼容性和部署便利性，适合内部管理系统和需要
+ * 快速部署的场景。
+ *
+ * @type {Router}
+ *
+ * @property {RouterHistory} history - 路由历史模式实例，使用哈希模式
+ * @property {RouteRecordRaw[]} routes - 静态路由配置表
+ *
+ * @remarks
+ * ## 路由模式选择说明：
+ * - **哈希模式 (Hash Mode)**:
+ *   - ✅ 优点：兼容所有浏览器、部署简单、无需服务器配置
+ *   - ❌ 缺点：URL中包含 `#` 符号，美观度较差
+ *   - 📍 适用场景：内部系统、静态托管、快速原型开发
+ *
+ * - **历史模式 (History Mode)**:
+ *   - ✅ 优点：URL简洁美观、符合传统URL格式
+ *   - ❌ 缺点：需要服务器端配置、低版本浏览器不兼容
+ *   - 📍 适用场景：公众网站、SEO要求高的项目
+ *
+ * @see {@link createWebHashHistory} 哈希模式创建函数
+ * @see {@link createWebHistory} 历史模式创建函数
+ * @see {@link staticRoutes} 静态路由配置
+ * @version 1.0.0
+ */
+export const router = createRouter({
+  history: createWebHashHistory(),
+  routes: staticRoutes,
 });
 
-// 路由守卫
-router.beforeEach(async (to, from, next) => {
-  // 设置页面标题
-  document.title = to.meta.title ? `${to.meta.title} - 医院管理系统` : '医院管理系统';
+/**
+ * 初始化应用程序路由系统
+ *
+ * 该函数负责配置和安装Vue Router,包含：
+ * 1. 配置顶部进度条的显示
+ * 2. 设置路由前置守卫
+ * 3. 设置路由后置守卫
+ * 4. 将路由实例安装到Vue应用中
+ *
+ * @param app - Vue 应用实例
+ * @returns 无返回值
+ *
+ * @see {@link configureNProgress} 顶部进度条配置
+ * @see {@link setupBeforeEachGuard} 路由前置守卫
+ * @see {@link setupAfterEachGuard} 路由后置守卫
+ */
+export function initRouter(app: App<Element>): void {
+  configureNProgress();
+  setupBeforeEachGuard(router);
+  setupAfterEachGuard(router);
+  app.use(router);
+}
 
-  // 检查路由是否需要认证
-  const needsAuth = to.matched.some((record) => record.meta.isRequiresAuth);
-
-  if (needsAuth) {
-    // 导入认证store
-    const { useAuthStore } = await import('../store/auth');
-    const authStore = useAuthStore();
-
-    // 初始化认证状态
-    authStore.initAuth();
-
-    // 检查是否已登录
-    if (!authStore.isLoggedIn) {
-      // 未登录，重定向到登录页
-      next({ name: 'Login', query: { redirect: to.fullPath } });
-      return;
-    }
-
-    // 检查token有效性
-    if (!authStore.checkTokenValidity()) {
-      // token无效，重定向到登录页
-      next({ name: 'Login', query: { redirect: to.fullPath } });
-      return;
-    }
-  }
-
-  // 如果访问登录页且已登录，重定向到首页
-  if (to.name === 'Login') {
-    const { useAuthStore } = await import('../store/auth');
-    const authStore = useAuthStore();
-    authStore.initAuth();
-
-    if (authStore.isLoggedIn) {
-      next({ name: 'Home' });
-      return;
-    }
-  }
-
-  next();
-});
-
-export default router;
+// 主页路径，默认使用菜单第一个有效路径，配置后使用此路径
+export const HOME_PAGE_PATH = '';

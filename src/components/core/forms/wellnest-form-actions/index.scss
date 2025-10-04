@@ -1,0 +1,92 @@
+@use "@styles/index.scss" as *;
+
+.form-actions {
+  width: 100%;
+  margin-top: 32px;
+
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    // 按钮间距调整
+    > * + * {
+      margin-left: 0;
+    }
+
+    // 响应式设计
+    @media (width <= 768px) {
+      flex-direction: column;
+      gap: 12px;
+
+      :deep(.wellnest-button) {
+        width: 100%;
+        min-height: 48px;
+      }
+    }
+
+    @media (width <= 480px) {
+      gap: 10px;
+
+      :deep(.wellnest-button) {
+        min-height: 44px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  // 块级布局
+  &.actions-block {
+    .button-group {
+      flex-direction: column;
+      gap: 12px;
+
+      :deep(.wellnest-button) {
+        width: 100%;
+        min-height: 48px;
+      }
+    }
+  }
+
+  // 左对齐布局
+  &.actions-left {
+    .button-group {
+      justify-content: flex-start;
+    }
+  }
+
+  // 右对齐布局
+  &.actions-right {
+    .button-group {
+      justify-content: flex-end;
+    }
+  }
+
+  // 分散对齐布局
+  &.actions-space-between {
+    .button-group {
+      justify-content: space-between;
+    }
+  }
+
+  // 动画效果
+  :deep(.wellnest-button) {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgb(0 0 0 / 15%);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgb(59 130 246 / 30%);
+      outline: none;
+    }
+  }
+}

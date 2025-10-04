@@ -1,0 +1,48 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# https://editorconfig.org
+
+# 根配置文件，确保不会继续向上查找
+root = true
+
+# 所有文件的通用设置
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Markdown文件特殊设置
+[*.md]
+trim_trailing_whitespace = false
+
+# 配置文件特殊设置
+[*.{json,yml,yaml,properties,toml,ini}]
+indent_style = space
+indent_size = 2
+
+# CSS预处理器特殊设置
+[*.{scss,sass,less}]
+indent_style = space
+indent_size = 2
+
+# 构建脚本特殊设置
+[Makefile]
+indent_style = tab
+indent_size = 4
+
+# Shell脚本特殊设置
+[*.sh]
+indent_style = tab
+indent_size = 4
+
+# Windows批处理文件特殊设置
+[*.{cmd,bat}]
+end_of_line = crlf
+
+# 图片资源文件不需要处理
+[*.{png,jpg,jpeg,gif,webp,svg}]
+trim_trailing_whitespace = false
+insert_final_newline = false

@@ -1,0 +1,179 @@
+@use "@styles/index.scss" as *;
+
+.login {
+  @include login-left-visible {
+    display: flex;
+  }
+
+  @include login-left-hidden {
+    display: flex;
+
+    .login-form {
+      width: 100% !important;
+      margin: 0;
+    }
+  }
+
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  .login-form {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    padding: 60px 40px;
+    background: rgb(255 255 255 / 98%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgb(0 0 0 / 10%);
+    transition: all 0.3s ease;
+
+    @media (width <= 1180px) {
+      width: 100%;
+      padding: 40px 20px;
+    }
+
+    @media (width <= 768px) {
+      padding: 30px 20px;
+    }
+  }
+
+  .login-header {
+    margin-bottom: 40px;
+    text-align: center;
+    animation: fadeInUp 0.8s ease;
+
+    .login-title {
+      margin: 0 0 12px;
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a202c;
+      text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+
+      @media (width <= 768px) {
+        font-size: 28px;
+      }
+    }
+
+    .login-subtitle {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #718096;
+
+      @media (width <= 768px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 420px;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+
+  .login-footer {
+    margin-top: 32px;
+    animation: fadeInUp 0.8s ease 0.4s both;
+
+    .login-options {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+
+      .forgot-password,
+      .register-link {
+        position: relative;
+        font-size: 14px;
+        font-weight: 500;
+        color: #667eea;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &::after {
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          transition: width 0.3s ease;
+          content: "";
+        }
+
+        &:hover {
+          color: #764ba2;
+          transform: translateY(-1px);
+
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+
+      @media (width <= 480px) {
+        gap: 12px;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width <= 1024px) {
+  .login {
+    .login-form {
+      padding: 50px 30px;
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .login {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    .login-form {
+      border-radius: 0;
+      background: rgb(255 255 255 / 95%);
+      box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+    }
+  }
+}
+
+@media (width <= 480px) {
+  .login {
+    .login-form {
+      padding: 20px 15px;
+
+      .login-header {
+        margin-bottom: 30px;
+      }
+
+      .login-footer {
+        margin-top: 24px;
+      }
+    }
+  }
+}

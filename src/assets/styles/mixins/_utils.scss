@@ -1,0 +1,366 @@
+// 工具类混合器
+@use "../variables/index.scss" as *;
+
+/**
+ * @mode ellipsis
+ * 文本截断的混合器
+ * @param {number} $lines - 截断的行数，默认1行
+ * @content - 文本截断的样式
+ */
+@mixin ellipsis($rowCount: 1) {
+  @if $rowCount <= 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $rowCount;
+    -webkit-box-orient: vertical;
+  }
+}
+
+
+
+
+/**
+ * @mode clear-fix
+ * 清除浮动的混合器
+ * @content - 清除浮动的样式
+ */
+@mixin clear-fix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/**
+ * @mode text-ellipsis
+ * 文本截断的混合器
+ * @param {number} $lines - 截断的行数，默认1行
+ * @content - 文本截断的样式
+ */
+@mixin text-ellipsis($lines: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @if $lines > 1 {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+}
+
+/**
+ * @mode image-responsive
+ * 基础响应式图片的混合器
+ * @content - 响应式图片的样式
+ */
+@mixin image-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+/**
+ * @mode box-sizing
+ * 边框盒模型的混合器
+ * @param {string} $box-sizing - 盒模型类型，默认border-box
+ * @content - 盒模型的样式
+ */
+@mixin box-sizing($box-sizing: border-box) {
+  box-sizing: $box-sizing;
+}
+
+/**
+ * @mode scrollbar
+ * 自定义滚动条的混合器
+ * @param {number} $width - 滚动条宽度，默认6px
+ * @param {color} $color - 滚动条颜色，默认使用border-primary变量
+ * @param {color} $hover-color - 滚动条悬停颜色，默认使用text-tertiary变量
+ * @param {number} $radius - 滚动条圆角，默认使用radius-full变量
+ * @content - 自定义滚动条的样式
+ */
+@mixin scrollbar(
+  $width: 6px,
+  $color: var(--border-primary),
+  $hover-color: var(--text-tertiary),
+  $radius: $radius-full
+) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $radius;
+    background-color: $color;
+    transition: background-color $transition-time-fast;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: $hover-color;
+  }
+}
+
+/**
+ * @mode cursor
+ * 自定义光标的混合器
+ * @param {string} $cursor-type - 光标类型，默认pointer
+ * @content - 自定义光标的样式
+ */
+@mixin cursor($cursor-type: pointer) {
+  cursor: $cursor-type;
+}
+
+/**
+ * @mode disabled
+ * 禁用状态的混合器
+ * @content - 元素禁用状态的样式
+ */
+@mixin disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/**
+ * @mode focus-outline
+ * 焦点样式的混合器
+ * @param {color} $outline-color - 焦点轮廓颜色，默认使用primary-color变量
+ * @param {number} $outline-width - 焦点轮廓宽度，默认2px
+ * @content - 元素获取焦点时的样式
+ */
+@mixin focus-outline($outline-color: var(--primary-color), $outline-width: 2px) {
+  outline: $outline-width solid $outline-color;
+  outline-offset: 2px;
+}
+
+/**
+ * @mode transition
+ * 过渡效果的混合器
+ * @param {string} $property - 过渡属性，默认all
+ * @param {number} $duration - 过渡持续时间，默认使用transition-time-base变量
+ * @param {string} $timing-function - 过渡时间函数，默认ease
+ * @content - 元素过渡效果的样式
+ */
+@mixin transition($property: all, $duration: $transition-time-base, $timing-function: ease) {
+  transition: $property $duration $timing-function;
+}
+
+/**
+ * @mode gradient
+ * 背景渐变的混合器
+ * @param {color} $from - 渐变起始颜色
+ * @param {color} $to - 渐变结束颜色
+ * @param {number} $direction - 渐变方向，默认180deg
+ * @content - 背景渐变的样式
+ */
+@mixin gradient($from, $to, $direction: 180deg) {
+  background: linear-gradient($direction, $from, $to);
+}
+
+/**
+ * @mode text-gradient
+ * 文本渐变的混合器
+ * @param {color} $from - 渐变起始颜色
+ * @param {color} $to - 渐变结束颜色
+ * @param {number} $direction - 渐变方向，默认180deg
+ * @content - 文本渐变的样式
+ */
+@mixin text-gradient($from, $to, $direction: 180deg) {
+  color: transparent;
+  background: linear-gradient($direction, $from, $to);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/**
+ * @mode shadow
+ * 阴影效果的混合器
+ * @param {string} $shadow - 阴影样式，默认使用shadow-md变量
+ * @content - 元素阴影的样式
+ */
+@mixin shadow($shadow: $shadow-md) {
+  box-shadow: $shadow;
+}
+
+/**
+ * @mode rounded
+ * 圆角效果的混合器
+ * @param {number} $radius - 圆角半径，默认使用radius-md变量
+ * @content - 元素圆角的样式
+ */
+@mixin rounded($radius: $radius-md) {
+  border-radius: $radius;
+}
+
+/**
+ * @mode border
+ * 边框效果的混合器
+ * @param {number} $width - 边框宽度，默认使用border-width-base变量
+ * @param {string} $style - 边框样式，默认solid
+ * @param {color} $color - 边框颜色，默认使用border-primary变量
+ * @content - 元素边框的样式
+ */
+@mixin border($width: $border-width-base, $style: solid, $color: var(--border-primary)) {
+  border: $width $style $color;
+}
+
+/**
+ * @mode border-color
+ * 边框颜色的混合器
+ * @param {color} $color - 边框颜色，默认使用border-primary变量
+ * @content - 元素边框颜色的样式
+ */
+@mixin border-color($color: var(--border-primary)) {
+  border-color: $color;
+}
+
+/**
+ * @mode border-style
+ * 边框样式的混合器
+ * @param {string} $style - 边框样式，默认solid
+ * @content - 元素边框样式的样式
+ */
+@mixin border-style($style: solid) {
+  border-style: $style;
+}
+
+/**
+ * @mode border-width
+ * 边框宽度的混合器
+ * @param {number} $width - 边框宽度，默认使用border-width-base变量
+ * @content - 元素边框宽度的样式
+ */
+@mixin border-width($width: $border-width-base) {
+  border-width: $width;
+}
+
+/**
+ * @mode position
+ * 定位的混合器
+ * @param {string} $position - 定位类型，默认relative
+ * @param {number|null} $top - 上定位值，默认null
+ * @param {number|null} $right - 右定位值，默认null
+ * @param {number|null} $bottom - 下定位值，默认null
+ * @param {number|null} $left - 左定位值，默认null
+ * @content - 元素定位的样式
+ */
+@mixin position($position: relative, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  inset: $top $right $bottom $left;
+}
+
+/**
+ * @mode fixed
+ * 固定定位的混合器
+ * @param {number|null} $top - 上定位值，默认null
+ * @param {number|null} $right - 右定位值，默认null
+ * @param {number|null} $bottom - 下定位值，默认null
+ * @param {number|null} $left - 左定位值，默认null
+ * @content - 元素固定定位的样式
+ */
+@mixin fixed($top: null, $right: null, $bottom: null, $left: null) {
+  @include position(fixed, $top, $right, $bottom, $left);
+}
+
+/**
+ * @mode absolute
+ * 绝对定位的混合器
+ * @param {number|null} $top - 上定位值，默认null
+ * @param {number|null} $right - 右定位值，默认null
+ * @param {number|null} $bottom - 下定位值，默认null
+ * @param {number|null} $left - 左定位值，默认null
+ * @content - 元素绝对定位的样式
+ */
+@mixin absolute($top: null, $right: null, $bottom: null, $left: null) {
+  @include position(absolute, $top, $right, $bottom, $left);
+}
+
+/**
+ * @mode relative
+ * 相对定位的混合器
+ * @param {number|null} $top - 上定位值，默认null
+ * @param {number|null} $right - 右定位值，默认null
+ * @param {number|null} $bottom - 下定位值，默认null
+ * @param {number|null} $left - 左定位值，默认null
+ * @content - 元素相对定位的样式
+ */
+@mixin relative($top: null, $right: null, $bottom: null, $left: null) {
+  @include position(relative, $top, $right, $bottom, $left);
+}
+
+/**
+ * @mode sticky
+ * 粘性定位的混合器
+ * @param {number} $top - 粘性定位的顶部距离，默认0
+ * @param {number} $z-index - 粘性定位的层级，默认使用z-index-sticky变量
+ * @content - 元素粘性定位的样式
+ */
+@mixin sticky($top: 0, $z-index: $z-index-sticky) {
+  position: sticky;
+  top: $top;
+  z-index: $z-index;
+}
+
+/**
+ * @mode center
+ * 居中对齐的混合器
+ * @content - 元素水平和垂直居中的样式
+ */
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/**
+ * @mode center-vertical
+ * 垂直居中的混合器
+ * @content - 元素垂直居中的样式
+ */
+@mixin center-vertical {
+  display: flex;
+  align-items: center;
+}
+
+/**
+ * @mode center-horizontal
+ * 水平居中的混合器
+ * @content - 元素水平居中的样式
+ */
+@mixin center-horizontal {
+  display: flex;
+  justify-content: center;
+}
+
+/**
+ * @mode vertical
+ * 垂直排列的混合器
+ * @content - 元素垂直排列的样式
+ */
+@mixin vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+/**
+ * @mode horizontal
+ * 水平排列的混合器
+ * @content - 元素水平排列的样式
+ */
+@mixin horizontal {
+  display: flex;
+  flex-direction: row;
+}

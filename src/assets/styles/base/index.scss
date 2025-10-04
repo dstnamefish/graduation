@@ -1,0 +1,5 @@
+// 基础样式导出文件
+
+// 使用@forward转发所有基础样式文件（替代被弃用的@import）
+@forward "./_reset.scss";
+@forward "./_global.scss";

@@ -1,0 +1,31 @@
+{
+  "menus": {
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "appointments": {
+      "title": "Appointments"
+    },
+    "patients": {
+      "title": "Patients"
+    },
+    "doctors": {
+      "title": "Doctors"
+    },
+    "departments": {
+      "title": "Departments"
+    },
+    "doctorsSchedule": {
+      "title": "Doctors Schedule"
+    },
+    "payments": {
+      "title": "Payments"
+    },
+    "inventory": {
+      "title": "Inventory"
+    },
+    "messages": {
+    "title": "Messages"
+    }
+  }
+}

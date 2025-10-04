@@ -1,0 +1,265 @@
+@use "@styles/index.scss" as *;
+
+.form-auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 28px;
+
+  .form-field {
+    position: relative;
+    width: 100%;
+
+    .input-container {
+      position: relative;
+      width: 100%;
+
+      .field-input {
+        width: 100%;
+        height: 56px;
+        padding: 20px 16px 8px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 400;
+        color: #1a202c;
+        background: #fff;
+        outline: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        appearance: none;
+
+        // 浮动标签效果需要的占位符
+        &::placeholder {
+          color: transparent;
+        }
+
+        // 选择框样式
+        &[type="select"],
+        &:is(select) {
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+          background-position: right 12px center;
+          background-repeat: no-repeat;
+          background-size: 16px;
+          cursor: pointer;
+
+          option {
+            padding: 8px 12px;
+            color: #1a202c;
+            background: #fff;
+          }
+
+          option:disabled {
+            color: #94a3b8;
+          }
+        }
+
+        // 聚焦状态
+        &:focus,
+        &.input-focused {
+          border-color: #667eea;
+          box-shadow: 0 0 0 3px rgb(102 126 234 / 10%);
+
+          + .field-label {
+            top: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+            transform: translateY(0);
+          }
+        }
+
+        // 填充状态
+        &.input-filled {
+          + .field-label {
+            top: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            transform: translateY(0);
+          }
+        }
+
+        // 错误状态
+        &.input-error {
+          border-color: #ef4444;
+          box-shadow: 0 0 0 3px rgb(239 68 68 / 10%);
+
+          + .field-label {
+            color: #ef4444;
+          }
+        }
+
+        // 禁用状态
+        &:disabled {
+          border-color: #e2e8f0;
+          color: #94a3b8;
+          background: #f8fafc;
+          cursor: not-allowed;
+
+          + .field-label {
+            color: #94a3b8;
+          }
+        }
+
+        // 移除自动填充样式
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+          border-color: #667eea;
+          -webkit-text-fill-color: #1a202c;
+          box-shadow: 0 0 0 1000px #fff inset;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+      }
+
+      .field-label {
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        padding: 0 4px;
+        font-size: 16px;
+        font-weight: 400;
+        color: #94a3b8;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          transparent 45%,
+          #fff 45%,
+          #fff 55%,
+          transparent 55%,
+          transparent 100%
+        );
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        transform: translateY(-50%);
+
+        &.label-required::after {
+          margin-left: 4px;
+          color: #ef4444;
+          content: "*";
+        }
+
+        &.label-error {
+          color: #ef4444;
+        }
+      }
+
+      .input-border {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transform: translateX(-50%);
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+
+    .error-message {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-top: 4px;
+      padding: 8px 12px;
+      border: 1px solid rgb(239 68 68 / 20%);
+      border-radius: 6px;
+      background: rgb(239 68 68 / 5%);
+      box-shadow: 0 2px 8px rgb(239 68 68 / 15%);
+      animation: error-slide-in 0.3s ease;
+      gap: 6px;
+
+      .error-icon {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: 700;
+        color: #fff;
+        background: #ef4444;
+      }
+
+      .error-text {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: #dc2626;
+      }
+    }
+  }
+}
+
+// 动画效果
+@keyframes error-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 响应式设计
+@media (width <= 768px) {
+  .form-auth {
+    gap: 24px;
+
+    .form-field {
+      .input-container {
+        .field-input {
+          height: 52px;
+          padding: 18px 14px 6px;
+          font-size: 15px;
+        }
+
+        .field-label {
+          left: 14px;
+          font-size: 15px;
+        }
+      }
+
+      .error-message {
+        margin-top: 3px;
+        padding: 6px 10px;
+
+        .error-text {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media (width <= 480px) {
+  .form-auth {
+    gap: 20px;
+
+    .form-field {
+      .input-container {
+        .field-input {
+          height: 48px;
+          padding: 16px 12px 4px;
+          font-size: 14px;
+        }
+
+        .field-label {
+          left: 12px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

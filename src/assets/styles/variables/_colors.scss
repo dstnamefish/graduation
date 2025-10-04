@@ -1,0 +1,81 @@
+/**
+ * 主题颜色变量（CSS变量格式）
+ * 定义项目中使用的颜色相关的变量，如主色调、辅助色、中性色、背景色、边框色、阴影色等
+ */
+
+// #f6f6f6 #233956 #a2f2ee #dff8f9 #f0f0f0 #e7e7e7
+/**
+浅蓝色（主色调，用于侧边栏选中项、部分按钮等）：#4ECDC4
+深蓝色（用于顶部导航栏部分元素、侧边栏底部提示框等）：#2A3B4C
+白色（背景色、卡片背景等）：#FFFFFF
+浅灰色（侧边栏未选中项文字、部分边框等）：#E0E0E0
+深灰色（主要文字颜色）：#333333
+绿色（用于表示 “Available” 等可用状态）：#4CAF50
+红色（用于表示 “Low” 等库存不足状态、未读消息提示等）：#FF5252
+黑色（部分图标、强调文字等）：#000000
+*/
+/**
+ * 默认主题（Light模式）
+ * 定义项目在Light模式下的颜色方案，包括主色调、辅助色、中性色、背景色、边框色、阴影色等
+ */
+:root {
+  // 主色调
+  --primary-color: #a2f2ee;
+  --primary-color-dark: #223956;
+  --primary-color-light: #dff8f9;
+  --primary-color-lighter: #f0f0f0;
+
+  //背景色
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f0f0;
+  --bg-tertiary: #f6f6f6;
+
+  // 文字颜色
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-tertiary: #999999;
+  --text-disabled: #cccccc;
+}
+
+/**
+ * Dark主题
+ * 定义项目在Dark模式下的颜色方案，包括主色调、辅助色、中性色、背景色、边框色、阴影色等
+ */
+:root.dark {
+  // 主色调
+  --primary-color: #40a9ff;
+
+  // 辅助色
+  --success-color: #73d13d;
+  --warning-color: #ffc53d;
+  --error-color: #ff4d4f;
+  --info-color: #40a9ff;
+
+  // 中性色
+  --text-primary: #d9d9d9;
+  --text-secondary: #bfbfbf;
+  --text-tertiary: #8c8c8c;
+  --text-disabled: #595959;
+
+  // 背景色
+  --bg-primary: #141414;
+  --bg-secondary: #1f1f1f;
+  --bg-tertiary: #262626;
+  --bg-disabled: #0a0a0a;
+
+  // 边框色
+  --border-primary: #434343;
+  --border-secondary: #292929;
+  --border-light: #262626;
+
+  // 阴影色
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 30%), 0 2px 4px -1px rgb(0 0 0 / 20%);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 30%), 0 4px 6px -2px rgb(0 0 0 / 20%);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 30%), 0 10px 10px -5px rgb(0 0 0 / 25%);
+
+  // 状态色
+  --hover-color: #262626;
+  --active-color: #0050b3;
+  --focus-color: rgb(64 169 255 / 30%);
+}

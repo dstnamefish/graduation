@@ -1,0 +1,271 @@
+/**
+ * 样式重置 (Reset CSS)
+ * 目的: 消除不同浏览器默认样式的差异，提供统一的基础样式起点
+ */
+@use '../variables/index.scss' as *;
+
+/**
+ * 1. 全局重置
+ * 为所有元素和伪元素设置基础样式
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * 2. 根元素样式
+ * 设置HTML和Body的基础样式
+ */
+html {
+  font-size: 16px; /* 设置基础字体大小，作为rem单位的基准 */
+  line-height: $line-height-base;
+  text-size-adjust: 100%; /* 防止iOS设备在横屏时自动调整字体大小 */
+  -webkit-tap-highlight-color: transparent; /* 移除移动设备点击高亮效果 */
+  scroll-behavior: smooth; /* 平滑滚动 */
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased; /* 字体抗锯齿，提高显示质量 */
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility; /* 优化文本可读性 */
+}
+
+/**
+ * 3. 文本内容元素
+ * 标题、段落、列表等文本相关元素
+ */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: $font-weight-medium;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  margin: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+dl {
+  margin: 0;
+}
+
+dt, dd {
+  margin: 0;
+}
+
+blockquote, q {
+  quotes: none;
+  margin: 0;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: none;
+}
+
+/**
+ * 4. 链接元素
+ * 设置链接的基础样式和交互效果
+ */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color $transition-time-base;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/**
+ * 5. 媒体元素
+ * 图片、视频等媒体内容
+ */
+img {
+  height: auto;
+  max-width: 100%;
+  border-style: none;
+  vertical-align: middle;
+}
+
+/* 为SVG添加可访问性支持 */
+svg {
+  height: auto;
+  max-width: 100%;
+  fill: currentcolor;
+}
+
+/**
+ * 6. 表单元素
+ * 输入框、按钮、选择框等表单控件
+ */
+input, textarea, select, button {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background-color: transparent;
+  outline: none;
+}
+
+/* 统一按钮样式 */
+button {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all $transition-time-base;
+}
+
+/* 按钮禁用状态 */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 统一输入框占位符样式 */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: var(--text-disabled);
+}
+
+/* 输入框聚焦状态 */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* 增强表单元素的可访问性 */
+[type="checkbox"],
+[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* 补充表单元素重置 */
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+legend {
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * 7. 表格元素
+ * 表格及相关组件
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+/**
+ * 8. 其他元素
+ * 补充常见但容易被忽略的元素
+ */
+hr {
+  margin: 1.5rem 0;
+  border: none;
+  border-top: 1px solid var(--border-primary);
+}
+
+pre {
+  margin: 0;
+  font-family: $font-family-mono;
+  overflow-x: auto;
+}
+
+code {
+  font-family: $font-family-mono;
+}
+
+/**
+ * 9. 滚动条样式
+ * 统一各浏览器滚动条样式
+ */
+/* Webkit浏览器 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: $radius-full;
+  background-color: var(--border-primary);
+  transition: background-color $transition-time-fast;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-tertiary);
+}
+
+/* Firefox浏览器 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-primary) transparent;
+}

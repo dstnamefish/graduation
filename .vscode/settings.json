@@ -1,23 +1,23 @@
 {
+  // 配置 EditorConfig 路径
+  "editorconfig.configPath": "./config/.editorconfig",
+
   // 启用 Flat Config 模式的 ESLint
   "eslint.useFlatConfig": true,
   "eslint.validate": ["javascript", "typescript", "vue"],
   "eslint.run": "onType",
   "eslint.options": {
-    "overrideConfigFile": "./config/eslint.config.mjs"
+    "overrideConfigFile": "./eslint.config.mjs"
   },
 
   // Stylelint 适配多种前端样式文件
   "stylelint.validate": ["css", "scss", "sass", "less", "vue"],
   "stylelint.enable": true,
-  "stylelint.config": {
-    "extends": "./config/stylelint.config.mjs"
-  },
-  "stylelint.configBasedir": "./config",
+  "stylelint.configFile": "./stylelint.config.mjs",
 
   // 保存时自动格式化代码（使用 Prettier）
   "editor.formatOnSave": true,
-  "prettier.configPath": "./config/prettier.config.mjs",
+  "prettier.configPath": "./prettier.config.mjs",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   //  保存时自动修复 ESLint 和 Stylelint 错误
@@ -36,6 +36,7 @@
   "prettier.enable": true,
   "prettier.requireConfig": true,
 
+
   // 关闭 VS Code 自带 CSS 校验，避免和 Stylelint 冲突（可选）
   "css.validate": false,
   "scss.validate": false,
@@ -44,7 +45,29 @@
   "files.insertFinalNewline": false,
   "files.trimTrailingWhitespace": true,
   "editor.trimAutoWhitespace": true,
-  "cSpell.words": ["boxshadow", "isabled", "ishidden"],
+  "cSpell.words": [
+    "boxshadow",
+    "funcs",
+    "isabled",
+    "ishidden",
+    "Wellnest"
+  ],
+
+  // 隐藏特定文件夹
+  "files.exclude": {
+    "dist/": true,
+    ".git/": true,
+    "**/.DS_Store": false,
+    "**/.hg": false,
+    "**/.svn": false,
+    "**/Thumbs.db": false
+  },
   "trae.tab.enableRename": false,
-  "trae.tab.enableAutoImport": false
+  "trae.tab.enableAutoImport": false,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "search.exclude": {
+    "**/*.code-search": false,
+    "**/bower_components": false,
+    "**/node_modules": false
+  }
 }
