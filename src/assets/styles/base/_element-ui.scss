@@ -1,0 +1,23 @@
+@use "../variables/index.scss" as *;
+@use "../mixins/index.scss" as *;
+
+// el-input
+.el-input {
+  --el-input-height: 38px;
+
+  width: 260px;
+
+  .el-input__wrapper {
+    border-radius: $radius-xl;
+    background-color: var(--primary-color-lighter);
+    box-shadow: none;
+
+    .el-input__inner {
+      &::placeholder {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: var(--text-tertiary);
+      }
+    }
+  }
+}
