@@ -22,21 +22,10 @@ export enum MenuThemeEnum {
   DESIGN = 'design'
 }
 
-// Menu close width
-export enum MenuWidth {
-  CLOSE = '70px'
-}
-
 // Language
 export enum LanguageEnum {
   ZH = 'zh',
   EN = 'en'
-}
-
-// Icon type
-export enum IconTypeEnum {
-  CLASS_NAME = 'className',
-  UNICODE = 'unicode'
 }
 
 // Container width

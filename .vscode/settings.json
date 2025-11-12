@@ -50,7 +50,7 @@
     "funcs",
     "isabled",
     "ishidden",
-    "Wellnest"
+    "Zen"
   ],
 
   // 隐藏特定文件夹
@@ -69,5 +69,9 @@
     "**/*.code-search": false,
     "**/bower_components": false,
     "**/node_modules": false
-  }
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
+  "svg.preview.background": "transparent"
 }

@@ -1,0 +1,27 @@
+.language {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.language:hover {
+  background-color: rgb(0 0 0 / 4%);
+}
+
+.language-btn {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.language:hover .language-icon {
+  transform: rotate(360deg);
+}

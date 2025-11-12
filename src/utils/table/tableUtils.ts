@@ -1,9 +1,9 @@
 // 表格工具函数
 
-import type { PaginationParams } from '@/types/api/request'
-import { tableConfig } from './tableConfig'
+import { tableConfig } from './tableConfig';
 
-import type { ApiResponse } from './tableCache'
+import type { ApiResponse } from './tableCache';
+import type { PaginationParams } from '@/types/api/request';
 
 // 请求参数基础接口，扩展分页参数
 export interface BaseRequestParams extends PaginationParams {

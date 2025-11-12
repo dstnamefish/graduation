@@ -8,7 +8,7 @@
       </div>
 
       <div class="form-container">
-        <WellnestFormAuth
+        <ZenFormAuth
           ref="formRef"
           :fields="fields"
           @submit="handleLogin"
@@ -41,8 +41,8 @@
 </template>
 <script setup lang="ts">
 import { fetchLogin } from '@/api/auth';
-import FormActions from '@/components/core/forms/wellnest-form-actions/index.vue';
-import WellnestFormAuth from '@/components/core/forms/wellnest-form-auth/index.vue';
+import FormActions from '@/components/core/forms/zen-form-actions/index.vue';
+import ZenFormAuth from '@/components/core/forms/zen-form-auth/index.vue';
 import LoginLeftView from '@/components/core/views/login/LoginLeftView.vue';
 import { RoutesAlias } from '@/router/routesAlias';
 import { useUserStore } from '@/store/modules/user';
@@ -51,12 +51,14 @@ import type { FormProps, ValidatorFunction } from '@/types/component/form';
 
 const router = useRouter();
 const userStore = useUserStore();
-const formRef = ref<InstanceType<typeof WellnestFormAuth>>();
+const formRef = ref<InstanceType<typeof ZenFormAuth>>();
 const isLoading = ref(false);
 
 // 自定义验证器：检查用户名是否包含特殊字符
 const validateUsername: ValidatorFunction = async (value, field, formData) => {
-  if (!value) {return true;} // 空值由 required 规则处理
+  if (!value) {
+    return true;
+  } // 空值由 required 规则处理
 
   // 检查是否包含特殊字符（只允许字母、数字、下划线）
   const hasSpecialChars = /[^a-zA-Z0-9_]/.test(value);
@@ -73,12 +75,10 @@ const validateUsername: ValidatorFunction = async (value, field, formData) => {
 };
 
 // 自定义验证器：密码强度检查
-const validatePasswordStrength: ValidatorFunction = async (
-  value,
-  field,
-  formData,
-) => {
-  if (!value) {return true;} // 空值由 required 规则处理
+const validatePasswordStrength: ValidatorFunction = async (value, field, formData) => {
+  if (!value) {
+    return true;
+  } // 空值由 required 规则处理
 
   // 检查是否包含至少一个字母
   if (!/[a-zA-Z]/.test(value)) {
@@ -138,7 +138,9 @@ const hasFormErrors = computed(() => {
 
 // 处理表单提交按钮点击
 const handleFormSubmit = async () => {
-  if (!formRef.value) {return;}
+  if (!formRef.value) {
+    return;
+  }
 
   const isValid = await formRef.value.validateForm();
   if (isValid) {

@@ -2,13 +2,14 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import fs from 'fs' 
+import fs from 'fs'
 import viteCompression from 'vite-plugin-compression'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import ElementPlus from 'unplugin-element-plus/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import svgLoader from 'vite-svg-loader' // 添加vite-svg-loader导入
 // 可视化插件（按需启用）
 // import visualizer from 'rollup-plugin-visualizer'
 
@@ -241,6 +242,7 @@ export default ({ mode }: { mode: string }) => {
         useSource: mode === 'development',
       }),
       viteCompression({ ...getCompressionConfig(mode), algorithm: 'gzip' as any }),
+      svgLoader(),
       ...(mode === 'development' ? [vueDevTools()] : []),
       // ...(mode === 'production' ? [
       //   visualizer({
@@ -272,7 +274,6 @@ export default ({ mode }: { mode: string }) => {
       },
       preprocessorOptions: {
         scss: {
-          api: 'modern-compiler',
           additionalData: `
             @use "@styles/variables/index.scss" as *;
             @use "@styles/mixins/index.scss" as *;

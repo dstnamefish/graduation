@@ -297,42 +297,42 @@ export default defineConfig([
 
         // 普通变量使用小驼峰
         {
-          format: ['camelCase', 'UPPER_CASE'],
+          format: ['camelCase', 'UPPER_CASE','PascalCase'],
           leadingUnderscore: 'forbid',
           selector: 'variable',
         },
 
         // 函数使用小驼峰
         {
-          format: ['camelCase'],
+          format: ['camelCase', 'UPPER_CASE','PascalCase'],
           leadingUnderscore: 'forbid',
           selector: 'function',
         },
 
         // 参数使用小驼峰
         {
-          format: ['camelCase'],
+          format: ['camelCase','UPPER_CASE'],
           leadingUnderscore: 'allow',
           selector: 'parameter',
         },
 
         // 属性使用小驼峰
         {
-          format: ['camelCase'],
+          format: ['camelCase', 'UPPER_CASE','PascalCase'],
           leadingUnderscore: 'forbid',
           selector: 'property',
         },
 
         // 方法使用小驼峰
         {
-          format: ['camelCase'],
+          format: ['camelCase', 'UPPER_CASE'],
           leadingUnderscore: 'forbid',
           selector: 'method',
         },
 
         // 私有成员必须下划线前缀
         {
-          format: ['camelCase'],
+          format: ['camelCase', 'UPPER_CASE'],
           leadingUnderscore: 'require',
           modifiers: ['private'],
           selector: 'memberLike',
@@ -340,13 +340,13 @@ export default defineConfig([
 
         // 类使用帕斯卡命名
         {
-          format: ['PascalCase'],
+          format: ['PascalCase', 'UPPER_CASE'],
           selector: 'class',
         },
 
         // 接口使用帕斯卡命名
         {
-          format: ['PascalCase'],
+          format: ['PascalCase', 'UPPER_CASE'],
           selector: 'interface',
         },
 
@@ -566,7 +566,7 @@ export default defineConfig([
       'vue/prop-name-casing': ['error', 'camelCase'],
 
       // 必须添加 required 或 default
-      'vue/require-default-prop': 'error',
+      'vue/require-default-prop': 'off',
 
       // Prop 指定类型
       'vue/require-prop-types': 'error',

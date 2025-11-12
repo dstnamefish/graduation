@@ -12,9 +12,6 @@
  * - 配合编辑器插件实现代码自动格式化
  */
 export default {
-/*   // 每行最大字符数
-  printWidth: 100, */
-
   // 箭头函数参数是否添加括号：always表示始终添加
   arrowParens: 'always',
 
@@ -64,6 +61,9 @@ export default {
       },
     },
   ],
+
+  // 每行最大字符数
+  printWidth: 500,
 
   // 对象属性引号使用方式：consistent表示保持一致
   quoteProps: 'consistent',

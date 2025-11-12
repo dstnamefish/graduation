@@ -14,27 +14,6 @@ import { useSettingStore } from './setting';
 import type { UserInfo } from '@/types/api/auth';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * 用户状态管理
  * 管理用户登录状态、个人信息、语言设置、搜索历史、锁屏状态等

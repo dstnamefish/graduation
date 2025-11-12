@@ -1,0 +1,353 @@
+@use "@styles/index.scss" as *;
+
+.layout-top-bar {
+  width: 100%;
+  padding: 0 12px;
+  background-color: red;
+  transition: all 0.3s ease-in-out;
+
+  .btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    .btn {
+      display: block;
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      line-height: 38px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+  }
+
+  .menu {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    box-sizing: border-box;
+    line-height: 60px;
+    user-select: none;
+
+    > .left {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      min-width: 0;
+      line-height: 60px;
+
+      .el-route {
+        margin-left: 10px;
+        line-height: 60px;
+      }
+
+      .search-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-right: 12px;
+
+        .search-input {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 160px;
+          height: 36px;
+          box-sizing: border-box;
+          padding: 0 10px;
+          border: 1px solid var(--art-border-dashed-color);
+          border-radius: calc(var(--custom-radius) / 2 + 2px) !important;
+          cursor: pointer;
+
+          .left {
+            > i {
+              font-size: 14px;
+            }
+
+            span {
+              margin-left: 10px;
+              font-size: 13px;
+              font-weight: 400;
+              color: var(--art-gray-500);
+            }
+          }
+
+          .search-keydown {
+            display: flex;
+            align-items: center;
+            height: 20px;
+            padding: 0 6px;
+            border: 1px solid var(--art-border-dashed-color);
+            border-radius: 4px;
+            color: var(--art-gray-500);
+            background-color: var(--art-bg-color);
+
+            i {
+              font-size: 12px;
+            }
+
+            span {
+              margin-left: 2px;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    > .right {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      line-height: 60px;
+
+      .btn-box {
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        .count {
+          position: absolute;
+          top: 19px;
+          right: 17px;
+          display: block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--el-color-danger) !important;
+        }
+      }
+
+      .user {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        padding: 0 10px;
+        line-height: 60px;
+        transition: background-color 0.3s;
+
+        &:hover ul {
+          height: 80px;
+        }
+
+        .cover {
+          width: 34px;
+          height: 34px;
+          margin: 0 10px 0 0;
+          border-radius: 50%;
+          background: #eee;
+          cursor: pointer;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+.user-menu-popover {
+  padding: 0 !important;
+
+  .user-menu-box {
+    padding-top: 10px;
+
+    .user-head {
+      display: flex;
+      align-items: center;
+      padding: 0 0 4px;
+
+      .cover {
+        width: 40px;
+        height: 40px;
+        margin: 0 10px 0 0;
+        border-radius: 50%;
+        background: #eee;
+        overflow: hidden;
+      }
+
+      .user-wrap {
+        width: calc(100% - 60px);
+        height: 100%;
+
+        span {
+          display: block;
+        }
+
+        .name {
+          @include ellipsis;
+
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--art-gray-800);
+        }
+
+        .email {
+          @include ellipsis;
+
+          margin-top: 3px;
+          font-size: 12px;
+          color: var(--art-gray-500);
+        }
+      }
+    }
+
+    .user-menu {
+      margin-top: 10px;
+      padding: 16px 0;
+      border-top: 1px solid var(--art-border-color);
+
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        user-select: none;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        i {
+          display: block;
+          width: 25px;
+          font-size: 16px;
+          color: var(--art-text-gray-800);
+        }
+
+        span {
+          font-size: 14px;
+          color: var(--art-text-gray-800);
+        }
+
+        &:hover {
+          background-color: rgb(var(--art-gray-200-rgb), 0.7);
+        }
+      }
+
+      .line {
+        width: 100%;
+        height: 1px;
+        margin: 10px 0;
+        background-color: var(--art-border-color);
+      }
+
+      .logout-btn {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 20px;
+        padding: 7px 0;
+        border: 1px solid var(--art-border-dashed-color);
+        border-radius: 7px;
+        font-size: 13px;
+        color: var(--art-text-gray-800);
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          box-shadow: 0 0 10px rgb(var(--art-gray-300-rgb), 0.7);
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotate180 {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  75% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes expand {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrink {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+}

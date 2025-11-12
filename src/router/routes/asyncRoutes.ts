@@ -19,55 +19,91 @@ import { RoutesAlias } from '../routesAlias';
 export const asyncRoutes: AppRouteRecord[] = [
   {
     component: RoutesAlias.Dashboard,
-    meta: { title: 'menus.dashboard.title' },
+    meta: {
+      icon: 'dashboard',
+      keepAlive: false,
+      title: 'menus.dashboard.title',
+    },
     name: 'Dashboard',
     path: '/dashboard',
   },
   {
     component: RoutesAlias.Appointments,
-    meta: { title: 'menus.appointments.title' },
+    meta: {
+      icon: 'appointment',
+      keepAlive: false,
+      title: 'menus.appointments.title',
+    },
     name: 'Appointments',
     path: '/appointments',
   },
   {
     component: RoutesAlias.Patients,
-    meta: { title: 'menus.patients.title' },
+    meta: {
+      icon: 'patient',
+      keepAlive: false,
+      title: 'menus.patients.title',
+    },
     name: 'Patients',
     path: '/patients',
   },
   {
     component: RoutesAlias.Doctors,
-    meta: { keepAlive: false,title: 'menus.doctors.title' },
+    meta: {
+      icon: 'doctor',
+      keepAlive: false,
+      title: 'menus.doctors.title',
+    },
     name: 'Doctors',
     path: '/doctors',
   },
   {
     component: RoutesAlias.Departments,
-    meta: { keepAlive: false,title: 'menus.departments.title' },
+    meta: {
+      icon: 'department',
+      keepAlive: false,
+      title: 'menus.departments.title',
+    },
     name: 'Departments',
     path: '/departments',
   },
   {
     component: RoutesAlias.DoctorsSchedule,
-    meta: { keepAlive: false,title: 'menus.doctorsSchedule.title' },
+    meta: {
+      icon: 'doctor-schedule',
+      keepAlive: false,
+      title: 'menus.doctorsSchedule.title',
+    },
     name: 'DoctorsSchedule',
     path: '/doctors-schedule',
   },
   {
     component: RoutesAlias.Payments,
-    meta: { keepAlive: false,title: 'menus.payments.title' },
+    meta: {
+      icon: 'payment',
+      keepAlive: false,
+      title: 'menus.payments.title',
+    },
     name: 'Payments',
     path: '/payments',
   },
   {
     component: RoutesAlias.Inventory,
-    meta: { keepAlive: false,title: 'menus.inventory.title' },
+    meta: {
+      icon: 'inventory',
+      keepAlive: false,
+      title: 'menus.inventory.title',
+    },
     name: 'Inventory',
     path: '/inventory',
   },
   {
     component: RoutesAlias.Messages,
-    meta: { keepAlive: false,title: 'menus.messages.title' },
+    meta: {
+      icon: 'message',
+      keepAlive: false,
+      title: 'menus.messages.title',
+    },
     name: 'Messages',
     path: '/messages',
   },

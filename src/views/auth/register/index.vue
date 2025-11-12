@@ -44,20 +44,16 @@
             class="step-card"
           >
             <div class="step-header">
-              <h2 class="step-title">
-                第{{ currentStep }}步：{{ steps[currentStep - 1].title }}
-              </h2>
+              <h2 class="step-title">第{{ currentStep }}步：{{ steps[currentStep - 1].title }}</h2>
               <p class="step-description">
                 {{ steps[currentStep - 1].description }}
               </p>
-              <div class="progress-text">
-                已完成 {{ currentStep - 1 }}/{{ steps.length }} 步
-              </div>
+              <div class="progress-text">已完成 {{ currentStep - 1 }}/{{ steps.length }} 步</div>
             </div>
 
             <!-- 表单 -->
             <div class="step-form">
-              <WellnestFormAuth
+              <ZenFormAuth
                 :fields="currentStepFields"
                 :initData="currentStepData"
                 @submit="handleStepSubmit"
@@ -89,7 +85,10 @@
                 >
                   {{ emailCountdown > 0 ? `${emailCountdown}s 后重发` : '发送验证码' }}
                 </ElButton>
-                <p v-if="emailCodeSent" class="success-tip">
+                <p
+                  v-if="emailCodeSent"
+                  class="success-tip"
+                >
                   验证码已发送至您的邮箱，请注意查收
                 </p>
               </div>
@@ -183,15 +182,11 @@ import { ref, reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { fetchRegister, fetchSendEmailCode, fetchCheckEmployeeIdAndRealName } from '@/api/auth';
-import WellnestFormAuth from '@/components/core/forms/wellnest-form-auth/index.vue';
+import ZenFormAuth from '@/components/core/forms/zen-form-auth/index.vue';
 import LoginLeftView from '@/components/core/views/login/LoginLeftView.vue';
 import { RoutesAlias } from '@/router/routesAlias';
 import type { RegisterRequest } from '@/types/api/auth';
-import type {
-  FormField,
-  ValidatorFunction,
-  SelectOption,
-} from '@/types/component/form';
+import type { FormField, ValidatorFunction, SelectOption } from '@/types/component/form';
 
 /** 动态步骤配置 */
 const steps = [
@@ -232,7 +227,9 @@ const formData = reactive<FormData>({
 /** ====== 自定义校验器 ====== */
 // 邮箱唯一性校验 - 移除API验证，由后端sendCode方法处理
 const validateEmail: ValidatorFunction = async (value) => {
-  if (!value) {return '邮箱不能为空';}
+  if (!value) {
+    return '邮箱不能为空';
+  }
   if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
     return '请输入正确的邮箱格式';
   }
@@ -241,7 +238,9 @@ const validateEmail: ValidatorFunction = async (value) => {
 
 // 用户名唯一性校验
 const validateUsername: ValidatorFunction = async (value) => {
-  if (!value) {return '用户名不能为空';}
+  if (!value) {
+    return '用户名不能为空';
+  }
 
   // 基本格式验证
   if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(value)) {
@@ -276,18 +275,32 @@ const validateUsername: ValidatorFunction = async (value) => {
 
 // 密码强度校验
 const validatePassword: ValidatorFunction = async (value) => {
-  if (value.length < 8) {return '密码不能少于8位';}
-  if (!/[A-Z]/.test(value)) {return '需包含大写字母';}
-  if (!/[a-z]/.test(value)) {return '需包含小写字母';}
-  if (!/\d/.test(value)) {return '需包含数字';}
-  if (!/[!@#$%^&*]/.test(value)) {return '需包含特殊字符';}
+  if (value.length < 8) {
+    return '密码不能少于8位';
+  }
+  if (!/[A-Z]/.test(value)) {
+    return '需包含大写字母';
+  }
+  if (!/[a-z]/.test(value)) {
+    return '需包含小写字母';
+  }
+  if (!/\d/.test(value)) {
+    return '需包含数字';
+  }
+  if (!/[!@#$%^&*]/.test(value)) {
+    return '需包含特殊字符';
+  }
   return true;
 };
 
 // 邮箱验证码校验
 const validateEmailCode: ValidatorFunction = async (value) => {
-  if (!value) {return '验证码不能为空';}
-  if (!/^\d{6}$/.test(value)) {return '请输入6位数字验证码';}
+  if (!value) {
+    return '验证码不能为空';
+  }
+  if (!/^\d{6}$/.test(value)) {
+    return '请输入6位数字验证码';
+  }
 
   // 这里可以添加验证码有效性验证的API调用
   // 目前仅做基本格式验证
@@ -386,43 +399,56 @@ const currentStepData = computed(() => {
 const passwordStrength = computed(() => {
   const pwd = formData.password;
   let score = 0;
-  if (pwd.length >= 8) {score++;}
-  if (/[A-Z]/.test(pwd)) {score++;}
-  if (/[a-z]/.test(pwd)) {score++;}
-  if (/\d/.test(pwd)) {score++;}
-  if (/[!@#$%^&*]/.test(pwd)) {score++;}
-  if (score <= 2) {return 'weak';}
-  if (score === 3 || score === 4) {return 'medium';}
+  if (pwd.length >= 8) {
+    score++;
+  }
+  if (/[A-Z]/.test(pwd)) {
+    score++;
+  }
+  if (/[a-z]/.test(pwd)) {
+    score++;
+  }
+  if (/\d/.test(pwd)) {
+    score++;
+  }
+  if (/[!@#$%^&*]/.test(pwd)) {
+    score++;
+  }
+  if (score <= 2) {
+    return 'weak';
+  }
+  if (score === 3 || score === 4) {
+    return 'medium';
+  }
   return 'strong';
 });
 const strengthText = computed(() =>
-  passwordStrength.value === 'weak'
-    ? '弱'
-    : passwordStrength.value === 'medium'
-      ? '中'
-      : '强',
+  passwordStrength.value === 'weak' ? '弱' : passwordStrength.value === 'medium' ? '中' : '强',
 );
 
 /** ====== 步骤逻辑 ====== */
 const isCurrentStepValid = computed(() => {
-  if (currentStep.value === 1)
-  {return formData.employeeId && formData.realName;}
-  if (currentStep.value === 2)
-  {return (
-    formData.username &&
-      formData.password &&
-      formData.confirmPassword
-  );}
-  if (currentStep.value === 3)
-  {return formData.email;}
-  if (currentStep.value === 4)
-  {return formData.emailCode;}
+  if (currentStep.value === 1) {
+    return formData.employeeId && formData.realName;
+  }
+  if (currentStep.value === 2) {
+    return formData.username && formData.password && formData.confirmPassword;
+  }
+  if (currentStep.value === 3) {
+    return formData.email;
+  }
+  if (currentStep.value === 4) {
+    return formData.emailCode;
+  }
   return true;
 });
 
 const handleStepSubmit = async () => {
-  if (currentStep.value < steps.length) {nextStep();}
-  else {submitForm();}
+  if (currentStep.value < steps.length) {
+    nextStep();
+  } else {
+    submitForm();
+  }
 };
 
 const handleFormChange = (name: string, value: any) => {
@@ -434,7 +460,9 @@ const handleFormError = () => {
 };
 
 const nextStep = async () => {
-  if (!isCurrentStepValid.value) {return ElMessage.error('请完善当前表单');}
+  if (!isCurrentStepValid.value) {
+    return ElMessage.error('请完善当前表单');
+  }
   validating.value = true;
 
   try {
@@ -445,14 +473,34 @@ const nextStep = async () => {
 
     // 第二步：验证用户名和密码规则
     if (currentStep.value === 2) {
-      const usernameResult = await validateUsername(formData.username, { label: '用户名', name: 'username', placeholder: '请输入用户名', required: true, type: 'text' }, formData);
+      const usernameResult = await validateUsername(
+        formData.username,
+        {
+          label: '用户名',
+          name: 'username',
+          placeholder: '请输入用户名',
+          required: true,
+          type: 'text',
+        },
+        formData,
+      );
       if (usernameResult !== true) {
         if (typeof usernameResult === 'string') {
           throw new Error(usernameResult);
         }
       }
 
-      const passwordResult = await validatePassword(formData.password, { label: '密码', name: 'password', placeholder: '请输入密码', required: true, type: 'password' }, formData);
+      const passwordResult = await validatePassword(
+        formData.password,
+        {
+          label: '密码',
+          name: 'password',
+          placeholder: '请输入密码',
+          required: true,
+          type: 'password',
+        },
+        formData,
+      );
       if (passwordResult !== true) {
         if (typeof passwordResult === 'string') {
           throw new Error(passwordResult);
@@ -474,7 +522,10 @@ const nextStep = async () => {
       currentStep.value++;
     }
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : (error as any)?.response?.data?.msg || '验证失败，请检查表单信息';
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : (error as any)?.response?.data?.msg || '验证失败，请检查表单信息';
     ElMessage.error(errorMessage);
   } finally {
     validating.value = false;
@@ -549,9 +600,10 @@ const sendEmailCode = async () => {
     }
   } catch (error) {
     console.error('发送邮箱验证码失败:', error);
-    const errorMessage = error instanceof Error ? error.message :
-      (error as any)?.response?.data?.msg ||
-      '发送验证码失败，请稍后再试';
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : (error as any)?.response?.data?.msg || '发送验证码失败，请稍后再试';
     ElMessage.error(errorMessage);
   } finally {
     sendingEmailCode.value = false;

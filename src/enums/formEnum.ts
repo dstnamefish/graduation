@@ -1,10 +1,6 @@
-// 表单枚举
-
-// 页面类型
-export enum PageModeEnum {
-  Add, // 新增
-  Edit // 编辑
-}
+/**
+ * @description 表单枚举
+ */
 
 // 表格大小
 export enum TableSizeEnum {

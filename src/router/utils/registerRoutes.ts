@@ -2,11 +2,11 @@ import { h } from 'vue';
 
 import { useMenuStore } from '@/store/modules/menu';
 
-import type { AppRouteRecord } from '@/types/router'
 import { RoutesAlias } from '../routesAlias';
 
 import { saveIframeRoutes } from './menuToRouter';
 
+import type { AppRouteRecord } from '@/types/router';
 import type { Router, RouteRecordRaw } from 'vue-router';
 
 /**

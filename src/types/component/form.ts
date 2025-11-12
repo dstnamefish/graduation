@@ -118,3 +118,39 @@ export interface FormEmit {
   (e: 'change', fieldName: string, value: any): void;
   (e: 'error', fieldName: string, errors: string[]): void;
 }
+
+/**
+ * @description 表格列配置接口
+ *
+ * @interface ColumnOption
+ * @template T - 表格数据行类型，默认为 any
+ * @property {string} [type] - 列类型，可选值：selection（选择框）、expand（展开行）、index（行索引）、globalIndex（全局索引）
+ * @property {string} [prop] - 列数据属性名，用于绑定表格数据行的属性值
+ * @property {string} [label] - 列标题文本，用于显示在表格表头
+ * @property {string | number} [width] - 列宽度，支持像素值或百分比
+ * @property {string | number} [minWidth] - 列最小宽度，支持像素值或百分比
+ * @property {boolean | 'left' | 'right'} [fixed] - 是否固定列位置，可选值：true（固定在左侧）、false（不固定）、'right'（固定在右侧）
+ * @property {boolean} [sortable] - 是否可排序，默认值为 false
+ * @property {any[]} [filters] - 列筛选选项数组，每个选项为一个对象，包含 value（筛选值）和 label（筛选标签）属性
+ *
+ */
+export interface ColumnOption<T = any> {
+  type?: 'selection' | 'expand' | 'index' | 'globalIndex';
+  prop?: string;
+  label?: string;
+  width?: string | number;
+  minWidth?: string | number;
+  fixed?: boolean | 'left' | 'right';
+  sortable?: boolean;
+  filters?: any[];
+  filterMethod?: (value: any, row: any) => boolean;
+  filterPlacement?: string;
+  disabled?: boolean;
+  checked?: boolean;
+  formatter?: (row: T) => any;
+  useSlot?: boolean;
+  slotName?: string;
+  useHeaderSlot?: boolean;
+  headerSlotName?: string;
+  [key: string]: any;
+}

@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+import { fetchRefreshToken } from '@/api/auth';
 import { $t } from '@/locales';
 import { useUserStore } from '@/store/modules/user';
 import { BaseResponse } from '@/types/api/request';
-import { fetchRefreshToken } from '@/api/auth';
 
 import { HttpError, handleError, showError, showSuccess } from './error';
 import { ApiStatus } from './status';
@@ -104,7 +104,7 @@ function createHttpError(message: string, code: number) {
  */
 function handleUnauthorizedError(message?: string): never {
   const error = createHttpError(message || $t('httpMsg.unauthorized'), ApiStatus.unauthorized);
-  
+
   // 如果没有刷新令牌或正在刷新中，直接登出
   const userStore = useUserStore();
   if (!userStore.refreshToken || isRefreshing) {
@@ -118,7 +118,7 @@ function handleUnauthorizedError(message?: string): never {
     }
     throw error;
   }
-  
+
   // 创建一个Promise等待刷新令牌完成
   const refreshPromise = new Promise<string>((resolve, reject) => {
     // 将回调函数添加到订阅者列表
@@ -126,10 +126,10 @@ function handleUnauthorizedError(message?: string): never {
       resolve(newToken);
     });
   });
-  
+
   // 开始刷新令牌
   refreshToken(userStore.refreshToken);
-  
+
   // 抛出错误，但不显示消息，因为我们正在尝试刷新令牌
   throw error;
 }
@@ -139,24 +139,26 @@ function handleUnauthorizedError(message?: string): never {
  * @param refreshToken 刷新令牌
  */
 async function refreshToken(currentRefreshToken: string) {
-  if (isRefreshing) return;
-  
+  if (isRefreshing) {return;}
+
   isRefreshing = true;
-  
+
   try {
     // 调用刷新令牌接口
     const response = await fetchRefreshToken({ refreshToken: currentRefreshToken });
-    
+
     if (response.token) {
       const userStore = useUserStore();
+
       // 更新用户存储中的token和refreshToken
       userStore.setToken(response.token, response.refreshToken);
-      
+
       // 执行所有等待中的请求
       refreshSubscribers.forEach((callback) => callback(response.token));
     }
   } catch (error) {
     console.error('刷新令牌失败:', error);
+
     // 刷新失败，执行登出
     logOut();
   } finally {
@@ -272,7 +274,7 @@ async function request<T = any>(config: ExtendedAxiosRequestConfig): Promise<T> 
       const showMsg = config.showErrorMessage !== false;
       showError(error, showMsg);
     }
-    
+
     return Promise.reject(error);
   }
 }

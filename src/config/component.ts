@@ -2,11 +2,11 @@
  * 全局组件配置
  * 用于管理应用中的全局组件，如设置面板、搜索、锁屏等
  */
-import { defineAsyncComponent } from 'vue';
+/* import { defineAsyncComponent } from 'vue'; */
 
 // 全局组件配置列表
 export const globalComponentsConfig: GlobalComponentConfig[] = [
-  {
+/*   {
     component: defineAsyncComponent(
       () => import('@/components/core/layouts/art-settings-panel/index.vue'),
     ),
@@ -53,7 +53,7 @@ export const globalComponentsConfig: GlobalComponentConfig[] = [
     enabled: true,
     key: 'watermark',
     name: '水印效果',
-  },
+  }, */
 ];
 
 // 全局组件配置接口

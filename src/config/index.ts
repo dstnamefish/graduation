@@ -5,10 +5,6 @@
 import { MenuThemeEnum, MenuTypeEnum, SystemThemeEnum } from '@/enums/appEnum';
 import { SystemConfig } from '@/types/config';
 
-import { configImages } from './assets/images';
-import fastEnterConfig from './fastEnter';
-import { headerBarConfig } from './headerBar';
-
 const appConfig: SystemConfig = {
   darkMenuStyles: [
     {
@@ -31,25 +27,30 @@ const appConfig: SystemConfig = {
     primary: '#5D87FF',
   },
 
-  // 快速入口配置
-  fastEnter: fastEnterConfig,
-
-  // 顶部栏功能配置
-  headerBar: headerBarConfig,
-
   // 菜单布局列表
   menuLayoutList: [
-    { img: configImages.menuLayouts.vertical, name: 'Left', value: MenuTypeEnum.LEFT },
-    { img: configImages.menuLayouts.horizontal, name: 'Top', value: MenuTypeEnum.TOP },
-    { img: configImages.menuLayouts.mixed, name: 'Mixed', value: MenuTypeEnum.TOP_LEFT },
-    { img: configImages.menuLayouts.dualColumn, name: 'Dual Column', value: MenuTypeEnum.DUAL_MENU },
+    {
+      name: 'Left',
+      value: MenuTypeEnum.LEFT,
+    },
+    {
+      name: 'Top',
+      value: MenuTypeEnum.TOP,
+    },
+    {
+      name: 'Mixed',
+      value: MenuTypeEnum.TOP_LEFT,
+    },
+    {
+      name: 'Dual Column',
+      value: MenuTypeEnum.DUAL_MENU,
+    },
   ],
 
   // 系统主题列表
   settingThemeList: [
     {
       color: ['#fff', '#fff'],
-      img: configImages.themeStyles.light,
       leftLineColor: '#EDEEF0',
       name: 'Light',
       rightLineColor: '#EDEEF0',
@@ -57,7 +58,6 @@ const appConfig: SystemConfig = {
     },
     {
       color: ['#22252A'],
-      img: configImages.themeStyles.dark,
       leftLineColor: '#3F4257',
       name: 'Dark',
       rightLineColor: '#3F4257',
@@ -65,7 +65,6 @@ const appConfig: SystemConfig = {
     },
     {
       color: ['#fff', '#22252A'],
-      img: configImages.themeStyles.system,
       leftLineColor: '#EDEEF0',
       name: 'System',
       rightLineColor: '#3F4257',
@@ -75,7 +74,7 @@ const appConfig: SystemConfig = {
 
   // 系统信息
   systemInfo: {
-    name: 'WellNest', // 系统名称
+    name: 'Zen',
   },
 
   // 系统主色
@@ -91,9 +90,9 @@ const appConfig: SystemConfig = {
 
   // 系统其他项默认配置
   systemSetting: {
-    defaultCustomRadius: '0.75', // 自定义圆角
-    defaultMenuWidth: 240, // 菜单宽度
-    defaultTabStyle: 'tab-default', // 标签样式
+    defaultCustomRadius: '0.75',
+    defaultMenuWidth: 240,
+    defaultTabStyle: 'tab-default',
   },
 
   // 系统主题
@@ -105,10 +104,9 @@ const appConfig: SystemConfig = {
   // 菜单主题列表
   themeList: [
     {
-      background: '#FFFFFF',
+      background: '#f6f6f6',
       iconActiveColor: '#333333',
       iconColor: '#6B6B6B',
-      img: configImages.menuStyles.design,
       leftLineColor: '#EDEEF0',
       rightLineColor: '#EDEEF0',
       systemBackground: '#FAFBFC',
@@ -122,7 +120,6 @@ const appConfig: SystemConfig = {
       background: '#191A23',
       iconActiveColor: '#FFFFFF',
       iconColor: '#BABBBD',
-      img: configImages.menuStyles.dark,
       leftLineColor: '#3F4257',
       rightLineColor: '#EDEEF0',
       systemBackground: '#F8F8F8',
@@ -136,7 +133,6 @@ const appConfig: SystemConfig = {
       background: '#ffffff',
       iconActiveColor: '#333333',
       iconColor: '#6B6B6B',
-      img: configImages.menuStyles.light,
       leftLineColor: '#EDEEF0',
       rightLineColor: '#EDEEF0',
       systemBackground: '#F8F8F8',

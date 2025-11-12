@@ -36,7 +36,48 @@
     "tips": "提示",
     "cancel": "取消",
     "confirm": "确定",
-    "logOutTips": "您是否要退出登录?"
+    "logOutTips": "您是否要退出登录?",
+    "search": "搜索",
+    "reset": "重置",
+    "refresh": "刷新",
+    "total": "总计",
+    "page": "页",
+    "itemsPerPage": "每页显示"
+  },
+  "patients": {
+    "pageTitle": "患者管理",
+    "addPatient": "新增患者",
+    "viewDetail": "查看详情",
+    "edit": "编辑",
+    "delete": "删除",
+    "searchPlaceholder": "搜索患者姓名、医生姓名",
+    "statusFilter": "患者状态",
+    "dateRange": {
+      "start": "开始日期",
+      "end": "结束日期"
+    },
+    "table": {
+      "patientId": "患者ID",
+      "avatar": "头像",
+      "patientName": "患者姓名",
+      "age": "年龄",
+      "status": "状态",
+      "checkInTime": "入院时间",
+      "doctorName": "负责医生",
+      "latestTreatment": "最新治疗情况",
+      "treatmentDate": "治疗时间",
+      "operation": "操作"
+    },
+    "status": {
+      "all": "全部",
+      "inpatient": "住院",
+      "outpatient": "门诊",
+      "discharged": "已出院"
+    },
+    "confirmDelete": "确定要删除该患者吗？此操作不可撤销。",
+    "deleteSuccess": "删除成功",
+    "cancelDelete": "已取消删除",
+    "loadFailed": "获取患者列表失败，请稍后重试"
   },
   "search": {
     "placeholder": "搜索页面",

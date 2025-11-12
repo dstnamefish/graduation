@@ -29,7 +29,7 @@ export function useCommon() {
   // 页面最小高度
   const containerMinHeight = computed(() => {
     // 移除了与标签页相关的高度计算
-    return 'calc(100vh - 60px)'; // 使用固定的顶部高度
+    return 'calc(100vh - 60px)';
   });
 
   // 设置容器高度CSS变量

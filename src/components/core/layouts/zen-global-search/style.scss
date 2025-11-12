@@ -1,0 +1,46 @@
+$dropdown-width: 400px;
+
+.global-search {
+  position: relative;
+  display: flex;
+  height: 40px;
+  transition: all 0.3s ease;
+
+  &--active {
+    width: $dropdown-width;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(50%);
+  }
+
+  .search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: $dropdown-width;
+    height: 300px;
+    margin-top: 4px;
+    border-radius: 4px;
+    background-color: red;
+    animation-delay: 0.2s;
+  }
+}
+
+/* 下拉动画 - 延迟进入 */
+.dropdown-enter-active {
+  transition: all 0.3s ease;
+  transition-delay: 0.2s; /* 等待输入框动画完成 */
+}
+
+.dropdown-leave-active {
+  transition: all 0.1s ease;
+}
+
+.dropdown-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
