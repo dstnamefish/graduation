@@ -1,0 +1,205 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* 基础颜色 */
+  --zen-color: #fff;
+  --theme-color: var(--main-color);
+
+  /* 主题颜色 */
+  --zen-primary: #a2f2ee;
+  --zen-secondary: #223956;
+  --zen-tertiary: #dff8f8;
+  --zen-error: #f26250;
+  --zen-info: #f2d650;
+  --zen-success: #50f294;
+  --zen-warning: #f2c150;
+  --zen-danger: #f26250;
+
+  /* 灰度范围 - 从最亮到最暗 */
+  --zen-gray-100: #f9fafb;
+  --zen-gray-200: #f2f4f5;
+  --zen-gray-300: #e6eaeb;
+  --zen-gray-400: #dbdfe1;
+  --zen-gray-500: #949eb7;
+  --zen-gray-600: #7987a1;
+  --zen-gray-700: #4d5875;
+  --zen-gray-800: #383853;
+  --zen-gray-900: #323251;
+
+  /* 边框颜色 */
+  --zen-card-border-color: rgb(0 0 0 / 7%);
+  --default-border: #e2e8ee;
+  --default-border-dashed: #dbdfe9;
+
+  /* 背景颜色 */
+  --default-bg-color: #fafbfc;
+  --default-box-bg: #fff;
+
+  /* 悬停颜色 */
+  --zen-hover-color: #f2f4f5;
+
+  /* 激活颜色 */
+  --zen-active-color: #f2f4f5;
+
+  /* 元素组件激活颜色 */
+  --zen-el-active-color: #f2f4f5;
+}
+
+.dark {
+  /* 基础颜色 */
+  --zen-color: #000;
+
+  /* 灰度范围 - 从最亮到最暗 */
+  --zen-gray-100: #110f0f;
+  --zen-gray-200: #17171c;
+  --zen-gray-300: #393946;
+  --zen-gray-400: #505062;
+  --zen-gray-500: #73738c;
+  --zen-gray-600: #8f8fa3;
+  --zen-gray-700: #ababba;
+  --zen-gray-800: #c7c7d1;
+  --zen-gray-900: #e3e3e8;
+
+  /* 边框颜色 */
+  --zen-card-border: rgb(255 255 255 / 7%);
+  --default-border: rgb(255 255 255 / 10%);
+  --default-border-dashed: #363843;
+
+  /* 背景颜色 */
+  --default-bg-color: #070707;
+  --default-box-color: #161618;
+
+  /* 悬停颜色 */
+  --zen-hover-color: #252530;
+
+  /* 激活颜色 */
+  --zen-active-color: #202226;
+
+  /* 元素组件激活颜色 */
+  --zen-el-active-color: #2e2e38;
+}
+
+/* ==================== Tailwind 主题 ==================== */
+@theme {
+  /* Box Color (Light: white / Dark: black) */
+  --color-box: var(--default-box-color);
+
+  /* System Theme Color */
+  --color-theme: var(--theme-color);
+
+  /* Hover Color */
+  --color-hover-color: var(--zen-hover-color);
+
+  /* Active Color */
+  --color-active-color: var(--zen-active-color);
+
+  /* Active Color */
+  --color-el-active-color: var(--zen-active-color);
+
+  /* ElementPlus Theme Colors */
+  --color-primary: var(--zen-primary);
+  --color-secondary: var(--zen-secondary);
+  --color-error: var(--zen-error);
+  --color-info: var(--zen-info);
+  --color-success: var(--zen-success);
+  --color-warning: var(--zen-warning);
+  --color-danger: var(--zen-danger);
+
+  /* Gray Scale Colors (Auto-adapts to dark mode) */
+  --color-g-100: var(--zen-gray-100);
+  --color-g-200: var(--zen-gray-200);
+  --color-g-300: var(--zen-gray-300);
+  --color-g-400: var(--zen-gray-400);
+  --color-g-500: var(--zen-gray-500);
+  --color-g-600: var(--zen-gray-600);
+  --color-g-700: var(--zen-gray-700);
+  --color-g-800: var(--zen-gray-800);
+  --color-g-900: var(--zen-gray-900);
+}
+
+/* ==================== 自定义边框圆角工具 ==================== */
+@utility rounded-custom-xs {
+  border-radius: calc(var(--custom-radius) / 2);
+}
+
+@utility rounded-custom-sm {
+  border-radius: calc(var(--custom-radius) / 2 + 2px);
+}
+
+/* ==================== 自定义实用类 ==================== */
+@layer utilities {
+  /* Flexbox Layout Utilities */
+  .flex-c {
+    @apply flex items-center;
+  }
+
+  .flex-b {
+    @apply flex justify-between;
+  }
+
+  .flex-cc {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-cb {
+    @apply flex items-center justify-between;
+  }
+
+  /* Transition Utilities */
+  .tad-200 {
+    @apply transition-all duration-200;
+  }
+
+  .tad-300 {
+    @apply transition-all duration-300;
+  }
+
+  /* Border Utilities */
+  .border-full-d {
+    @apply border border-[var(--default-border)];
+  }
+
+  .border-b-d {
+    @apply border-b border-[var(--default-border)];
+  }
+
+  .border-t-d {
+    @apply border-t border-[var(--default-border)];
+  }
+
+  .border-l-d {
+    @apply border-l border-[var(--default-border)];
+  }
+
+  .border-r-d {
+    @apply border-r border-[var(--default-border)];
+  }
+
+  /* Cursor Utilities */
+  .c-p {
+    @apply cursor-pointer;
+  }
+}
+
+/* ==================== 自定义组件类 ==================== */
+@layer components {
+  /* Art Card Header Component */
+  .zen-card-header {
+    @apply flex justify-between pr-6 pb-1;
+
+    .title {
+      h4 {
+        @apply text-lg font-medium text-g-900;
+      }
+
+      p {
+        @apply mt-1 text-sm text-g-600;
+
+        span {
+          @apply ml-2 font-medium;
+        }
+      }
+    }
+  }
+}
