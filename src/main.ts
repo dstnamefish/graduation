@@ -4,6 +4,8 @@ import 'element-plus/dist/index.css';
 import '@styles/index.scss';
 
 import App from './App.vue';
+import '@styles/core/tailwind.css';
+
 import language from './locales';
 import { initRouter } from './router';
 import { initStore } from './store';
