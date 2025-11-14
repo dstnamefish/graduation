@@ -157,23 +157,23 @@
 
   /* Border Utilities */
   .border-full-d {
-    @apply border border-[var(--default-border)];
+    @apply border border-(--default-border);
   }
 
   .border-b-d {
-    @apply border-b border-[var(--default-border)];
+    @apply border-b border-(--default-border);
   }
 
   .border-t-d {
-    @apply border-t border-[var(--default-border)];
+    @apply border-t border-(--default-border);
   }
 
   .border-l-d {
-    @apply border-l border-[var(--default-border)];
+    @apply border-l border-(--default-border);
   }
 
   .border-r-d {
-    @apply border-r border-[var(--default-border)];
+    @apply border-r border-(--default-border);
   }
 
   /* Cursor Utilities */

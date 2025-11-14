@@ -1,6 +1,7 @@
-@use "../variables/index.scss" as *;
-@use "../mixins/index.scss" as *;
+// 优化 Element Plus 组件库默认样式
 
+
+// -------------------------------- 修改 el-input=default 组件默认 start --------------------------------
 // el-input
 .el-input {
   --el-input-height: 38px;
@@ -21,3 +22,5 @@
     }
   }
 }
+
+// -------------------------------- 修改 el-input=default 组件默认 end --------------------------------

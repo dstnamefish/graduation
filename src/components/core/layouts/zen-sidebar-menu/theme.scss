@@ -1,8 +1,8 @@
 @use '@styles/index.scss' as *;
 
-/*---------------------------------------
+/* ---------------------------------------
  * 侧边栏菜单样式设置
- --------------------------------------*/
+ -------------------------------------- */
 /**
  * 菜单高度
  * 菜单图标大小
@@ -40,9 +40,10 @@ $hover-bg-color: var(--bg-quaternary);
     line-height: $menu-height !important;
 
     span {
-      font-size: $menu-font-size !important;
 
-      @include ellipsis();
+      @include ellipsis;
+
+      font-size: $menu-font-size !important;
     }
 
     &.is-active {
@@ -198,8 +199,8 @@ $hover-bg-color: var(--bg-quaternary);
 
     .el-sub-menu__title:hover,
     .el-menu-item:hover {
-      background-color: var(--art-gray-200) !important;
       border-radius: 6px;
+      background-color: var(--art-gray-200) !important;
     }
 
     .el-menu-item {
