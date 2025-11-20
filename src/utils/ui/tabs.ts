@@ -34,27 +34,27 @@
  * @author Art Design Pro Team
  */
 export const TAB_CONFIG = {
+  'tab-card': {
+    closeHeight: 95,
+    closeTop: 78,
+    openHeight: 139,
+    openTop: 122,
+  },
   'tab-default': {
-    openTop: 106,
+    closeHeight: 75,
     closeTop: 60,
     openHeight: 121,
-    closeHeight: 75
-  },
-  'tab-card': {
-    openTop: 122,
-    closeTop: 78,
-    openHeight: 139,
-    closeHeight: 95
+    openTop: 106,
   },
   'tab-google': {
-    openTop: 122,
+    closeHeight: 95,
     closeTop: 78,
     openHeight: 139,
-    closeHeight: 95
-  }
-}
+    openTop: 122,
+  },
+};
 
 // 获取当前 tab 样式配置，设置默认值
 export const getTabConfig = (style: string) => {
-  return TAB_CONFIG[style as keyof typeof TAB_CONFIG] || TAB_CONFIG['tab-card'] // 默认使用 tab-card 配置
-}
+  return TAB_CONFIG[style as keyof typeof TAB_CONFIG] || TAB_CONFIG['tab-card']; // 默认使用 tab-card 配置
+};

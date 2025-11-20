@@ -21,21 +21,10 @@ export default {
    * stylelint-config-clean-order 包含属性排序规则
    * stylelint-config-recess-order 包含推荐的属性排序规则
    */
-  extends: [
-    'stylelint-config-standard',
-    'stylelint-config-standard-scss',
-    'stylelint-config-clean-order',
-    'stylelint-config-recess-order',
-    'stylelint-config-recommended-vue',
-  ],
+  extends: ['stylelint-config-standard', 'stylelint-config-standard-scss', 'stylelint-config-clean-order', 'stylelint-config-recess-order', 'stylelint-config-recommended-vue'],
 
   // 忽略检查的文件
-  ignoreFiles: [
-    '**/dist/**',
-    '**/node_modules/**',
-    '**/coverage/**',
-    '**/*.min.css',
-  ],
+  ignoreFiles: ['**/dist/**', '**/node_modules/**', '**/coverage/**', '**/*.css', '**/*.html'],
 
   // 针对不同文件类型的覆盖配置
   overrides: [
@@ -61,12 +50,7 @@ export default {
    * stylelint-no-unsupported-browser-features 检查浏览器兼容性
    * stylelint-declaration-block-no-ignored-properties 避免无效属性
    */
-  plugins: [
-    'stylelint-scss',
-    'stylelint-order',
-    'stylelint-no-unsupported-browser-features',
-    'stylelint-declaration-block-no-ignored-properties',
-  ],
+  plugins: ['stylelint-scss', 'stylelint-order', 'stylelint-no-unsupported-browser-features', 'stylelint-declaration-block-no-ignored-properties'],
 
   // 自定义规则
   rules: {
@@ -79,10 +63,13 @@ export default {
       },
     ],
 
-    // Support for SCSS-specific at-rules
-    'at-rule-no-unknown': [true, {
-      ignoreAtRules: ['forward', 'use', 'mixin', 'include', 'if', 'else', 'each', 'for', 'function', 'return', 'extend', 'content', 'error'],
-    }],
+    // 允许未知规则
+    'at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['apply', 'use', 'mixin', 'include', 'extend', 'each', 'if', 'else', 'for', 'while', 'reference', 'custom-variant','theme','utility','forward','function','return'],
+      },
+    ],
 
     // 注释前后空行规则
     'comment-empty-line-before': [
@@ -123,16 +110,8 @@ export default {
     // 不允许空样式文件
     'no-empty-source': true,
 
-
-
     // 允许单行注释 (//)
     'no-invalid-double-slash-comments': null,
-
-    /**
-     * ------------------------------------------
-     * 属性相关
-     * ------------------------------------------
-     */
 
     /**
      * ------------------------------------------
@@ -141,6 +120,12 @@ export default {
      */
     // 允许@import在任何位置使用
     'no-invalid-position-at-import-rule': null,
+
+    /**
+     * ------------------------------------------
+     * 属性相关
+     * ------------------------------------------
+     */
 
     // 不允许未知的动画名称
     'no-unknown-animations': true,
@@ -320,7 +305,7 @@ export default {
       'animation-play-state',
     ],
 
-    // 不允许未知的CSS属性
+    // 允许未知的CSS属性
     'property-no-unknown': true,
 
     'scss/at-else-empty-line-before': 'never',
@@ -331,8 +316,20 @@ export default {
     // 要求@if语句的大括号换行
     'scss/at-if-closing-brace-newline-after': 'always-last-in-chain',
 
-    // 变量名使用kebab-case格式
-    'scss/dollar-variable-pattern': '^[a-z][a-z0-9]*(-[a-z0-9]+)*$',
+    // 允许混合宏使用camelCase或kebab-case命名
+    'scss/at-mixin-pattern': ['^[a-z][a-z0-9]*(-[a-z0-9]+)*|^[a-z][a-zA-Z0-9]*$', {
+      message: 'Mixin name should be kebab-case (like "user-select") or camelCase (like "userSelect")',
+    }],
+
+    'scss/at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['apply', 'use', 'mixin', 'include', 'extend', 'each', 'if', 'else', 'for', 'while', 'reference', 'custom-variant','theme','utility','forward','function','return'],
+      },
+    ],
+
+    // 变量名使用 kebab-case 格式或小驼峰式格式
+    'scss/dollar-variable-pattern': '^[a-z][a-z0-9]*(-[a-z0-9]+)*|^[a-z][a-zA-Z0-9]*$',
 
     // 禁止行内 // 注释
     'scss/double-slash-comment-inline': 'never',
@@ -358,10 +355,7 @@ export default {
      */
     // 类名使用kebab-case或camelCase
     // 错误提示示例：Class name should be lowercase with hyphens (like "news-list")
-    'selector-class-pattern': [
-      '^[a-z][a-z0-9]*(-[a-z0-9]+)*|^[a-z][a-zA-Z0-9]*$',
-      { message: 'Class name should be lowercase with hyphens (like "news-list") or camelCase' },
-    ],
+    'selector-class-pattern': ['^[a-z][a-z0-9]*(-[a-z0-9]+)*|^[a-z][a-zA-Z0-9]*$', { message: 'Class name should be lowercase with hyphens (like "news-list") or camelCase' }],
 
     // 强制 ID 选择器使用短横线命名法 (kebab-case)
     'selector-id-pattern': [
@@ -389,14 +383,14 @@ export default {
      * ------------------------------------------
      */
 
-    // 禁止类型限定(如div.my-class)
-    'selector-no-qualifying-type': true,
+    // 允许类型限定选择器（允许html.dark等用法）
+    'selector-no-qualifying-type': null,
 
-    // 允许Vue的deep伪类
+    // 允许Vue的deep伪类和遗留的input-placeholder
     'selector-pseudo-class-no-unknown': [
       true,
       {
-        ignorePseudoClasses: ['deep', 'v-deep', 'v-global', 'v-slotted'],
+        ignorePseudoClasses: ['deep', 'v-deep', 'v-global', 'v-slotted', 'input-placeholder'],
       },
     ],
 

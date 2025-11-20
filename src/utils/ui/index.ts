@@ -5,7 +5,7 @@
  * @author Art Design Pro Team
  */
 
-export * from './colors'
-export * from './loading'
-export * from './tabs'
-export * from './emojo'
+export * from './colors';
+export * from './loading';
+export * from './tabs';
+export * from './emojo';

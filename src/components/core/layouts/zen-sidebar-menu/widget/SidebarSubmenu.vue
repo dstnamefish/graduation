@@ -1,26 +1,20 @@
 <template>
-  <!-- 遍历过滤后的菜单项 -->
-  <template
-    v-for="item in filteredMenuItems"
-    :key="item.path"
-  >
-    <!-- 包含子菜单的项目 -->
-    <ElSubMenu
-      v-if="hasChildren(item)"
-      :index="item.path || item.meta.title"
-      :level="level"
-    >
+  <template v-for="(item, index) in filteredMenuItems" :key="getUniqueKey(item, index)">
+    <ElSubMenu v-if="hasChildren(item)" :index="item.path || item.meta.title" :level="level">
       <template #title>
-        <!-- 菜单项图标 -->
-        <MenuItemIcon
-          :icon="item.meta.icon"
-          :color="theme?.iconColor"
-        />
-        <!-- 菜单项名称 -->
-        <span class="menu-name">{{ formatMenuTitle(item.meta.title) }}</span>
+        <div class="menu-icon flex-cc">
+          <ZenSvgIcon
+            :icon="item.meta.icon"
+            :color="theme?.iconColor"
+            :style="{ color: theme.iconColor }"
+          />
+        </div>
+        <span class="menu-name">
+          {{ formatMenuTitle(item.meta.title) }}
+        </span>
+        <div v-if="item.meta.showBadge" class="zen-badge" style="right: 10px" />
       </template>
 
-      <!-- 递归渲染子菜单 -->
       <SidebarSubmenu
         :list="item.children"
         :isMobile="isMobile"
@@ -30,37 +24,31 @@
       />
     </ElSubMenu>
 
-    <!-- 普通菜单项（无子菜单） -->
     <ElMenuItem
       v-else
-      :index="item.path || item.meta.title"
+      :index="isExternalLink(item) ? undefined : item.path || item.meta.title"
       :levelItem="level + 1"
       @click="goPage(item)"
     >
-      <!-- 菜单项图标 -->
-      <MenuItemIcon
-        :icon="item.meta.icon"
-        :color="theme?.iconColor"
-      />
-      <!-- 固定显示徽章 -->
+      <div class="menu-icon flex-cc">
+        <ZenSvgIcon
+          :icon="item.meta.icon"
+          :color="theme?.iconColor"
+          :style="{ color: theme.iconColor }"
+        />
+      </div>
       <div
-        v-show="item.meta.showBadge && level === 0"
-        class="wellnest-badge"
+        v-show="item.meta.showBadge && level === 0 && !menuOpen"
+        class="zen-badge"
+        style="right: 5px"
       />
 
       <template #title>
-        <!-- 菜单项名称 -->
-        <span class="menu-name">{{ formatMenuTitle(item.meta.title) }}</span>
-        <!-- 徽章 -->
-        <div
-          v-if="item.meta.showBadge"
-          class="wellnest-badge"
-        />
-        <!-- 文字徽章 -->
-        <div
-          v-if="item.meta.showTextBadge"
-          class="wellnest-text-badge"
-        >
+        <span class="menu-name">
+          {{ formatMenuTitle(item.meta.title) }}
+        </span>
+        <div v-if="item.meta.showBadge" class="zen-badge" />
+        <div v-if="item.meta.showTextBadge && (level > 0 || menuOpen)" class="zen-text-badge">
           {{ item.meta.showTextBadge }}
         </div>
       </template>
@@ -69,27 +57,39 @@
 </template>
 
 <script setup lang="ts">
-import { formatMenuTitle } from '@/router/utils/utils';
-import { AppRouteRecord } from '@/types/router';
+import { computed } from 'vue';
+import type { AppRouteRecord } from '@/types/router';
+import { formatMenuTitle } from '@/utils/router';
 import { handleMenuJump } from '@/utils/navigation';
+import { useSettingStore } from '@/store/modules/setting';
 
-defineOptions({ name: 'SidebarSubmenu' });
+  interface MenuTheme {
+    iconColor?: string
+  }
 
-interface MenuTheme {
-  iconColor?: string;
-}
+  interface Props {
 
-interface Props {
-  title?: string;
-  list?: AppRouteRecord[];
-  theme?: MenuTheme;
-  isMobile?: boolean;
-  level: number;
-}
+    /** 菜单标题 */
+    title?: string
 
-interface Emit {
-  (e: 'close'): void;
-}
+    /** 菜单列表 */
+    list?: AppRouteRecord[]
+
+    /** 主题配置 */
+    theme?: MenuTheme
+
+    /** 是否为移动端模式 */
+    isMobile?: boolean
+
+    /** 菜单层级 */
+    level?: number
+  }
+
+  interface Emits {
+
+    /** 关闭菜单事件 */
+    (e: 'close'): void
+  }
 
 const props = withDefaults(defineProps<Props>(), {
   isMobile: false,
@@ -99,34 +99,41 @@ const props = withDefaults(defineProps<Props>(), {
   title: '',
 });
 
-const emit = defineEmits<Emit>();
+const emit = defineEmits<Emits>();
+
+const settingStore = useSettingStore();
+
+const { menuOpen } = storeToRefs(settingStore);
 
 /**
- * 筛选出可见的菜单项（过滤掉隐藏的菜单项）
- */
+   * 过滤后的菜单项列表
+   * 只显示未隐藏的菜单项
+   */
 const filteredMenuItems = computed(() => filterRoutes(props.list));
 
 /**
- * 跳转到指定页面
- * @param item 菜单项数据
- */
-const goPage = (item: AppRouteRecord) => {
-  // 关闭菜单
+   * 跳转到指定页面
+   * @param item 菜单项数据
+   */
+const goPage = (item: AppRouteRecord): void => {
   closeMenu();
-
-  // 处理菜单跳转
   handleMenuJump(item);
 };
 
+/**
+   * 关闭菜单
+   * 触发父组件的关闭事件
+   */
 const closeMenu = (): void => {
   emit('close');
 };
 
 /**
- * 过滤路由菜单项
- * @param items 路由菜单项列表
- * @returns 过滤后的路由菜单项列表
- */
+   * 递归过滤菜单路由，移除隐藏的菜单项
+   * 如果一个父菜单的所有子菜单都被隐藏，则父菜单也会被隐藏
+   * @param items 菜单项数组
+   * @returns 过滤后的菜单项数组
+   */
 const filterRoutes = (items: AppRouteRecord[]): AppRouteRecord[] => {
   return items
     .filter((item) => {
@@ -138,6 +145,8 @@ const filterRoutes = (items: AppRouteRecord[]): AppRouteRecord[] => {
       // 如果有子菜单，递归过滤子菜单
       if (item.children && item.children.length > 0) {
         const filteredChildren = filterRoutes(item.children);
+
+        // 如果所有子菜单都被过滤掉了，则隐藏父菜单
         return filteredChildren.length > 0;
       }
 
@@ -151,77 +160,37 @@ const filterRoutes = (items: AppRouteRecord[]): AppRouteRecord[] => {
 };
 
 /**
- * 判断菜单项是否有子菜单
- * @param item 菜单项数据
- * @returns 是否有子菜单
- */
+   * 判断菜单项是否包含可见的子菜单
+   * @param item 菜单项数据
+   * @returns 是否包含可见的子菜单
+   */
 const hasChildren = (item: AppRouteRecord): boolean => {
   if (!item.children || item.children.length === 0) {
     return false;
   }
-  const filterChildren = filterRoutes(item.children);
-  return filterChildren.length > 0;
-};
-</script>
 
-<script lang="ts">
+  // 递归检查是否有可见的子菜单
+  const filteredChildren = filterRoutes(item.children);
+  return filteredChildren.length > 0;
+};
 
 /**
- * 菜单图标组件
- * 用于渲染菜单项的图标
- */
-const MenuItemIcon = defineComponent({
-  name: 'MenuItemIcon',
-  props: {
-    /** 图标颜色 */
-    color: {
-      default: '',
-      type: String,
-    },
+   * 判断是否为外部链接
+   * @param item 菜单项数据
+   * @returns 是否为外部链接
+   */
+const isExternalLink = (item: AppRouteRecord): boolean => {
+  return !!(item.meta.link && !item.meta.isIframe);
+};
 
-    /** 图标内容或SVG文件名 */
-    icon: {
-      default: '',
-      type: String,
-    },
-  },
-  setup(props) {
-    // 判断是否为SVG图标（假设SVG图标不包含HTML标签，而Unicode图标包含）
-    const isSvgIcon = computed(() => {
-      return (
-        props.icon && !props.icon.includes('<') && !props.icon.includes('&#')
-      );
-    });
-
-    // 使用vite-svg-loader的默认行为，不使用?component后缀
-    return () => {
-      if (isSvgIcon.value) {
-        try {
-          // 直接使用img标签加载SVG文件
-          return h('img', {
-            alt: props.icon,
-            class: 'menu-icon svg-icon',
-            src: `/src/assets/svg/menu/${props.icon}.svg`,
-            style: props.color ? { color: props.color } : undefined,
-          });
-        } catch (error) {
-          console.error(`Failed to load SVG icon: ${props.icon}`, error);
-
-          // 加载失败时回退到原始i标签
-          return h('i', {
-            class: 'menu-icon iconfont-sys',
-            style: props.color ? { color: props.color } : undefined,
-          });
-        }
-      } else {
-        // 兼容原有Unicode图标
-        return h('i', {
-          class: 'menu-icon iconfont-sys',
-          innerHTML: props.icon,
-          style: props.color ? { color: props.color } : undefined,
-        });
-      }
-    };
-  },
-});
+/**
+   * 生成唯一的 key
+   * 使用 path、title 和 index 组合确保唯一性
+   * @param item 菜单项数据
+   * @param index 索引
+   * @returns 唯一的 key
+   */
+const getUniqueKey = (item: AppRouteRecord, index: number): string => {
+  return `${item.path || item.meta.title || 'menu'}-${props.level}-${index}`;
+};
 </script>

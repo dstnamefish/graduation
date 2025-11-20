@@ -35,7 +35,6 @@
           :textColor="getMenuTheme.textColor"
           :uniqueOpened="uniqueOpened"
           :backgroundColor="getMenuTheme.background"
-          :activeTextColor="getMenuTheme.textActiveColor"
           :defaultOpeneds="defaultOpenedMenus"
           :popperClass="`menu-left-${getMenuTheme.theme}-popper`"
           :showTimeout="50"
@@ -55,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCommon } from '@/composables/useCommon';
+import { useCommon } from '@/hooks/core/useCommon';
 import AppConfig from '@/config';
 import { MenuTypeEnum } from '@/enums/appEnum';
 import { useMenuStore } from '@/store/modules/menu';
@@ -78,9 +77,7 @@ const isMobileMode = ref(false);
 const currentScreenWidth = ref(0);
 
 // 菜单类型判断
-const showLeftMenu = computed(
-  () => menuType.value === MenuTypeEnum.LEFT || menuType.value === MenuTypeEnum.TOP_LEFT,
-);
+const showLeftMenu = computed(() => menuType.value === MenuTypeEnum.LEFT || menuType.value === MenuTypeEnum.TOP_LEFT);
 
 // 路由相关
 const routerPath = computed(() => String(route.meta.activePath || route.path));

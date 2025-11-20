@@ -1,6 +1,6 @@
 import { AppRouteRecord } from '@/types/router';
 
-import { RoutesAlias } from '../routesAlias';
+import { routeModules } from '../modules/index';
 
 /**
  * 菜单列表、异步路由
@@ -15,96 +15,10 @@ import { RoutesAlias } from '../routesAlias';
  * 注意事项：
  * 1、RoutesAlias.Layout 指向的是布局容器，后端返回的菜单数据中，component 字段需要指向 /index/index
  * 2、path、name 不要和动态路由冲突，否则会导致路由冲突无法访问
+ *
+ * 重构说明：
+ * - 2024年重构：将路由配置按模块拆分到 src/router/modules/ 目录下
+ * - 每个模块独立管理自己的路由配置，降低耦合度
+ * - 保持路由加载顺序一致
  */
-export const asyncRoutes: AppRouteRecord[] = [
-  {
-    component: RoutesAlias.Dashboard,
-    meta: {
-      icon: 'dashboard',
-      keepAlive: false,
-      title: 'menus.dashboard.title',
-    },
-    name: 'Dashboard',
-    path: '/dashboard',
-  },
-  {
-    component: RoutesAlias.Appointments,
-    meta: {
-      icon: 'appointment',
-      keepAlive: false,
-      title: 'menus.appointments.title',
-    },
-    name: 'Appointments',
-    path: '/appointments',
-  },
-  {
-    component: RoutesAlias.Patients,
-    meta: {
-      icon: 'patient',
-      keepAlive: false,
-      title: 'menus.patients.title',
-    },
-    name: 'Patients',
-    path: '/patients',
-  },
-  {
-    component: RoutesAlias.Doctors,
-    meta: {
-      icon: 'doctor',
-      keepAlive: false,
-      title: 'menus.doctors.title',
-    },
-    name: 'Doctors',
-    path: '/doctors',
-  },
-  {
-    component: RoutesAlias.Departments,
-    meta: {
-      icon: 'department',
-      keepAlive: false,
-      title: 'menus.departments.title',
-    },
-    name: 'Departments',
-    path: '/departments',
-  },
-  {
-    component: RoutesAlias.DoctorsSchedule,
-    meta: {
-      icon: 'doctor-schedule',
-      keepAlive: false,
-      title: 'menus.doctorsSchedule.title',
-    },
-    name: 'DoctorsSchedule',
-    path: '/doctors-schedule',
-  },
-  {
-    component: RoutesAlias.Payments,
-    meta: {
-      icon: 'payment',
-      keepAlive: false,
-      title: 'menus.payments.title',
-    },
-    name: 'Payments',
-    path: '/payments',
-  },
-  {
-    component: RoutesAlias.Inventory,
-    meta: {
-      icon: 'inventory',
-      keepAlive: false,
-      title: 'menus.inventory.title',
-    },
-    name: 'Inventory',
-    path: '/inventory',
-  },
-  {
-    component: RoutesAlias.Messages,
-    meta: {
-      icon: 'message',
-      keepAlive: false,
-      title: 'menus.messages.title',
-    },
-    name: 'Messages',
-    path: '/messages',
-  },
-];
+export const asyncRoutes: AppRouteRecord[] = routeModules;

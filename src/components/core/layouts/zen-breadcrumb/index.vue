@@ -1,23 +1,28 @@
 <!-- 面包屑导航 -->
 <template>
-  <nav
-    class="breadcrumb"
-    aria-label="breadcrumb"
-  >
-    <ul>
+  <nav class="ml-2.5 max-lg:hidden!" aria-label="breadcrumb">
+    <ul class="flex-c h-full">
       <li
         v-for="(item, index) in breadcrumbItems"
         :key="item.path"
+        class="box-border flex-c h-7 text-sm leading-7"
       >
         <div
-          :class="{ clickable: isClickable(item, index) }"
+          :class="
+            isClickable(item, index)
+              ? 'c-p py-1 rounded tad-200 hover:bg-active-color hover:[&_span]:text-g-600'
+              : ''
+          "
           @click="handleBreadcrumbClick(item, index)"
         >
-          <span>{{ formatMenuTitle(item.meta?.title as string) }}</span>
+          <span
+            class="block max-w-46 overflow-hidden text-ellipsis whitespace-nowrap px-1.5 text-sm text-g-600 dark:text-g-800"
+            >{{ formatMenuTitle(item.meta?.title as string) }}</span
+          >
         </div>
         <div
           v-if="!isLastItem(index) && item.meta?.title"
-          class="breadcrumb-separator"
+          class="mx-1 text-sm not-italic text-g-500"
           aria-hidden="true"
         >
           /
@@ -31,14 +36,14 @@
 import { computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import type { RouteLocationMatched, RouteRecordRaw } from 'vue-router';
-import { formatMenuTitle } from '@/router/utils/utils';
+import { formatMenuTitle } from '@/utils/router';
 
-defineOptions({ name: 'ZenBreadcrumb' });
+defineOptions({ name: 'ArtBreadcrumb' });
 
 export interface BreadcrumbItem {
-  path: string;
-  meta: RouteRecordRaw['meta'];
-}
+    path: string
+    meta: RouteRecordRaw['meta']
+  }
 
 const route = useRoute();
 const router = useRouter();

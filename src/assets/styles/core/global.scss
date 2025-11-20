@@ -1,1 +1,8 @@
 // 全局样式
+.zen-full-height {
+  display: flex;
+  flex-direction: column;
+
+ // 自动计算的剩余高度
+  height: var(--zen-full-height);
+}

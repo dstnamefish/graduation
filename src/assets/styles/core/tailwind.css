@@ -8,7 +8,7 @@
 
   /* 主题颜色 */
   --zen-primary: #a2f2ee;
-  --zen-secondary: #223956;
+  --zen-secondary: #253958;
   --zen-tertiary: #dff8f8;
   --zen-error: #f26250;
   --zen-info: #f2d650;
@@ -33,8 +33,9 @@
   --default-border-dashed: #dbdfe9;
 
   /* 背景颜色 */
-  --default-bg-color: #fafbfc;
+  --default-bg-color: #fff;
   --default-box-bg: #fff;
+  --default-table-color: #e70000;
 
   /* 悬停颜色 */
   --zen-hover-color: #f2f4f5;
@@ -69,6 +70,7 @@
   /* 背景颜色 */
   --default-bg-color: #070707;
   --default-box-color: #161618;
+  --default-table-color: #e70000;
 
   /* 悬停颜色 */
   --zen-hover-color: #252530;

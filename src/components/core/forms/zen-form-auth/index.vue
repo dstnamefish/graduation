@@ -100,7 +100,7 @@ import type {
   FormEmit,
   ValidatorFunction,
   ValidatorRule,
-} from '@/types/component/form';
+} from '@/types/component/form.ts';
 
 // 移除内置验证器导入，只支持自定义验证器
 

@@ -41,8 +41,6 @@ $hover-bg-color: var(--bg-quaternary);
 
     span {
 
-      @include ellipsis;
-
       font-size: $menu-font-size !important;
     }
 

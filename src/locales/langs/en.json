@@ -1,4 +1,19 @@
 {
+  "httpMsg": {
+    "unauthorized": "Unauthorized access, please login again",
+    "forbidden": "Access to this resource is forbidden",
+    "notFound": "The requested resource does not exist",
+    "methodNotAllowed": "Request method not allowed",
+    "requestTimeout": "Request timeout, please try again later",
+    "internalServerError": "Internal server error, please try again later",
+    "badGateway": "Bad gateway error, please try again later",
+    "serviceUnavailable": "Service temporarily unavailable, please try again later",
+    "gatewayTimeout": "Gateway timeout, please try again later",
+    "requestCancelled": "Request cancelled",
+    "networkError": "Network connection error, please check your connection",
+    "requestFailed": "Request failed",
+    "requestConfigError": "Request configuration error"
+  },
   "menus": {
     "dashboard": {
       "title": "Dashboard"
@@ -71,5 +86,21 @@
     "page": "Page",
     "itemsPerPage": "Items per page",
     "placeholder": "Search anything"
+  },
+  "inventory": {
+    "table": {
+      "image": "Image",
+      "item": "Item",
+      "category": "Category",
+      "Availiability": "Availiability",
+      "Qty In Stock": "Qty In Stock",
+      "Qty In Recorder": "Qty In Recorder",
+      "Action": "Action"
+    }
+  },
+  "table": {
+        "searchBar": {
+      "search":"search"
+    }
   }
 }

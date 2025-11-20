@@ -40,14 +40,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { fetchLogin } from '@/api/auth';
+import { fetchLogin } from '@/api/core/auth';
 import FormActions from '@/components/core/forms/zen-form-actions/index.vue';
 import ZenFormAuth from '@/components/core/forms/zen-form-auth/index.vue';
 import LoginLeftView from '@/components/core/views/login/LoginLeftView.vue';
 import { RoutesAlias } from '@/router/routesAlias';
 import { useUserStore } from '@/store/modules/user';
-import type { LoginRequest } from '@/types/api/auth';
-import type { FormProps, ValidatorFunction } from '@/types/component/form';
+import type { LoginParams } from '@/types/api/core/auth';
+import type { FormProps, ValidatorFunction } from '@/types/component/form.ts';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -153,7 +153,7 @@ const handleLogin = async (formData: Record<string, any>) => {
     isLoading.value = true;
 
     // 准备登录数据
-    const loginData: LoginRequest = {
+    const loginData: LoginParams = {
       password: formData.password,
       username: formData.username,
     };

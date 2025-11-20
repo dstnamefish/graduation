@@ -1,11 +1,11 @@
 <template>
   <div class="app-layout">
-    <aside class="app-sidebar">
+    <aside id="app-sidebar">
       <ZenSidebarMenu />
     </aside>
 
     <main id="app-main">
-      <div class="app-header">
+      <div id="app-header">
         <ZenHeaderBar
           :showBreadcrumb="route.meta.showBreadcrumb"
           :showGlobalSearch="route.meta.showGlobalSearch"
@@ -16,7 +16,8 @@
           :showThemeToggle="route.meta.showThemeToggle"
         />
       </div>
-      <div class="app-content">
+
+      <div id="app-content">
         <ZenPageContent />
       </div>
     </main>
@@ -25,10 +26,6 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import ZenPageContent from '@/components/core/layouts/zen-page-content/index.vue';
-import ZenSidebarMenu from '@/components/core/layouts/zen-sidebar-menu/index.vue';
-import ZenHeaderBar from '@/components/core/layouts/zen-header-bar/index.vue';
-
 defineOptions({ name: 'AppLayout' });
 
 const route = useRoute();

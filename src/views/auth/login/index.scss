@@ -1,18 +1,4 @@
-@use "@styles/index.scss" as *;
-
 .login {
-  @include login-left-visible {
-    display: flex;
-  }
-
-  @include login-left-hidden {
-    display: flex;
-
-    .login-form {
-      width: 100% !important;
-      margin: 0;
-    }
-  }
 
   position: relative;
   display: flex;

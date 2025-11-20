@@ -60,7 +60,7 @@
           </ElFormItem>
         </ElCol>
 
-        <ELCol
+        <ElCol
           :xs="24" :sm="24" :md="span"
           :lg="span" :xl="span" class="action-cloumn"
         >
@@ -78,7 +78,7 @@
               </ElButton>
             </div>
           </div>
-        </ELCol>
+        </ElCol>
       </ElRow>
     </ElForm>
   </section>

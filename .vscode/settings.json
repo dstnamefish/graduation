@@ -16,7 +16,7 @@
   "stylelint.configFile": "./stylelint.config.mjs",
 
   // 保存时自动格式化代码（使用 Prettier）
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "prettier.configPath": "./prettier.config.mjs",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 

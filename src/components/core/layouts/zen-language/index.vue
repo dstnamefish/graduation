@@ -5,7 +5,6 @@
       @command="changeLanguage"
       popper="languageDropDownStyle"
     >
-      <LanguageIcon class="language-btn" />
       <template #dropdown>
         <ElDropdownMenu>
           <div
@@ -28,8 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import LanguageIcon from '@/assets/svg/header-bar/language.svg';
-import { useCommon } from '@/composables/useCommon';
+import { useCommon } from '@/hooks/core/useCommon';
 import { LanguageEnum } from '@/enums/appEnum';
 import { languageOptions } from '@/locales';
 import { useUserStore } from '@/store/modules/user';
@@ -64,7 +62,3 @@ const changeLanguage = (lang: LanguageEnum): void => {
   reload(50);
 };
 </script>
-
-<style lang="scss" scoped>
-@forward './style.scss';
-</style>

@@ -2,21 +2,20 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "bundler",
-    "strict": false,
-    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["node", "element-plus/global"],
+    "types": ["vite/client", "node", "element-plus/global"],
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
       "@views/*": ["src/views/*"],
-      "@imgs/*": ["src/assets/img/*"],
+      "@imgs/*": ["src/assets/images/*"],
       "@icons/*": ["src/assets/icons/*"],
       "@utils/*": ["src/utils/*"],
       "@stores/*": ["src/store/*"],
@@ -24,6 +23,6 @@
       "@styles/*": ["src/assets/styles/*"]
     }
   },
-  "include": ["src/**/*", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.scss", "vite.config.ts"],
+  "include": ["src/**/*", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

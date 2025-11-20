@@ -1,9 +1,24 @@
+/**
+ * HTTP 请求封装模块
+ * 基于 Axios 封装的 HTTP 请求工具，提供统一的请求/响应处理
+ *
+ * ## 主要功能
+ *
+ * - 请求/响应拦截器（自动添加 Token、统一错误处理）
+ * - 401 未授权自动登出（带防抖机制）
+ * - 请求失败自动重试（可配置）
+ * - 统一的成功/错误消息提示
+ * - 支持 GET/POST/PUT/DELETE 等常用方法
+ *
+ * @module utils/http
+ * @author Art Design Pro Team
+ */
+
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { fetchRefreshToken } from '@/api/auth';
 import { $t } from '@/locales';
 import { useUserStore } from '@/store/modules/user';
-import { BaseResponse } from '@/types/api/request';
+import { BaseResponse } from '@/types';
 
 import { HttpError, handleError, showError, showSuccess } from './error';
 import { ApiStatus } from './status';
@@ -18,10 +33,6 @@ const UNAUTHORIZED_DEBOUNCE_TIME = 3000;
 /** 401防抖状态 */
 let isUnauthorizedErrorShown = false;
 let unauthorizedTimer: NodeJS.Timeout | null = null;
-
-/** 刷新令牌状态 */
-let isRefreshing = false;
-let refreshSubscribers: Array<(token: string) => void> = [];
 
 /** 扩展 AxiosRequestConfig */
 interface ExtendedAxiosRequestConfig extends AxiosRequestConfig {
@@ -56,9 +67,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (request: InternalAxiosRequestConfig) => {
     const { accessToken } = useUserStore();
-
-    // 按照JWT标准，Authorization头应该包含Bearer前缀
-    if (accessToken) {request.headers.set('Authorization', `Bearer ${accessToken}`);}
+    if (accessToken) { request.headers.set('Authorization', `Bearer ${accessToken}`); }
 
     if (request.data && !(request.data instanceof FormData) && !request.headers['Content-Type']) {
       request.headers.set('Content-Type', 'application/json');
@@ -87,91 +96,29 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-/**
- * @description 统一创建HttpError
- * @param message 错误信息
- * @param code 错误码
- * @returns {HttpError}
- */
+/** 统一创建HttpError */
 function createHttpError(message: string, code: number) {
   return new HttpError(message, code);
 }
 
-/**
- * @description 处理401错误（带令牌刷新机制）
- * @param message 错误信息
- * @returns never
- */
+/** 处理401错误（带防抖） */
 function handleUnauthorizedError(message?: string): never {
   const error = createHttpError(message || $t('httpMsg.unauthorized'), ApiStatus.unauthorized);
 
-  // 如果没有刷新令牌或正在刷新中，直接登出
-  const userStore = useUserStore();
-  if (!userStore.refreshToken || isRefreshing) {
-    if (!isUnauthorizedErrorShown) {
-      isUnauthorizedErrorShown = true;
-      logOut();
+  if (!isUnauthorizedErrorShown) {
+    isUnauthorizedErrorShown = true;
+    logOut();
 
-      unauthorizedTimer = setTimeout(resetUnauthorizedError, UNAUTHORIZED_DEBOUNCE_TIME);
+    unauthorizedTimer = setTimeout(resetUnauthorizedError, UNAUTHORIZED_DEBOUNCE_TIME);
 
-      showError(error, true);
-    }
+    showError(error, true);
     throw error;
   }
 
-  // 创建一个Promise等待刷新令牌完成
-  const refreshPromise = new Promise<string>((resolve, reject) => {
-    // 将回调函数添加到订阅者列表
-    refreshSubscribers.push((newToken) => {
-      resolve(newToken);
-    });
-  });
-
-  // 开始刷新令牌
-  refreshToken(userStore.refreshToken);
-
-  // 抛出错误，但不显示消息，因为我们正在尝试刷新令牌
   throw error;
 }
 
-/**
- * @description 刷新令牌
- * @param refreshToken 刷新令牌
- */
-async function refreshToken(currentRefreshToken: string) {
-  if (isRefreshing) {return;}
-
-  isRefreshing = true;
-
-  try {
-    // 调用刷新令牌接口
-    const response = await fetchRefreshToken({ refreshToken: currentRefreshToken });
-
-    if (response.token) {
-      const userStore = useUserStore();
-
-      // 更新用户存储中的token和refreshToken
-      userStore.setToken(response.token, response.refreshToken);
-
-      // 执行所有等待中的请求
-      refreshSubscribers.forEach((callback) => callback(response.token));
-    }
-  } catch (error) {
-    console.error('刷新令牌失败:', error);
-
-    // 刷新失败，执行登出
-    logOut();
-  } finally {
-    // 重置刷新状态
-    isRefreshing = false;
-    refreshSubscribers = [];
-  }
-}
-
-/**
- * @description 重置401防抖状态
- * @returns {void}
- */
+/** 重置401防抖状态 */
 function resetUnauthorizedError() {
   isUnauthorizedErrorShown = false;
   if (unauthorizedTimer) {clearTimeout(unauthorizedTimer);}
@@ -212,17 +159,6 @@ async function retryRequest<T>(
   }
 }
 
-/**
- * @description 当刷新令牌成功后，重新发送请求
- * @param config 请求配置
- * @param token 新的访问令牌
- */
-function retryOriginalRequest<T>(config: ExtendedAxiosRequestConfig, token: string): Promise<T> {
-  config.headers = config.headers || {};
-  config.headers.Authorization = `Bearer ${token}`;
-  return request<T>(config);
-}
-
 /** 延迟函数 */
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -250,31 +186,10 @@ async function request<T = any>(config: ExtendedAxiosRequestConfig): Promise<T> 
 
     return res.data.data as T;
   } catch (error) {
-    // 如果是401错误且正在刷新令牌，等待刷新完成后重试请求
-    if (error instanceof HttpError && error.code === ApiStatus.unauthorized && isRefreshing) {
-      const userStore = useUserStore();
-      if (userStore.refreshToken) {
-        // 创建一个Promise等待刷新完成
-        return new Promise<T>((resolve, reject) => {
-          // 添加到订阅者列表
-          refreshSubscribers.push((newToken) => {
-            try {
-              // 重试原始请求
-              resolve(retryOriginalRequest(config, newToken));
-            } catch (retryError) {
-              reject(retryError);
-            }
-          });
-        });
-      }
-    }
-
-    // 其他错误处理
     if (error instanceof HttpError && error.code !== ApiStatus.unauthorized) {
       const showMsg = config.showErrorMessage !== false;
       showError(error, showMsg);
     }
-
     return Promise.reject(error);
   }
 }

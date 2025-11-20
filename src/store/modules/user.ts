@@ -1,18 +1,50 @@
+/**
+ * 用户状态管理模块
+ *
+ * 提供用户相关的状态管理
+ *
+ * ## 主要功能
+ *
+ * - 用户登录状态管理
+ * - 用户信息存储
+ * - 访问令牌和刷新令牌管理
+ * - 语言设置
+ * - 搜索历史记录
+ * - 锁屏状态和密码管理
+ * - 登出清理逻辑
+ *
+ * ## 使用场景
+ *
+ * - 用户登录和认证
+ * - 权限验证
+ * - 个人信息展示
+ * - 多语言切换
+ * - 锁屏功能
+ * - 搜索历史管理
+ *
+ * ## 持久化
+ *
+ * - 使用 localStorage 存储
+ * - 存储键：sys-v{version}-user
+ * - 登出时自动清理
+ *
+ * @module store/modules/user
+ * @author Art Design Pro Team
+ */
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 
 import { LanguageEnum } from '@/enums/appEnum';
 import { router } from '@/router';
 import { resetRouterState } from '@/router/guards/beforeEach';
-import { RoutesAlias } from '@/router/routesAlias';
-import { setPageTitle } from '@/router/utils/utils';
 import { AppRouteRecord } from '@/types/router';
+import { setPageTitle } from '@/utils/router';
 
 import { useMenuStore } from './menu';
 import { useSettingStore } from './setting';
+import { useWorktabStore } from './worktab';
 
-import type { UserInfo } from '@/types/api/auth';
-
+import type { UserInfo } from '@/types/api/core/user';
 
 /**
  * 用户状态管理
@@ -51,10 +83,9 @@ export const useUserStore = defineStore(
     // 计算属性：获取设置状态
     const getSettingState = computed(() => useSettingStore().$state);
 
-    // 计算属性：获取用户角色ID
-    const getUserRoleId = computed(() => info.value.roleId);
+    // 计算属性：获取工作台状态
+    const getWorktabState = computed(() => useWorktabStore().$state);
 
-    // 计算属性：获取用户角色代码
     const getUserRoleCode = computed(() => info.value.roleCode);
 
     /**
@@ -119,20 +150,11 @@ export const useUserStore = defineStore(
     };
 
     /**
-     * 检查用户是否具有指定角色
-     * @param roleId 角色ID
-     * @returns 是否具有指定角色
+     * 检查用户角色是否匹配
+     * @param roleCode 角色编码
+     * @returns 是否匹配
      */
-    const hasRole = (roleId: number): boolean => {
-      return info.value.roleId === roleId;
-    };
-
-    /**
-     * 检查用户是否具有指定角色代码
-     * @param roleCode 角色代码
-     * @returns 是否具有指定角色代码
-     */
-    const hasRoleCode = (roleCode: string): boolean => {
+    const checkRoleCode = (roleCode: string):boolean => {
       return info.value.roleCode === roleCode;
     };
 
@@ -159,6 +181,9 @@ export const useUserStore = defineStore(
       // 清空刷新令牌
       refreshToken.value = '';
 
+      // 清空工作台已打开页面
+      useWorktabStore().opened = [];
+
       // 移除iframe路由缓存
       sessionStorage.removeItem('iframeRoutes');
 
@@ -169,17 +194,16 @@ export const useUserStore = defineStore(
       resetRouterState();
 
       // 跳转到登录页
-      router.push(RoutesAlias.Login);
+      router.push({ name: 'Login' });
     };
 
     return {
       accessToken,
+      checkRoleCode,
       getSettingState,
       getUserInfo,
       getUserRoleCode,
-      getUserRoleId,
-      hasRole,
-      hasRoleCode,
+      getWorktabState,
       info,
       isLock,
       isLogin,

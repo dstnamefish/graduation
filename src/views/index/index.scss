@@ -1,13 +1,11 @@
-@use "@/assets/styles/index.scss" as *;
-
 .app-layout {
   display: flex;
   width: 100%;
   min-height: 100vh;
-  background-color: var(--bg-primary);
+  background: var(--default-bg-color);
 
-  .app-sidebar{
-    background-color: var(--bg-tertiary);
+  #app-sidebar {
+    flex-shrink: 0;
   }
 
   #app-main {
@@ -18,17 +16,17 @@
     min-width: 0;
     overflow: auto;
 
-    .app-header {
+    #app-header {
       position: sticky;
       top: 0;
-      z-index: 200;
+      z-index: 50;
       flex-shrink: 0;
       width: 100%;
     }
 
-    .app-content {
+    #app-content {
       flex: 1;
-      
+
       :deep(.layout-content) {
         width: calc(100% - 40px);
         box-sizing: border-box;
@@ -40,8 +38,54 @@
           box-sizing: border-box;
           padding: 20px;
           border-radius: calc(var(--custom-radius) / 2 + 2px) !important;
-          background: var(--art-main-bg-color);
+          background: var(--default-box-color);
           overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (width <= 1180px) {
+  .app-layout {
+    #app-main {
+      height: 100dvh;
+    }
+  }
+}
+
+@media only screen and (width <= 800px) {
+  .app-layout {
+    position: relative;
+
+    #app-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 300;
+      height: 100vh;
+    }
+
+    #app-main {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+
+      #app-content {
+        :deep(.layout-content) {
+          width: calc(100% - 40px);
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (width <= 640px) {
+  .app-layout {
+    #app-main {
+      #app-content {
+        :deep(.layout-content) {
+          width: calc(100% - 30px);
         }
       }
     }

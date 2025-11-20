@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FormActionsEmit, FormActionsProps } from '@/types/component/button';
+import type { FormActionsEmit, FormActionsProps } from '@/types/component/button.ts';
 
 import ZenButtonMore from '../zen-button-more/index.vue';
 

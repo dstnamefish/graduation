@@ -1,5 +1,6 @@
+import { AppRouteRecordRaw } from '@/utils/router';
+
 import { RoutesAlias } from '../routesAlias';
-import { AppRouteRecordRaw } from '../utils/utils';
 
 /**
  * 静态路由配置表

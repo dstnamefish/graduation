@@ -1,23 +1,50 @@
 /**
- * 路由相关类型定义
+ * 路由类型定义模块
+ *
+ * 提供路由相关的类型定义
+ *
+ * ## 主要功能
+ *
+ * - 路由元数据类型（标题、图标、权限等）
+ * - 应用路由记录类型
+ * - 路由配置扩展
+ *
+ * ## 使用场景
+ *
+ * - 路由配置类型约束
+ * - 路由元数据定义
+ * - 菜单生成
+ * - 权限控制
+ *
+ * @module types/router/index
+ * @author Art Design Pro Team
  */
 
 import { RouteRecordRaw } from 'vue-router';
 
 /**
  * 路由元数据接口
- * 定义路由元数据的属性接口，用于存储路由相关的额外信息
- * 每个属性都有一个默认值，用于在未传入对应属性时使用
- * @property {string} title - 路由标题，默认值为空字符串
- * @property {string} icon - 路由图标，默认值为空字符串
- * @property {boolean} showBadge - 是否显示徽章，默认值为false
- * @property {string} showTextBadge - 文本徽章，默认值为空字符串
- * @property {boolean} isHide - 是否在菜单中隐藏，默认值为false
- * @property {boolean} isHideTab - 是否在标签页中隐藏，默认值为false
- * @property {string} link - 外部链接，默认值为空字符串
- * @property {boolean} isIframe - 是否为iframe，默认值为false
- * @property {boolean} keepAlive - 是否缓存，默认值为false
- * @property {Array<{authMark: string, title: string}>} authList - 操作权限列表，默认值为空数组
+ * 定义路由的各种配置属性
+ *
+ * @property title 路由标题
+ * @property icon 路由图标
+ * @property showBadge 是否显示徽章
+ * @property showTextBadge 文本徽章
+ * @property isHide 是否在菜单中隐藏
+ * @property isHideTab 是否在标签页中隐藏
+ * @property link 外部链接
+ * @property isIframe 是否为iframe
+ * @property keepAlive 是否缓存
+ * @property authList 操作权限列表
+ * @property isFirstLevel 是否为一级菜单
+ * @property roles 角色权限列表
+ * @property fixedTab 是否固定标签页
+ * @property activePath 激活菜单路径
+ * @property isFullPage 是否为全屏页面
+ * @property isAuthButton 是否为权限按钮行
+ * @property authMark 权限标识
+ * @property parentPath 父级路径
+ * @property headerBar 头栏配置
  */
 export interface RouteMeta extends Record<string | number | symbol, unknown> {
   title: string
@@ -41,16 +68,25 @@ export interface RouteMeta extends Record<string | number | symbol, unknown> {
   isAuthButton?: boolean
   authMark?: string
   parentPath?: string
-  showBreadcrumb?: boolean
-  showGlobalSearch?: boolean
-  showNotification?: boolean
-  showChat?: boolean
-  showLanguage?: boolean
-  showSettings?: boolean
-  showThemeToggle?: boolean
+  headerBar?: {
+    showBreadcrumb?: boolean
+    showChat?: boolean
+    showFastEnter?: boolean
+    showFullscreen?: boolean
+    showGlobalSearch?: boolean
+    showLanguage?: boolean
+    showMenuButton?: boolean
+    showNotification?: boolean
+    showRefreshButton?: boolean
+    showSettings?: boolean
+    showThemeToggle?: boolean
+  }
 }
 
-// 扩展路由记录
+/**
+ * 应用路由记录接口
+ * 扩展 Vue Router 的路由记录类型
+ */
 export interface AppRouteRecord extends Omit<RouteRecordRaw, 'meta' | 'children' | 'component'> {
   id?: number
   meta: RouteMeta

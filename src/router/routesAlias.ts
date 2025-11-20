@@ -16,14 +16,4 @@ export enum RoutesAlias {
   Register = '/auth/register',
   ForgotPassword = '/auth/forgot-password',
   Exception404 = '/exception/404',
-  Dashboard = '/dashboard',
-  Appointments = '/appointments',
-  Patients = '/patients/list',
-  PatientDetail = '/patients/detail',
-  Doctors = '/doctors',
-  Departments = '/departments',
-  DoctorsSchedule = '/doctors-schedule',
-  Payments = '/payments',
-  Inventory = '/inventory',
-  Messages = '/messages'
 }

@@ -1,6 +1,41 @@
 import { ElNotification } from 'element-plus';
 
-import { upgradeLogList } from '@/mock/upgrade/changeLog';
+/**
+ * 系统版本升级管理模块
+ *
+ * 提供完整的应用版本升级检测和处理功能
+ *
+ * ## 主要功能
+ *
+ * - 版本号比较和升级检测
+ * - 首次访问识别和处理
+ * - 旧版本数据自动清理
+ * - 升级日志展示和通知
+ * - 强制重新登录控制（根据升级日志配置）
+ * - 版本号规范化处理
+ * - 旧存储结构迁移和清理
+ * - 升级流程延迟执行（确保应用完全加载）
+ *
+ * ## 使用场景
+ *
+ * - 应用启动时自动检测版本升级
+ * - 版本更新后清理旧数据
+ * - 向用户展示版本更新内容
+ * - 重大更新时要求用户重新登录
+ * - 防止旧版本数据污染新版本
+ *
+ * ## 工作流程
+ *
+ * 1. 检查本地存储的版本号
+ * 2. 与当前应用版本对比
+ * 3. 查找并清理旧版本数据
+ * 4. 展示升级通知（包含更新日志）
+ * 5. 根据配置决定是否强制重新登录
+ * 6. 更新本地版本号
+ *
+ * @module utils/sys/upgrade
+ * @author Art Design Pro Team
+ */
 import { useUserStore } from '@/store/modules/user';
 import { StorageConfig } from '@/utils/storage/storage-config';
 
@@ -56,7 +91,7 @@ class VersionManager {
    */
   private findLegacyStorage(): { oldSysKey: string | null; oldVersionKeys: string[] } {
     const storageKeys = Object.keys(localStorage);
-    const currentVersionPrefix = StorageConfig.generateStorageKey('').slice(0, -1); // 移除末尾的 '-'
+    const currentVersionPrefix = StorageConfig.generateStorageKey('').slice(0, -1);
 
     // 查找旧的单一存储结构
     const oldSysKey =
@@ -83,30 +118,25 @@ class VersionManager {
     const normalizedCurrent = this.normalizeVersion(StorageConfig.CURRENT_VERSION);
     const normalizedStored = this.normalizeVersion(storedVersion);
 
-    return upgradeLogList.value.some((item) => {
-      const itemVersion = this.normalizeVersion(item.version);
-      return (
-        item.requireReLogin && itemVersion > normalizedStored && itemVersion <= normalizedCurrent
-      );
-    });
+    return false;
   }
 
   /**
    * 构建升级通知消息
    */
   private buildUpgradeMessage(requireReLogin: boolean): string {
-    const { title: content } = upgradeLogList.value[0];
+    const defaultContent = '系统功能优化和性能提升';
 
     const messageParts = [
-      '<p style="color: var(--art-gray-text-800) !important; padding-bottom: 5px;">',
+      '<p style="color: var(--art-gray-800) !important; padding-bottom: 5px;">',
       `系统已升级到 ${StorageConfig.CURRENT_VERSION} 版本，此次更新带来了以下改进：`,
       '</p>',
-      content,
+      defaultContent,
     ];
 
     if (requireReLogin) {
       messageParts.push(
-        '<p style="color: var(--main-color); padding-top: 5px;">升级完成，请重新登录后继续使用。</p>',
+        '<p style="color: var(--theme-color); padding-top: 5px;">升级完成，请重新登录后继续使用。</p>',
       );
     }
 
@@ -163,10 +193,7 @@ class VersionManager {
     legacyStorage: ReturnType<typeof this.findLegacyStorage>,
   ): Promise<void> {
     try {
-      if (!upgradeLogList.value.length) {
-        console.warn('[Upgrade] 升级日志列表为空');
-        return;
-      }
+      // 总是执行升级流程
 
       const requireReLogin = this.shouldRequireReLogin(storedVersion);
       const message = this.buildUpgradeMessage(requireReLogin);
@@ -206,7 +233,8 @@ class VersionManager {
     // 首次访问处理
     if (this.isFirstVisit(storedVersion)) {
       this.setStoredVersion(StorageConfig.CURRENT_VERSION);
-      console.info('[Upgrade] 首次访问，已设置当前版本');
+
+      // console.info('[Upgrade] 首次访问，已设置当前版本')
       return;
     }
 

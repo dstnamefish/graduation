@@ -1,7 +1,7 @@
 <!-- 表格头部，包含表格大小、刷新、全屏、列设置、其他设置 -->
 <template>
   <div
-    class="table-header"
+    class="flex-cb max-md:block!"
     id="zen-table-header"
   >
     <div class="left">
@@ -245,6 +245,6 @@ watch(
 
 </script>
 
-<style scoped lang="scss">
-@forward './style';
+<style scoped >
+@reference '@styles/core/tailwind.css';
 </style>

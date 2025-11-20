@@ -63,7 +63,7 @@ export default {
   ],
 
   // 每行最大字符数
-  printWidth: 500,
+  printWidth: 100,
 
   // 对象属性引号使用方式：consistent表示保持一致
   quoteProps: 'consistent',

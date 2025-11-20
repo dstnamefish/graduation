@@ -1,8 +1,8 @@
-<!-- ZenHeaderBar.vue -->
+<!-- 顶部栏 -->
 <template>
-  <div class="layout-top-bar">
-    <div class="menu">
-      <div class="left">
+  <div class="w-full bg-amber-200 ">
+    <div class="relative flex-b box-border h-[60px] line-height-60">
+      <div class="">
         <!-- 面包屑 -->
         <ZenBreadcrumb v-if="showBreadcrumb" />
 
@@ -22,8 +22,6 @@
 
         <!-- 主题切换 -->
         <!-- 用户信息、菜单 -->
-        <ZenUser v-if="showUser"/>
-
       </div>
     </div>
   </div>
@@ -42,7 +40,7 @@ import { useMenuStore } from '@/store/modules/menu';
 
 import { WEB_LINKS } from '@/utils/constants';
 import { mittBus } from '@/utils/sys';
-import { useHeaderBar } from '@/composables/useHeaderBar';
+import { useHeaderBar } from '@/hooks/core/useHeaderBar';
 import { HeaderBarFeatureConfig } from '@/types/config';
 
 defineOptions({ name: 'ZenHeaderBar' });
@@ -58,15 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
 const headerBar = useHeaderBar(props.config);
 
 // 直接使用配置
-const {
-  showBreadcrumb,
-  showChat,
-  showGlobalSearch,
-  showLanguage,
-  showNotification,
-  showSettings,
-  showThemeToggle,
-} = headerBar;
+const { showBreadcrumb, showChat, showGlobalSearch, showLanguage, showNotification, showSettings, showThemeToggle } = headerBar;
 
 // 原有的业务逻辑保持不变
 const router = useRouter();
@@ -174,7 +164,3 @@ const closeUserMenu = (): void => {
   }, 100);
 };
 </script>
-
-<style lang="scss" scoped>
-@use './style';
-</style>

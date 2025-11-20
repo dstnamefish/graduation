@@ -1,80 +1,6 @@
 @use "@styles/index.scss" as *;
 
 .register {
-  // 在大屏幕上使用左右布局
-  @include login-left-visible {
-    position: relative;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b73e8 100%);
-    overflow: hidden;
-
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(
-          circle at 20% 50%,
-          rgb(120 119 198 / 30%),
-          transparent 50%
-        ),
-        radial-gradient(
-          circle at 80% 20%,
-          rgb(255 255 255 / 10%),
-          transparent 50%
-        ),
-        radial-gradient(
-          circle at 40% 80%,
-          rgb(102 126 234 / 20%),
-          transparent 50%
-        );
-      content: "";
-      pointer-events: none;
-    }
-  }
-
-  // 在中小屏幕上调整为单栏布局
-  @include login-left-hidden {
-    position: relative;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b73e8 100%);
-    overflow: hidden;
-
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(
-          circle at 20% 50%,
-          rgb(120 119 198 / 30%),
-          transparent 50%
-        ),
-        radial-gradient(
-          circle at 80% 20%,
-          rgb(255 255 255 / 10%),
-          transparent 50%
-        ),
-        radial-gradient(
-          circle at 40% 80%,
-          rgb(102 126 234 / 20%),
-          transparent 50%
-        );
-      content: "";
-      pointer-events: none;
-    }
-  }
-
   position: relative;
   display: flex;
   width: 100vw;
@@ -110,47 +36,6 @@
   }
 
   .right-warp {
-    // 在大屏幕上，右侧表单区域占据剩余空间
-    @include login-left-visible {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      width: 50%;
-      padding: 48px 40px;
-      border-radius: 24px 0 0 24px;
-      background: linear-gradient(
-        145deg,
-        rgb(255 255 255 / 95%) 0%,
-        rgb(248 250 252 / 90%) 100%
-      );
-      box-shadow:
-        -10px 0 50px rgb(0 0 0 / 10%),
-        inset 1px 1px 0 rgb(255 255 255 / 80%);
-      backdrop-filter: blur(20px);
-    }
-
-    // 在中小屏幕上，右侧表单区域占据全宽度
-    @include login-left-hidden {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      margin: 20px;
-      padding: 40px 32px;
-      border-radius: 24px;
-      background: linear-gradient(
-        145deg,
-        rgb(255 255 255 / 95%) 0%,
-        rgb(248 250 252 / 90%) 100%
-      );
-      box-shadow:
-        0 20px 60px rgb(0 0 0 / 15%),
-        inset 1px 1px 0 rgb(255 255 255 / 80%);
-      backdrop-filter: blur(20px);
-    }
 
     position: relative;
     z-index: 10;
