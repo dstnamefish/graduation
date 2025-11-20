@@ -15,6 +15,7 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     'Index.': typeof import('./../../components/core/layouts/zen-user/index..vue')['default']
@@ -32,6 +33,7 @@ declare module 'vue' {
     ZenFormAuth: typeof import('./../../components/core/forms/zen-form-auth/index.vue')['default']
     ZenGlobalSearch: typeof import('./../../components/core/layouts/zen-global-search/index.vue')['default']
     ZenHeaderBar: typeof import('./../../components/core/layouts/zen-header-bar/index.vue')['default']
+    ZenIconButton: typeof import('./../../components/core/widget/zen-icon-button/index.vue')['default']
     ZenLanguage: typeof import('./../../components/core/layouts/zen-language/index.vue')['default']
     ZenLogo: typeof import('./../../components/core/base/zen-logo/index.vue')['default']
     ZenNotification: typeof import('./../../components/core/layouts/zen-notification/index.vue')['default']
@@ -42,5 +44,6 @@ declare module 'vue' {
     ZenSvgIcon: typeof import('./../../components/core/base/zen-svg-icon/index.vue')['default']
     ZenTable: typeof import('./../../components/core/tables/zen-table/index.vue')['default']
     ZenTableHeader: typeof import('./../../components/core/tables/zen-table-header/index.vue')['default']
+    ZenUserMenu: typeof import('./../../components/core/layouts/zen-header-bar/widget/ZenUserMenu.vue')['default']
   }
 }

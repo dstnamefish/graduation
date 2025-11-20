@@ -1,27 +1,26 @@
 <!-- 顶部栏 -->
 <template>
-  <div class="w-full bg-amber-200 ">
-    <div class="relative flex-b box-border h-[60px] line-height-60">
-      <div class="">
+  <div class="w-full border-b border-(--default-border) shadow-sm">
+    <div class="relative box-border flex-b h-16 px-4 select-none">
+      <div class="flex-c flex-1 min-w-0">
         <!-- 面包屑 -->
-        <ZenBreadcrumb v-if="showBreadcrumb" />
+        <ZenBreadcrumb v-if="shouldShowBreadcrumb" />
 
         <!-- 全局搜索 -->
-        <ZenGlobalSearch v-if="showGlobalSearch" />
+        <ZenGlobalSearch v-if="shouldShowGlobalSearch" />
       </div>
 
-      <div class="right">
-        <!-- 通知 -->
-        <ZenNotification v-if="showNotification" />
-
+      <div class="flex items-center gap-4">
         <!-- 语言 -->
-        <ZenLanguage v-if="showLanguage" />
+        <ZenLanguage v-if="shouldShowLanguage"/>
 
         <!-- 设置 -->
-        <ZenSetting v-if="showSettings" />
+        <ZenSetting v-if="shouldShowSettings"/>
 
-        <!-- 主题切换 -->
+        <!-- 通知 -->
+        <ZenNotification v-if="shouldShowNotification"/>
         <!-- 用户信息、菜单 -->
+        <ZenUserMenu class="ml-2"/>
       </div>
     </div>
   </div>
@@ -56,7 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
 const headerBar = useHeaderBar(props.config);
 
 // 直接使用配置
-const { showBreadcrumb, showChat, showGlobalSearch, showLanguage, showNotification, showSettings, showThemeToggle } = headerBar;
+const { shouldShowBreadcrumb, shouldShowChat, shouldShowGlobalSearch, shouldShowLanguage, shouldShowNotification, shouldShowSettings, showThemeToggle } = headerBar;
 
 // 原有的业务逻辑保持不变
 const router = useRouter();

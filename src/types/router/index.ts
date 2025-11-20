@@ -69,17 +69,17 @@ export interface RouteMeta extends Record<string | number | symbol, unknown> {
   authMark?: string
   parentPath?: string
   headerBar?: {
-    showBreadcrumb?: boolean
-    showChat?: boolean
-    showFastEnter?: boolean
-    showFullscreen?: boolean
-    showGlobalSearch?: boolean
-    showLanguage?: boolean
-    showMenuButton?: boolean
-    showNotification?: boolean
-    showRefreshButton?: boolean
-    showSettings?: boolean
-    showThemeToggle?: boolean
+    breadcrumb?: boolean
+    chat?: boolean
+    fastEnter?: boolean
+    fullscreen?: boolean
+    globalSearch?: boolean
+    language?: boolean
+    menuButton?: boolean
+    notification?: boolean
+    refreshButton?: boolean
+    settings?: boolean
+    themeToggle?: boolean
   }
 }
 

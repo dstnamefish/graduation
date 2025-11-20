@@ -242,6 +242,5 @@ export function useHeaderBar() {
     headerBarMetaConfig: getHeaderBarMetaConfig,  // 当前路由的meta配置
     getFeatureConfigFromMeta,  // 从meta或配置获取功能配置
     shouldShowFeatureFromMeta,  // 基于meta的显示检查方法
-
   };
 }

@@ -1,6 +1,6 @@
 <template>
-  <button class="setting" @click="openSetting" aria-label="Open Settings">
-  </button>
+  <ZenIconButton icon="ri:settings-line" class="ml-3" >
+  </ZenIconButton>
 </template>
 
 <script setup lang="ts">

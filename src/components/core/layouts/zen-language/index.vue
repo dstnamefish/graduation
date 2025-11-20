@@ -5,6 +5,7 @@
       @command="changeLanguage"
       popper="languageDropDownStyle"
     >
+      <ZenIconButton icon="ri:globe-2-line" class="ml-3" />
       <template #dropdown>
         <ElDropdownMenu>
           <div
